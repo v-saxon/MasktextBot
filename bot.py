@@ -12,11 +12,9 @@ if not TOKEN:
     )
 
 # Cyrillic letter -> list of possible substitution symbols.
-# One variant is picked at random for every single occurrence of a letter.
 # Vocabulary contains no RTL, Arabic-joining, Mongolian, N'Ko, Syriac, or
 # Hangul-jamo characters, no Indic dependent vowel signs / combining marks,
-# and no supplementary-plane (surrogate-pair) characters -- all removed as
-# potential sources of broken rendering around the ZWJ joiners.
+# and no supplementary-plane (surrogate-pair) characters.
 SYMBOL_MAP = {
     'А': ['Å', 'ᴀ', '⍺', 'Ꭺ', 'Ꭿ', 'ᗅ', 'Ⲁ', 'ꓮ'],
     'Б': ['Ƃ'],
@@ -55,14 +53,62 @@ SYMBOL_MAP = {
 BOT_SIGNATURE = " @MasktextBot"
 
 # Real invisible characters (not literal escape text):
-NBSP = "\u00A0"   # non-breaking space  (&nbsp;)
-ZWJ = "\u200D"    # zero-width joiner   (&#8205;)
+NBSP = "\u00A0"   # non-breaking space   (&nbsp;)
+ZWJ = "\u200D"    # zero-width joiner    (&#8205;)
+WJ = "\u2060"     # word joiner
+
+
+def _random_separator() -> str:
+    """
+    Separator placed between two neighboring substituted symbols.
+    Always contains a ZWJ. On top of that, a WORD JOINER (U+2060) is thrown
+    in at random -- sometimes before the ZWJ, sometimes after, sometimes
+    not at all.
+    """
+    if random.random() < 0.5:
+        return ZWJ  # WJ not added this time
+    if random.random() < 0.5:
+        return WJ + ZWJ
+    return ZWJ + WJ
+
+
+def _make_variant_picker():
+    """
+    Returns a function next_variant(letter) that, for a single mask_text()
+    call, cycles through that letter's substitution symbols in random order
+    without repeating one until every variant has been used at least once.
+    Once a full cycle is exhausted, it reshuffles and starts a new cycle,
+    only making sure the first pick of the new cycle isn't the same symbol
+    that just finished the previous cycle (when more than one variant exists).
+    """
+    pools = {}       # letter -> list of variants still unused in this cycle
+    last_used = {}   # letter -> most recently used variant for that letter
+
+    def next_variant(letter: str) -> str:
+        variants = SYMBOL_MAP[letter]
+        pool = pools.get(letter)
+
+        if not pool:
+            pool = variants[:]
+            random.shuffle(pool)
+            if len(pool) > 1 and pool[0] == last_used.get(letter):
+                swap_idx = random.randint(1, len(pool) - 1)
+                pool[0], pool[swap_idx] = pool[swap_idx], pool[0]
+            pools[letter] = pool
+
+        variant = pool.pop(0)
+        last_used[letter] = variant
+        return variant
+
+    return next_variant
 
 
 def mask_text(text: str) -> str:
+    next_variant = _make_variant_picker()
+
     # Each item is (kind, string). kind is "vocab" for a substituted letter
     # (which may itself be a multi-character variant, e.g. "IO" or "bI" —
-    # treated as one atomic unit so ZWJ is never inserted inside it),
+    # treated as one atomic unit so separators are never inserted inside it),
     # or "other" for anything else (spaces, punctuation, digits, Latin letters...).
     tokens = []
     for char in text:
@@ -72,7 +118,7 @@ def mask_text(text: str) -> str:
         else:
             upper_char = char.upper()
             if upper_char in SYMBOL_MAP:
-                variant = random.choice(SYMBOL_MAP[upper_char])
+                variant = next_variant(upper_char)
                 tokens.append(("vocab", variant))
             else:
                 # Not a mapped Cyrillic letter -> left unchanged.
@@ -82,8 +128,7 @@ def mask_text(text: str) -> str:
     prev_kind = None
     for kind, s in tokens:
         if prev_kind == "vocab" and kind == "vocab":
-            # Rule: insert a ZWJ between two neighboring substituted symbols.
-            pieces.append(ZWJ)
+            pieces.append(_random_separator())
         pieces.append(s)
         prev_kind = kind
 
