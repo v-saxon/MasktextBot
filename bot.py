@@ -50,6 +50,24 @@ SYMBOL_MAP = {
     'Ю': ['ІО', 'IO', 'Iⵔ', 'Ꮊ'],
     'Я': ['ᴙ', 'ᖆ'],
 }
+# Letters whose substituted symbol may get a prefix marker inserted right before it.
+# Group 1: random choice of one of these three marks, or nothing at all.
+PREFIX_GROUP_1 = {"И", "В", "К", "Ы", "Ь", "Ш"}
+PREFIX_GROUP_1_MARKS = ["⁝", "⁚", "ˌ", ""]
+
+# Group 2: always one of these two marks (never blank).
+PREFIX_GROUP_2 = {"Н", "Ч", "Ж"}
+PREFIX_GROUP_2_MARKS = ["ˉ", "ˈ"]
+
+
+def _prefix_for(letter: str) -> str:
+    if letter in PREFIX_GROUP_1:
+        return random.choice(PREFIX_GROUP_1_MARKS)
+    if letter in PREFIX_GROUP_2:
+        return random.choice(PREFIX_GROUP_2_MARKS)
+    return ""
+
+
 BOT_SIGNATURE = " @MasktextBot"
 
 # Real invisible characters (not literal escape text):
@@ -119,7 +137,8 @@ def mask_text(text: str) -> str:
             upper_char = char.upper()
             if upper_char in SYMBOL_MAP:
                 variant = next_variant(upper_char)
-                tokens.append(("vocab", variant))
+                prefix = _prefix_for(upper_char)
+                tokens.append(("vocab", prefix + variant))
             else:
                 # Not a mapped Cyrillic letter -> left unchanged.
                 tokens.append(("other", char))
