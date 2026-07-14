@@ -13,9 +13,10 @@ if not TOKEN:
 
 # Cyrillic letter -> list of possible substitution symbols.
 # One variant is picked at random for every single occurrence of a letter.
-# Vocabulary contains no right-to-left (RTL) script characters and is curated
-# to avoid characters whose script shaping breaks when a ZWJ sits between
-# two adjacent symbols.
+# Vocabulary contains no RTL, Arabic-joining, Mongolian, N'Ko, Syriac, or
+# Hangul-jamo characters, no Indic dependent vowel signs / combining marks,
+# and no supplementary-plane (surrogate-pair) characters -- all removed as
+# potential sources of broken rendering around the ZWJ joiners.
 SYMBOL_MAP = {
     'А': ['Å', 'ᴀ', '⍺', 'Ꭺ', 'Ꭿ', 'ᗅ', 'Ⲁ', 'ꓮ'],
     'Б': ['Ƃ'],
@@ -35,13 +36,13 @@ SYMBOL_MAP = {
     'О': ['⭘', 'ᴑ', 'ⵔ', 'ㅇ'],
     'П': ['∏', '⊓', '∩', 'ⲡ', 'ᴨ', 'Ⲡ', 'ᥒ'],
     'Р': ['ᴩ', '⍴', 'թ', 'ꮲ', 'ꮅ', 'ㄗ', 'ᑭ', 'ᕈ', 'Ⲣ', 'ⲣ', 'ꓑ'],
-    'С': ['Ϲ', 'Ⅽ', '∁', 'ᴄ', 'Ⴚ', 'ꮯ', 'ꮳ', 'ꉔ', 'ㄈ', 'ᘳ', 'ᙅ', 'Ⲥ', 'ⲥ', 'ꓚ', '𐒨', 'ⵎ', 'ⵛ'],
-    'Т': ['⊤', 'Τ', '┬', 'ᴛ', 'ⴶ', 'ꭲ', 'ㄒ', 'Ꭲ', '𐏕', 'ͳ', 'Ͳ', 'ꓔ'],
+    'С': ['Ϲ', 'Ⅽ', '∁', 'ᴄ', 'Ⴚ', 'ꮯ', 'ꮳ', 'ꉔ', 'ㄈ', 'ᘳ', 'ᙅ', 'Ⲥ', 'ⲥ', 'ꓚ', 'ⵎ', 'ⵛ'],
+    'Т': ['⊤', '┬', 'ᴛ', 'ⴶ', 'ꭲ', 'ㄒ', 'ͳ', 'ꓔ'],
     'У': ['ყ', 'Ꭹ', 'Ꮍ'],
     'Ф': ['⌀', 'Φ', 'Փ', 'Ⴔ', 'ჶ', 'ⵀ', 'Ⲫ', 'ⲫ', 'Ⱇ'],
-    'Х': ['✕', '✗', 'ㄨ', '᙭', 'Ⲭ', 'ⲭ', 'ⵝ', 'ꓫ', 'ᚷ', '𐌢'],
-    'Ц': ['∪̩', 'և', 'பூ'],
-    'Ч': ['Ҹ', 'Կ', 'կ', 'ㄐ', '𐍁'],
+    'Х': ['✕', '✗', 'ㄨ', '᙭', 'Ⲭ', 'ⲭ', 'ⵝ', 'ꓫ', 'ᚷ'],
+    'Ц': ['և'],
+    'Ч': ['Ҹ', 'Կ', 'կ', 'ㄐ'],
     'Ш': ['ա', 'Ⱎ', 'ꔗ'],
     'Щ': ['պ', '山', 'બ'],
     'Ъ': ['Ƅ', 'Ⴆ', 'Ⴊ', 'ⵒ', 'ᕹ'],
