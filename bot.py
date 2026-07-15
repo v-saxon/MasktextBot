@@ -152,6 +152,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def run_http_server():
     """Run a simple Flask server to serve logs."""
     app = Flask(__name__)
+    
+    port = int(os.environ.get("PORT", 8080))
 
     @app.route("/logs")
     def get_logs():
@@ -163,18 +165,24 @@ def run_http_server():
     def health():
         return "OK", 200
 
-    app.run(host="0.0.0.0", port=8080, debug=False)
+    print(f"Starting Flask on port {port}")
+    app.run(host="0.0.0.0", port=port, debug=False)
 
 
-if __name__ == "__main__":
-    # Start HTTP server in a background thread
-    http_thread = Thread(target=run_http_server, daemon=True)
-    http_thread.start()
-    print("HTTP server started on port 8080. Logs available at /logs")
-
-    # Start Telegram bot
+def run_telegram_bot():
+    """Run the Telegram bot in a background thread."""
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     print("MasktextBot is starting...")
     app.run_polling()
+
+
+if __name__ == "__main__":
+    # Start Telegram bot in a background thread
+    telegram_thread = Thread(target=run_telegram_bot, daemon=True)
+    telegram_thread.start()
+    print("Telegram bot started in background")
+    
+    # Run Flask on main thread (Railway requires this)
+    run_http_server()
