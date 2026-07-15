@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
 import random
+import logging
+from datetime import datetime
+from threading import Thread
+from flask import Flask, send_file
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
@@ -12,9 +16,6 @@ if not TOKEN:
     )
 
 # Cyrillic letter -> list of possible substitution symbols.
-# Vocabulary contains no RTL, Arabic-joining, Mongolian, N'Ko, Syriac, or
-# Hangul-jamo characters, no Indic dependent vowel signs / combining marks,
-# and no supplementary-plane (surrogate-pair) characters.
 SYMBOL_MAP = {
     'А': ['Å', 'ᴀ', '⍺', 'Ꭺ', 'Ꭿ', 'ᗅ', 'Ⲁ', 'ꓮ'],
     'Б': ['Ƃ'],
@@ -50,6 +51,7 @@ SYMBOL_MAP = {
     'Ю': ['ІО', 'IO', 'Iⵔ', 'Ꮊ'],
     'Я': ['ᴙ', 'ᖆ'],
 }
+
 BOT_SIGNATURE = " @MasktextBot"
 
 # Real invisible characters (not literal escape text):
@@ -57,32 +59,30 @@ NBSP = "\u00A0"   # non-breaking space   (&nbsp;)
 ZWJ = "\u200D"    # zero-width joiner    (&#8205;)
 WJ = "\u2060"     # word joiner
 
+# Logging to file
+LOG_FILE = "masktext_logs.txt"
+
+def log_message(user_id: str, username: str, user_input: str, bot_output: str):
+    """Log user input and bot output to a file."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(f"[{timestamp}] User: {user_id} (@{username})\n")
+        f.write(f"  Input:  {user_input}\n")
+        f.write(f"  Output: {bot_output}\n")
+        f.write("\n")
+
 
 def _random_separator() -> str:
-    """
-    Separator placed between two neighboring substituted symbols.
-    Always contains a ZWJ. On top of that, a WORD JOINER (U+2060) is thrown
-    in at random -- sometimes before the ZWJ, sometimes after, sometimes
-    not at all.
-    """
     if random.random() < 0.5:
-        return ZWJ  # WJ not added this time
+        return ZWJ
     if random.random() < 0.5:
         return WJ + ZWJ
     return ZWJ + WJ
 
 
 def _make_variant_picker():
-    """
-    Returns a function next_variant(letter) that, for a single mask_text()
-    call, cycles through that letter's substitution symbols in random order
-    without repeating one until every variant has been used at least once.
-    Once a full cycle is exhausted, it reshuffles and starts a new cycle,
-    only making sure the first pick of the new cycle isn't the same symbol
-    that just finished the previous cycle (when more than one variant exists).
-    """
-    pools = {}       # letter -> list of variants still unused in this cycle
-    last_used = {}   # letter -> most recently used variant for that letter
+    pools = {}
+    last_used = {}
 
     def next_variant(letter: str) -> str:
         variants = SYMBOL_MAP[letter]
@@ -106,14 +106,9 @@ def _make_variant_picker():
 def mask_text(text: str) -> str:
     next_variant = _make_variant_picker()
 
-    # Each item is (kind, string). kind is "vocab" for a substituted letter
-    # (which may itself be a multi-character variant, e.g. "IO" or "bI" —
-    # treated as one atomic unit so separators are never inserted inside it),
-    # or "other" for anything else (spaces, punctuation, digits, Latin letters...).
     tokens = []
     for char in text:
         if char == " ":
-            # Rule: every space becomes a non-breaking space + a regular space.
             tokens.append(("other", NBSP + " "))
         else:
             upper_char = char.upper()
@@ -121,7 +116,6 @@ def mask_text(text: str) -> str:
                 variant = next_variant(upper_char)
                 tokens.append(("vocab", variant))
             else:
-                # Not a mapped Cyrillic letter -> left unchanged.
                 tokens.append(("other", char))
 
     pieces = []
@@ -144,11 +138,41 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     original_text = update.message.text
+    user_id = update.effective_user.id
+    username = update.effective_user.username or "unknown"
+    
     masked = mask_text(original_text)
+    
+    # Log to file
+    log_message(str(user_id), username, original_text, masked)
+    
     await update.message.reply_text(masked)
 
 
+def run_http_server():
+    """Run a simple Flask server to serve logs."""
+    app = Flask(__name__)
+
+    @app.route("/logs")
+    def get_logs():
+        if os.path.exists(LOG_FILE):
+            return send_file(LOG_FILE, as_attachment=False, mimetype="text/plain; charset=utf-8")
+        return "No logs yet.", 404
+
+    @app.route("/health")
+    def health():
+        return "OK", 200
+
+    app.run(host="0.0.0.0", port=8080, debug=False)
+
+
 if __name__ == "__main__":
+    # Start HTTP server in a background thread
+    http_thread = Thread(target=run_http_server, daemon=True)
+    http_thread.start()
+    print("HTTP server started on port 8080. Logs available at /logs")
+
+    # Start Telegram bot
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
