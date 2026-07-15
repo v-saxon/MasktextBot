@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 import random
-import logging
 from datetime import datetime
 from threading import Thread
-from flask import Flask, send_file
+from flask import Flask
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
@@ -19,7 +18,7 @@ if not TOKEN:
 SYMBOL_MAP = {
     'А': ['Å', 'ᴀ', '⍺', 'Ꭺ', 'Ꭿ', 'ᗅ', 'Ⲁ', 'ꓮ'],
     'Б': ['Ƃ'],
-    'В': ['ᴃ', 'ც', 'ჩ', 'Ᏸ', 'Ᏼ', 'β', 'ᗷ', 'ᗸ', 'ᗹ', 'ᗽ', 'ᗾ', 'ᗿ', 'Ⲃ', 'ꓐ', 'ᛒ', 'ᛔ', '฿'],
+    'В': ['ᴃ', 'ች', 'ჩ', 'Ᏸ', 'Ᏼ', 'β', 'ᗷ', 'ᗸ', 'ᗹ', 'ᗽ', 'ᗾ', 'ᗿ', 'Ⲃ', 'ꓐ', 'ᛒ', 'ᛔ', '฿'],
     'Г': ['┌', 'ᴤ', 'ᴦ', 'Ր', 'ⵤ', 'Ꮁ', 'ㄏ', 'ᒥ'],
     'Д': ['⍙', '⌂', '⊿', 'ց', 'ⵠ', 'ᗝ', 'ロ'],
     'Е': ['⋿', '℮', '∈', '⋲', 'ᴇ', 'Ꭼ', 'Ꮛ', 'દ', 'ⴹ', 'ᗴ', 'Ⲉ', 'ㅌ', 'ꓰ', 'ᦷ'],
@@ -59,17 +58,17 @@ NBSP = "\u00A0"   # non-breaking space   (&nbsp;)
 ZWJ = "\u200D"    # zero-width joiner    (&#8205;)
 WJ = "\u2060"     # word joiner
 
-# Logging to file
-LOG_FILE = "masktext_logs.txt"
+# Logs in memory: {user_id: [log entries]}
+LOGS = {}
 
 def log_message(user_id: str, username: str, user_input: str, bot_output: str):
-    """Log user input and bot output to a file."""
+    """Log user input and bot output to memory."""
+    if user_id not in LOGS:
+        LOGS[user_id] = []
+    
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write(f"[{timestamp}] User: {user_id} (@{username})\n")
-        f.write(f"  Input:  {user_input}\n")
-        f.write(f"  Output: {bot_output}\n")
-        f.write("\n")
+    log_entry = f"[{timestamp}] @{username}\nInput:  {user_input}\nOutput: {bot_output}\n"
+    LOGS[user_id].append(log_entry)
 
 
 def _random_separator() -> str:
@@ -132,34 +131,62 @@ def mask_text(text: str) -> str:
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Send me any text and I'll mask it with symbols! 🔒"
+        "Send me any text and I'll mask it with symbols! 🔒\n\n"
+        "Commands:\n"
+        "/logs - see your conversation history\n"
+        "/clear - delete your logs"
     )
+
+
+async def cmd_logs(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Send user their logs."""
+    user_id = str(update.effective_user.id)
+    
+    if user_id not in LOGS or not LOGS[user_id]:
+        await update.message.reply_text("No logs yet.")
+        return
+    
+    # Combine all logs into one message
+    all_logs = "\n".join(LOGS[user_id])
+    
+    # If too long, send in chunks
+    if len(all_logs) > 4000:
+        # Send in multiple messages
+        for i in range(0, len(all_logs), 4000):
+            chunk = all_logs[i:i+4000]
+            await update.message.reply_text(f"```\n{chunk}\n```", parse_mode="Markdown")
+    else:
+        await update.message.reply_text(f"```\n{all_logs}\n```", parse_mode="Markdown")
+
+
+async def cmd_clear(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Clear user's logs."""
+    user_id = str(update.effective_user.id)
+    
+    if user_id in LOGS:
+        LOGS[user_id] = []
+    
+    await update.message.reply_text("Your logs have been cleared.")
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     original_text = update.message.text
-    user_id = update.effective_user.id
+    user_id = str(update.effective_user.id)
     username = update.effective_user.username or "unknown"
     
     masked = mask_text(original_text)
     
-    # Log to file
-    log_message(str(user_id), username, original_text, masked)
+    # Log to memory
+    log_message(user_id, username, original_text, masked)
     
     await update.message.reply_text(masked)
 
 
 def run_http_server():
-    """Run a simple Flask server to serve logs."""
+    """Run a simple Flask server for health check."""
     app = Flask(__name__)
     
     port = int(os.environ.get("PORT", 8080))
-
-    @app.route("/logs")
-    def get_logs():
-        if os.path.exists(LOG_FILE):
-            return send_file(LOG_FILE, as_attachment=False, mimetype="text/plain; charset=utf-8")
-        return "No logs yet.", 404
 
     @app.route("/health")
     def health():
@@ -173,6 +200,8 @@ def run_telegram_bot():
     """Run the Telegram bot in a background thread."""
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("logs", cmd_logs))
+    app.add_handler(CommandHandler("clear", cmd_clear))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     print("MasktextBot is starting...")
     app.run_polling()
