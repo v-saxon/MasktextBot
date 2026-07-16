@@ -50,6 +50,50 @@ BOT_SIGNATURE = " @MasktextBot"
 NBSP = "\u00A0"
 WJ = "\u2060"
 
+LOGS = {}
+
+def log_message(user_id, username, user_input, bot_output):
+    if user_id not in LOGS:
+        LOGS[user_id] = []
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry = f"[{timestamp}] @{username}\nInput:  {user_input}\nOutput: {bot_output}\n"
+    LOGS[user_id].append(log_entry)
+
+def split_message(text, max_chars=4000):
+    """
+    Split text into chunks that fit Telegram's 4096 char limit.
+    Returns list of message chunks.
+    """
+    if len(text) <= max_chars:
+        return [text]
+    
+    chunks = []
+    current_chunk = ""
+    
+    # Try splitting by newlines first
+    if "\n" in text:
+        for line in text.split("\n"):
+            if len(current_chunk) + len(line) + 1 <= max_chars:
+                current_chunk += line + "\n"
+            else:
+                if current_chunk:
+                    chunks.append(current_chunk.rstrip())
+                current_chunk = line + "\n"
+    else:
+        # No newlines, split character by character while respecting max_chars
+        for char in text:
+            if len(current_chunk) + len(char) <= max_chars:
+                current_chunk += char
+            else:
+                if current_chunk:
+                    chunks.append(current_chunk)
+                current_chunk = char
+    
+    if current_chunk:
+        chunks.append(current_chunk.rstrip())
+    
+    return chunks if chunks else [text]
+
 def _make_variant_picker():
     pools = {}
     last_used = {}
@@ -98,8 +142,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "1. In any chat, type: @masktextbot your text\n"
         "2. Select masked result from dropdown\n"
         "3. Masked text will be sent!\n\n"
-        "Or use /direct command:\n"
-        "/direct <text> - mask text directly"
+        "Commands:\n"
+        "/direct <text> - mask text directly\n"
+        "/logs - see your conversation history\n"
+        "/clear - delete your logs"
     )
 
 async def direct_mask(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -108,8 +154,54 @@ async def direct_mask(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Usage: /direct <text to mask>")
         return
     text = " ".join(context.args)
+    user_id = str(update.effective_user.id)
+    username = update.effective_user.username or "unknown"
     masked = mask_text(text)
-    await update.message.reply_text(masked)
+    log_message(user_id, username, text, masked)
+    
+    # Split if too long
+    chunks = split_message(masked)
+    for chunk in chunks:
+        await update.message.reply_text(chunk)
+
+async def cmd_logs(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Show recent logs that fit in one message"""
+    user_id = str(update.effective_user.id)
+    if user_id not in LOGS or not LOGS[user_id]:
+        await update.message.reply_text("No logs yet.")
+        return
+    
+    # Show only recent logs that fit in 3500 chars (safe margin for 4096 limit)
+    max_chars = 3500
+    logs = LOGS[user_id]
+    
+    # Start from the end (most recent) and build backwards
+    result = []
+    total_len = 0
+    
+    for entry in reversed(logs):
+        if total_len + len(entry) + 1 <= max_chars:
+            result.insert(0, entry)
+            total_len += len(entry) + 1
+        else:
+            break
+    
+    if not result:
+        # Even one entry is too long, just take the most recent
+        result = [logs[-1]]
+    
+    output = "".join(result)
+    if len(logs) > len(result):
+        output += f"\n... (showing last {len(result)} of {len(logs)} entries)"
+    
+    await update.message.reply_text(output)
+
+async def cmd_clear(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Clear user's logs"""
+    user_id = str(update.effective_user.id)
+    if user_id in LOGS:
+        LOGS[user_id] = []
+    await update.message.reply_text("Logs cleared.")
 
 async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle inline queries: @masktextbot query"""
@@ -118,16 +210,26 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not query:
         return
     
+    user_id = str(update.effective_user.id)
+    username = update.effective_user.username or "unknown"
     masked = mask_text(query)
+    log_message(user_id, username, query, masked)
     
-    results = [
-        InlineQueryResultArticle(
-            id="masked",
-            title="🔐 Masked Text",
-            description=f"Mask: {query[:50]}{'...' if len(query) > 50 else ''}",
-            input_message_content=InputTextMessageContent(masked)
+    # Split if too long
+    chunks = split_message(masked)
+    results = []
+    
+    for i, chunk in enumerate(chunks):
+        part_label = f"Part {i+1}" if len(chunks) > 1 else "Masked Text"
+        results.append(
+            InlineQueryResultArticle(
+                id=f"masked_{i}",
+                title=f"🔐 {part_label}",
+                description=f"Mask: {query[:50]}{'...' if len(query) > 50 else ''}" + 
+                           (f" ({i+1}/{len(chunks)})" if len(chunks) > 1 else ""),
+                input_message_content=InputTextMessageContent(chunk)
+            )
         )
-    ]
     
     await update.inline_query.answer(results, cache_time=0)
 
@@ -135,6 +237,8 @@ if __name__ == "__main__":
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("direct", direct_mask))
+    app.add_handler(CommandHandler("logs", cmd_logs))
+    app.add_handler(CommandHandler("clear", cmd_clear))
     app.add_handler(InlineQueryHandler(inline_query))
     print("🔐 Masktext Bot is running...")
     app.run_polling()
