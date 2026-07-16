@@ -52,6 +52,15 @@ BOT_SIGNATURE = " @MasktextBot"
 NBSP = "\u00A0"
 WJ = "\u2060"
 
+# Only the bot owner may read or clear logs. Everyone else gets "No access".
+# The owner is identified by Telegram username (case-insensitive, no leading @).
+# Can be overridden via the OWNER_USERNAME env var.
+OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "vsaxon").lstrip("@").lower()
+
+def is_owner(update):
+    username = (update.effective_user.username or "").lower()
+    return username == OWNER_USERNAME
+
 # Public URL to the avatar image used as the inline-result thumbnail.
 # Telegram requires a publicly reachable URL here (a file_id does NOT work).
 # On Railway a public domain is exposed via RAILWAY_PUBLIC_DOMAIN; we serve
@@ -185,42 +194,47 @@ async def direct_mask(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(chunk)
 
 async def cmd_logs(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Show recent logs that fit in one message"""
-    user_id = str(update.effective_user.id)
-    if user_id not in LOGS or not LOGS[user_id]:
+    """Show recent logs of all users. Owner only."""
+    if not is_owner(update):
+        await update.message.reply_text("No access")
+        return
+
+    # Flatten every user's logs into a single chronological stream.
+    logs = [entry for entries in LOGS.values() for entry in entries]
+    if not logs:
         await update.message.reply_text("No logs yet.")
         return
-    
+
     # Show only recent logs that fit in 3500 chars (safe margin for 4096 limit)
     max_chars = 3500
-    logs = LOGS[user_id]
-    
+
     # Start from the end (most recent) and build backwards
     result = []
     total_len = 0
-    
+
     for entry in reversed(logs):
         if total_len + len(entry) + 1 <= max_chars:
             result.insert(0, entry)
             total_len += len(entry) + 1
         else:
             break
-    
+
     if not result:
         # Even one entry is too long, just take the most recent
         result = [logs[-1]]
-    
+
     output = "".join(result)
     if len(logs) > len(result):
         output += f"\n... (showing last {len(result)} of {len(logs)} entries)"
-    
+
     await update.message.reply_text(output)
 
 async def cmd_clear(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Clear user's logs"""
-    user_id = str(update.effective_user.id)
-    if user_id in LOGS:
-        LOGS[user_id] = []
+    """Clear all logs. Owner only."""
+    if not is_owner(update):
+        await update.message.reply_text("No access")
+        return
+    LOGS.clear()
     await update.message.reply_text("Logs cleared.")
 
 class _AvatarHandler(BaseHTTPRequestHandler):
