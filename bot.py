@@ -2,8 +2,8 @@
 import os
 import random
 from datetime import datetime
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
+from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, InlineQueryHandler, filters
 
 TOKEN = os.environ.get("BOT_TOKEN")
 
@@ -48,16 +48,7 @@ SYMBOL_MAP = {
 
 BOT_SIGNATURE = " @MasktextBot"
 NBSP = "\u00A0"
-WJ = "\u2060"    # word joiner
-
-LOGS = {}
-
-def log_message(user_id, username, user_input, bot_output):
-    if user_id not in LOGS:
-        LOGS[user_id] = []
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    log_entry = f"[{timestamp}] @{username}\nInput:  {user_input}\nOutput: {bot_output}\n"
-    LOGS[user_id].append(log_entry)
+WJ = "\u2060"
 
 def _make_variant_picker():
     pools = {}
@@ -101,43 +92,49 @@ def mask_text(text):
     return "".join(pieces)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Send me any text to mask it! 🔒\n/logs - see your logs\n/clear - clear logs")
+    await update.message.reply_text(
+        "🔐 Masktext\n\n"
+        "How to use:\n"
+        "1. In any chat, type: @masktextbot your text\n"
+        "2. Select masked result from dropdown\n"
+        "3. Masked text will be sent!\n\n"
+        "Or use /direct command:\n"
+        "/direct <text> - mask text directly"
+    )
 
-async def cmd_logs(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = str(update.effective_user.id)
-    if user_id not in LOGS or not LOGS[user_id]:
-        await update.message.reply_text("No logs yet.")
+async def direct_mask(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Direct masking - /direct <text>"""
+    if not context.args:
+        await update.message.reply_text("Usage: /direct <text to mask>")
         return
-    all_logs = "\n".join(LOGS[user_id])
-    if len(all_logs) > 4000:
-        for i in range(0, len(all_logs), 4000):
-            await update.message.reply_text(all_logs[i:i+4000])
-    else:
-        await update.message.reply_text(all_logs)
+    text = " ".join(context.args)
+    masked = mask_text(text)
+    await update.message.reply_text(masked)
 
-async def cmd_clear(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = str(update.effective_user.id)
-    if user_id in LOGS:
-        LOGS[user_id] = []
-    await update.message.reply_text("Logs cleared.")
-
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    try:
-        original_text = update.message.text
-        user_id = str(update.effective_user.id)
-        username = update.effective_user.username or "unknown"
-        masked = mask_text(original_text)
-        log_message(user_id, username, original_text, masked)
-        await update.message.reply_text(masked)
-    except Exception as e:
-        print(f"Error: {e}")
-        await update.message.reply_text("Error processing message")
+async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle inline queries: @masktextbot query"""
+    query = update.inline_query.query
+    
+    if not query:
+        return
+    
+    masked = mask_text(query)
+    
+    results = [
+        InlineQueryResultArticle(
+            id="masked",
+            title="🔐 Masked Text",
+            description=f"Mask: {query[:50]}{'...' if len(query) > 50 else ''}",
+            input_message_content=InputTextMessageContent(masked)
+        )
+    ]
+    
+    await update.inline_query.answer(results, cache_time=0)
 
 if __name__ == "__main__":
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("logs", cmd_logs))
-    app.add_handler(CommandHandler("clear", cmd_clear))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-    print("MasktextBot is running...")
+    app.add_handler(CommandHandler("direct", direct_mask))
+    app.add_handler(InlineQueryHandler(inline_query))
+    print("🔐 Masktext Bot is running...")
     app.run_polling()
