@@ -79,6 +79,21 @@ def _random_separator():
     else:  # choice == 4
         return WJ + CGJ + ZWJ + WJ
 
+def _add_separators_inside_variant(variant):
+    """
+    If variant has 2+ characters, add invisible separators between them.
+    Example: "bI" -> "b<SEP>I"
+    """
+    if len(variant) < 2:
+        return variant
+    
+    chars = list(variant)
+    result = [chars[0]]
+    for char in chars[1:]:
+        result.append(_random_separator())
+        result.append(char)
+    return "".join(result)
+
 def _make_variant_picker():
     pools = {}
     last_used = {}
@@ -94,6 +109,8 @@ def _make_variant_picker():
             pools[letter] = pool
         variant = pool.pop(0)
         last_used[letter] = variant
+        # Add separators inside multi-character variants
+        variant = _add_separators_inside_variant(variant)
         return variant
     return next_variant
 
