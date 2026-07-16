@@ -51,7 +51,6 @@ NBSP = "\u00A0"
 WJ = "\u2060"
 
 LOGS = {}
-BOT_AVATAR = None  # Will be set at startup
 
 def log_message(user_id, username, user_input, bot_output):
     if user_id not in LOGS:
@@ -149,18 +148,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/clear - delete your logs"
     )
 
-async def post_init(context: ContextTypes.DEFAULT_TYPE):
-    """Load bot avatar on startup"""
-    try:
-        bot = context.bot
-        photos = await bot.get_user_profile_photos(bot.id, limit=1)
-        if photos.photos:
-            file = await bot.get_file(photos.photos[0][-1].file_id)
-            context.bot_data["avatar_url"] = file.file_path
-            print(f"✅ Bot avatar loaded: {file.file_path}")
-    except Exception as e:
-        print(f"⚠️ Could not load bot avatar: {e}")
-
 async def direct_mask(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Direct masking - /direct <text>"""
     if not context.args:
@@ -241,8 +228,7 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
             title="Press to send",
             description=f"Mask: {query[:50]}{'...' if len(query) > 50 else ''}" + 
                        (f" ({i+1}/{len(chunks)})" if len(chunks) > 1 else ""),
-            input_message_content=InputTextMessageContent(chunk),
-            thumbnail_url=bot_avatar if bot_avatar else None
+            input_message_content=InputTextMessageContent(chunk)
         )
         results.append(result)
     
@@ -250,7 +236,6 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == "__main__":
     app = ApplicationBuilder().token(TOKEN).build()
-    app.post_init = post_init
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("direct", direct_mask))
     app.add_handler(CommandHandler("logs", cmd_logs))
