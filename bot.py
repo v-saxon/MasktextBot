@@ -246,7 +246,7 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
             description=f"{chunk[:80]}{'...' if len(chunk) > 80 else ''}" + 
                        (f" ({i+1}/{len(chunks)})" if len(chunks) > 1 else ""),
             input_message_content=InputTextMessageContent(chunk),
-            thumbnail_url=f"file://{AVATAR_FILE_ID}" if AVATAR_FILE_ID else None
+            thumbnail_url=AVATAR_FILE_ID if AVATAR_FILE_ID else None
         )
         results.append(result)
     
