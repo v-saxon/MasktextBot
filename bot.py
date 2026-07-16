@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
 import random
+import threading
 from datetime import datetime
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, InlineQueryHandler, filters
 
@@ -51,11 +53,16 @@ NBSP = "\u00A0"
 WJ = "\u2060"
 
 # Public URL to the avatar image used as the inline-result thumbnail.
-# Telegram requires a publicly reachable URL here (a file_id does NOT work),
-# so we point at avatar.png served from the repository by default.
-AVATAR_URL = os.environ.get(
-    "AVATAR_URL",
-    "https://raw.githubusercontent.com/v-saxon/masktextbot/main/avatar.png",
+# Telegram requires a publicly reachable URL here (a file_id does NOT work).
+# On Railway a public domain is exposed via RAILWAY_PUBLIC_DOMAIN; we serve
+# avatar.png ourselves (see serve_avatar) and build the URL from that domain.
+# Both the URL and the listening port can be overridden via env vars.
+AVATAR_FILENAME = "avatar.png"
+PORT = int(os.environ.get("PORT", "8080"))
+_RAILWAY_DOMAIN = os.environ.get("RAILWAY_PUBLIC_DOMAIN")
+
+AVATAR_URL = os.environ.get("AVATAR_URL") or (
+    f"https://{_RAILWAY_DOMAIN}/{AVATAR_FILENAME}" if _RAILWAY_DOMAIN else None
 )
 
 LOGS = {}
@@ -211,6 +218,42 @@ async def cmd_clear(update: Update, context: ContextTypes.DEFAULT_TYPE):
         LOGS[user_id] = []
     await update.message.reply_text("Logs cleared.")
 
+class _AvatarHandler(BaseHTTPRequestHandler):
+    """Minimal HTTP handler that serves only avatar.png (plus a health check)."""
+
+    def do_GET(self):
+        if self.path in ("/", "/health", "/healthz"):
+            self.send_response(200)
+            self.send_header("Content-Type", "text/plain; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(b"ok")
+            return
+        if self.path.split("?", 1)[0] == f"/{AVATAR_FILENAME}":
+            try:
+                with open(AVATAR_FILENAME, "rb") as f:
+                    data = f.read()
+            except OSError:
+                self.send_error(404, "avatar not found")
+                return
+            self.send_response(200)
+            self.send_header("Content-Type", "image/png")
+            self.send_header("Content-Length", str(len(data)))
+            self.send_header("Cache-Control", "public, max-age=86400")
+            self.end_headers()
+            self.wfile.write(data)
+            return
+        self.send_error(404, "not found")
+
+    def log_message(self, *args):
+        pass  # silence per-request stderr logging
+
+def serve_avatar():
+    """Start a background HTTP server that exposes avatar.png publicly."""
+    server = ThreadingHTTPServer(("0.0.0.0", PORT), _AvatarHandler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    print(f"🖼️ Avatar server listening on port {PORT}")
+
 async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle inline queries: @masktextbot query"""
     query = update.inline_query.query
@@ -241,6 +284,7 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.inline_query.answer(results, cache_time=0)
 
 if __name__ == "__main__":
+    serve_avatar()
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("direct", direct_mask))
