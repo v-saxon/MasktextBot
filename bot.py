@@ -241,10 +241,9 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
             title="Press to send",
             description=f"Mask: {query[:50]}{'...' if len(query) > 50 else ''}" + 
                        (f" ({i+1}/{len(chunks)})" if len(chunks) > 1 else ""),
-            input_message_content=InputTextMessageContent(chunk)
+            input_message_content=InputTextMessageContent(chunk),
+            thumb_url=bot_avatar if bot_avatar else None
         )
-        if bot_avatar:
-            result.thumb_url = bot_avatar
         results.append(result)
     
     await update.inline_query.answer(results, cache_time=0)
