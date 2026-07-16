@@ -48,8 +48,9 @@ SYMBOL_MAP = {
 
 BOT_SIGNATURE = " @MasktextBot"
 NBSP = "\u00A0"
-ZWJ = "\u200D"
-WJ = "\u2060"
+ZWJ = "\u200D"   # zero-width joiner
+WJ = "\u2060"    # word joiner
+CGJ = "\u034F"   # combining grapheme joiner
 
 LOGS = {}
 
@@ -61,11 +62,22 @@ def log_message(user_id, username, user_input, bot_output):
     LOGS[user_id].append(log_entry)
 
 def _random_separator():
-    if random.random() < 0.5:
-        return ZWJ
-    if random.random() < 0.5:
-        return WJ + ZWJ
-    return ZWJ + WJ
+    """
+    Randomly choose one of four separator combinations:
+    1. WJ + ZWJ + WJ
+    2. WJ
+    3. WJ + CGJ + WJ
+    4. WJ + CGJ + ZWJ + WJ
+    """
+    choice = random.randint(1, 4)
+    if choice == 1:
+        return WJ + ZWJ + WJ
+    elif choice == 2:
+        return WJ
+    elif choice == 3:
+        return WJ + CGJ + WJ
+    else:  # choice == 4
+        return WJ + CGJ + ZWJ + WJ
 
 def _make_variant_picker():
     pools = {}
