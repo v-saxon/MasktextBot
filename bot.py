@@ -5,7 +5,7 @@ import threading
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, InlineQueryHandler, filters
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, InlineQueryHandler, ChosenInlineResultHandler, filters
 
 TOKEN = os.environ.get("BOT_TOKEN")
 
@@ -66,6 +66,11 @@ AVATAR_URL = os.environ.get("AVATAR_URL") or (
 )
 
 LOGS = {}
+
+# Holds masked results generated while a user is typing an inline query, so the
+# exact text can be logged only once it is actually sent (chosen inline result).
+# Keyed by user_id -> { result_id: (username, query, chunk) }.
+PENDING = {}
 
 def log_message(user_id, username, user_input, bot_output):
     if user_id not in LOGS:
@@ -264,24 +269,42 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_user.id)
     username = update.effective_user.username or "unknown"
     masked = mask_text(query)
-    log_message(user_id, username, query, masked)
-    
+
     # Split if too long
     chunks = split_message(masked)
     results = []
-    
+    pending = {}
+
     for i, chunk in enumerate(chunks):
+        result_id = f"masked_{i}"
         result = InlineQueryResultArticle(
-            id=f"masked_{i}",
-            title="🔐 Press to send",
-            description=f"{chunk[:80]}{'...' if len(chunk) > 80 else ''}" + 
+            id=result_id,
+            title="Press to send",
+            description=f"{chunk[:80]}{'...' if len(chunk) > 80 else ''}" +
                        (f" ({i+1}/{len(chunks)})" if len(chunks) > 1 else ""),
             input_message_content=InputTextMessageContent(chunk),
             thumbnail_url=AVATAR_URL
         )
         results.append(result)
-    
+        pending[result_id] = (username, query, chunk)
+
+    # Cache the generated results so they can be logged only when actually sent.
+    PENDING[user_id] = pending
+
     await update.inline_query.answer(results, cache_time=0)
+
+async def chosen_inline_result(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Log an inline result only at the moment it is actually sent."""
+    chosen = update.chosen_inline_result
+    user_id = str(update.effective_user.id)
+    pending = PENDING.get(user_id, {})
+    entry = pending.pop(chosen.result_id, None)
+    if not pending:
+        PENDING.pop(user_id, None)
+    if entry is None:
+        return
+    username, query, chunk = entry
+    log_message(user_id, username, query, chunk)
 
 if __name__ == "__main__":
     serve_avatar()
@@ -291,5 +314,6 @@ if __name__ == "__main__":
     app.add_handler(CommandHandler("logs", cmd_logs))
     app.add_handler(CommandHandler("clear", cmd_clear))
     app.add_handler(InlineQueryHandler(inline_query))
+    app.add_handler(ChosenInlineResultHandler(chosen_inline_result))
     print("🔐 Masktext Bot is running...")
     app.run_polling()
