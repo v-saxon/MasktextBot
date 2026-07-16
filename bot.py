@@ -48,9 +48,7 @@ SYMBOL_MAP = {
 
 BOT_SIGNATURE = " @MasktextBot"
 NBSP = "\u00A0"
-ZWJ = "\u200D"   # zero-width joiner
 WJ = "\u2060"    # word joiner
-CGJ = "\u034F"   # combining grapheme joiner
 
 LOGS = {}
 
@@ -60,39 +58,6 @@ def log_message(user_id, username, user_input, bot_output):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     log_entry = f"[{timestamp}] @{username}\nInput:  {user_input}\nOutput: {bot_output}\n"
     LOGS[user_id].append(log_entry)
-
-def _random_separator():
-    """
-    Randomly choose one of four separator combinations:
-    1. WJ + ZWJ + WJ
-    2. WJ
-    3. WJ + CGJ + WJ
-    4. WJ + CGJ + ZWJ + WJ
-    """
-    choice = random.randint(1, 4)
-    if choice == 1:
-        return WJ + ZWJ + WJ
-    elif choice == 2:
-        return WJ
-    elif choice == 3:
-        return WJ + CGJ + WJ
-    else:  # choice == 4
-        return WJ + CGJ + ZWJ + WJ
-
-def _add_separators_inside_variant(variant):
-    """
-    If variant has 2+ characters, add invisible separators between them.
-    Example: "bI" -> "b<SEP>I"
-    """
-    if len(variant) < 2:
-        return variant
-    
-    chars = list(variant)
-    result = [chars[0]]
-    for char in chars[1:]:
-        result.append(_random_separator())
-        result.append(char)
-    return "".join(result)
 
 def _make_variant_picker():
     pools = {}
@@ -109,8 +74,6 @@ def _make_variant_picker():
             pools[letter] = pool
         variant = pool.pop(0)
         last_used[letter] = variant
-        # Add separators inside multi-character variants
-        variant = _add_separators_inside_variant(variant)
         return variant
     return next_variant
 
@@ -131,7 +94,7 @@ def mask_text(text):
     prev_kind = None
     for kind, s in tokens:
         if prev_kind == "vocab" and kind == "vocab":
-            pieces.append(_random_separator())
+            pieces.append(WJ)
         pieces.append(s)
         prev_kind = kind
     pieces.append(BOT_SIGNATURE)
