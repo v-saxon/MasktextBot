@@ -51,6 +51,7 @@ NBSP = "\u00A0"
 WJ = "\u2060"
 
 LOGS = {}
+AVATAR_FILE_ID = None  # Will be loaded on startup
 
 def log_message(user_id, username, user_input, bot_output):
     if user_id not in LOGS:
@@ -203,6 +204,25 @@ async def cmd_clear(update: Update, context: ContextTypes.DEFAULT_TYPE):
         LOGS[user_id] = []
     await update.message.reply_text("Logs cleared.")
 
+async def post_init(context: ContextTypes.DEFAULT_TYPE):
+    """Load avatar.png on startup"""
+    global AVATAR_FILE_ID
+    try:
+        import pathlib
+        avatar_path = pathlib.Path("avatar.png")
+        if avatar_path.exists():
+            with open(avatar_path, "rb") as avatar_file:
+                message = await context.bot.send_photo(
+                    chat_id=context.bot.id,
+                    photo=avatar_file
+                )
+                AVATAR_FILE_ID = message.photo[-1].file_id
+                print(f"✅ Avatar loaded: {AVATAR_FILE_ID}")
+        else:
+            print("⚠️ avatar.png not found")
+    except Exception as e:
+        print(f"⚠️ Could not load avatar: {e}")
+
 async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle inline queries: @masktextbot query"""
     query = update.inline_query.query
@@ -219,16 +239,14 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chunks = split_message(masked)
     results = []
     
-    # Get bot avatar for thumbnail
-    bot_avatar = context.bot_data.get("avatar_url")
-    
     for i, chunk in enumerate(chunks):
         result = InlineQueryResultArticle(
             id=f"masked_{i}",
-            title="Press to send",
-            description=f"Mask: {query[:50]}{'...' if len(query) > 50 else ''}" + 
+            title="🔐 Press to send",
+            description=f"{chunk[:80]}{'...' if len(chunk) > 80 else ''}" + 
                        (f" ({i+1}/{len(chunks)})" if len(chunks) > 1 else ""),
-            input_message_content=InputTextMessageContent(chunk)
+            input_message_content=InputTextMessageContent(chunk),
+            thumbnail_url=f"file://{AVATAR_FILE_ID}" if AVATAR_FILE_ID else None
         )
         results.append(result)
     
@@ -236,6 +254,7 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == "__main__":
     app = ApplicationBuilder().token(TOKEN).build()
+    app.post_init = post_init
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("direct", direct_mask))
     app.add_handler(CommandHandler("logs", cmd_logs))
