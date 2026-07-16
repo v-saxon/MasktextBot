@@ -50,8 +50,15 @@ BOT_SIGNATURE = " @MasktextBot"
 NBSP = "\u00A0"
 WJ = "\u2060"
 
+# Public URL to the avatar image used as the inline-result thumbnail.
+# Telegram requires a publicly reachable URL here (a file_id does NOT work),
+# so we point at avatar.png served from the repository by default.
+AVATAR_URL = os.environ.get(
+    "AVATAR_URL",
+    "https://raw.githubusercontent.com/v-saxon/masktextbot/main/avatar.png",
+)
+
 LOGS = {}
-AVATAR_FILE_ID = None  # Will be loaded on startup
 
 def log_message(user_id, username, user_input, bot_output):
     if user_id not in LOGS:
@@ -204,25 +211,6 @@ async def cmd_clear(update: Update, context: ContextTypes.DEFAULT_TYPE):
         LOGS[user_id] = []
     await update.message.reply_text("Logs cleared.")
 
-async def post_init(context: ContextTypes.DEFAULT_TYPE):
-    """Load avatar.png on startup"""
-    global AVATAR_FILE_ID
-    try:
-        import pathlib
-        avatar_path = pathlib.Path("avatar.png")
-        if avatar_path.exists():
-            with open(avatar_path, "rb") as avatar_file:
-                message = await context.bot.send_photo(
-                    chat_id=context.bot.id,
-                    photo=avatar_file
-                )
-                AVATAR_FILE_ID = message.photo[-1].file_id
-                print(f"✅ Avatar loaded: {AVATAR_FILE_ID}")
-        else:
-            print("⚠️ avatar.png not found")
-    except Exception as e:
-        print(f"⚠️ Could not load avatar: {e}")
-
 async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle inline queries: @masktextbot query"""
     query = update.inline_query.query
@@ -246,7 +234,7 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
             description=f"{chunk[:80]}{'...' if len(chunk) > 80 else ''}" + 
                        (f" ({i+1}/{len(chunks)})" if len(chunks) > 1 else ""),
             input_message_content=InputTextMessageContent(chunk),
-            thumbnail_url=AVATAR_FILE_ID if AVATAR_FILE_ID else None
+            thumbnail_url=AVATAR_URL
         )
         results.append(result)
     
@@ -254,7 +242,6 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == "__main__":
     app = ApplicationBuilder().token(TOKEN).build()
-    app.post_init = post_init
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("direct", direct_mask))
     app.add_handler(CommandHandler("logs", cmd_logs))
