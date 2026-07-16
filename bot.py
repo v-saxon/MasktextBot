@@ -220,11 +220,10 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     results = []
     
     for i, chunk in enumerate(chunks):
-        part_label = f"Part {i+1}" if len(chunks) > 1 else "Masked Text"
         results.append(
             InlineQueryResultArticle(
                 id=f"masked_{i}",
-                title=f"🔐 {part_label}",
+                title="Press to send",
                 description=f"Mask: {query[:50]}{'...' if len(query) > 50 else ''}" + 
                            (f" ({i+1}/{len(chunks)})" if len(chunks) > 1 else ""),
                 input_message_content=InputTextMessageContent(chunk)
