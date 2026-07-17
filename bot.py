@@ -141,7 +141,7 @@ def _make_variant_picker():
         return variant
     return next_variant
 
-def mask_text(text):
+def mask_text(text, signature=True):
     next_variant = _make_variant_picker()
     tokens = []
     for char in text:
@@ -161,7 +161,8 @@ def mask_text(text):
             pieces.append(WJ)
         pieces.append(s)
         prev_kind = kind
-    pieces.append(BOT_SIGNATURE)
+    if signature:
+        pieces.append(BOT_SIGNATURE)
     return "".join(pieces)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -171,23 +172,20 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "1. In any chat, type: @masktextbot your text\n"
         "2. Select masked result from dropdown\n"
         "3. Masked text will be sent!\n\n"
-        "Commands:\n"
-        "/direct <text> - mask text directly\n"
-        "/logs - see your conversation history\n"
-        "/clear - delete your logs"
+        "Or just send me any message here and I'll mask it for you."
     )
 
 async def direct_mask(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Direct masking - /direct <text>"""
-    if not context.args:
-        await update.message.reply_text("Usage: /direct <text to mask>")
+    """Mask any plain (non-command) message sent to the bot."""
+    text = update.message.text
+    if not text:
         return
-    text = " ".join(context.args)
     user_id = str(update.effective_user.id)
     username = update.effective_user.username or "unknown"
-    masked = mask_text(text)
+    # In-bot messages keep the bot signature.
+    masked = mask_text(text, signature=True)
     log_message(user_id, username, text, masked)
-    
+
     # Split if too long
     chunks = split_message(masked)
     for chunk in chunks:
@@ -282,7 +280,8 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     user_id = str(update.effective_user.id)
     username = update.effective_user.username or "unknown"
-    masked = mask_text(query)
+    # Inline results are sent into other chats, so don't append the bot name.
+    masked = mask_text(query, signature=False)
 
     # Split if too long
     chunks = split_message(masked)
@@ -324,10 +323,11 @@ if __name__ == "__main__":
     serve_avatar()
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("direct", direct_mask))
     app.add_handler(CommandHandler("logs", cmd_logs))
     app.add_handler(CommandHandler("clear", cmd_clear))
     app.add_handler(InlineQueryHandler(inline_query))
     app.add_handler(ChosenInlineResultHandler(chosen_inline_result))
+    # Any plain (non-command) text message is masked automatically.
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, direct_mask))
     print("🔐 Masktext Bot is running...")
     app.run_polling()
