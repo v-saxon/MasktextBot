@@ -53,13 +53,23 @@ NBSP = "\u00A0"
 WJ = "\u2060"
 
 # Only the bot owner may read or clear logs. Everyone else gets "No access".
-# The owner is identified by Telegram username (case-insensitive, no leading @).
-# Can be overridden via the OWNER_USERNAME env var.
+# The owner can be identified by Telegram username (case-insensitive, no leading
+# @) via OWNER_USERNAME, and/or by numeric Telegram user ID via OWNER_ID (the
+# most reliable key, since usernames can change). OWNER_ID accepts several IDs
+# separated by commas. Send /whoami to the bot to discover your own ID/username.
 OWNER_USERNAME = os.environ.get("OWNER_USERNAME", "vsaxon").lstrip("@").lower()
+OWNER_IDS = {
+    part.strip()
+    for part in os.environ.get("OWNER_ID", "").split(",")
+    if part.strip()
+}
 
 def is_owner(update):
-    username = (update.effective_user.username or "").lower()
-    return username == OWNER_USERNAME
+    user = update.effective_user
+    if str(user.id) in OWNER_IDS:
+        return True
+    username = (user.username or "").lower()
+    return bool(OWNER_USERNAME) and username == OWNER_USERNAME
 
 # Public URL to the avatar image used as the inline-result thumbnail.
 # Telegram requires a publicly reachable URL here (a file_id does NOT work).
@@ -173,6 +183,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "2. Select masked result from dropdown\n"
         "3. Masked text will be sent!\n\n"
         "Or just send me any message here and I'll mask it for you."
+    )
+
+async def cmd_whoami(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Report the caller's Telegram ID/username and whether they are the owner."""
+    user = update.effective_user
+    await update.message.reply_text(
+        f"id: {user.id}\n"
+        f"username: @{user.username or '(none)'}\n"
+        f"owner: {'yes' if is_owner(update) else 'no'}"
     )
 
 async def direct_mask(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -323,6 +342,7 @@ if __name__ == "__main__":
     serve_avatar()
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("whoami", cmd_whoami))
     app.add_handler(CommandHandler("logs", cmd_logs))
     app.add_handler(CommandHandler("clear", cmd_clear))
     app.add_handler(InlineQueryHandler(inline_query))
