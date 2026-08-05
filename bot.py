@@ -350,4 +350,7 @@ if __name__ == "__main__":
     # Any plain (non-command) text message is masked automatically.
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, direct_mask))
     print("🔐 Masktext Bot is running...")
-    app.run_polling()
+    # Explicitly request every update type so chosen_inline_result (needed to log
+    # inline sends) is always delivered, regardless of any previously remembered
+    # allowed_updates setting on Telegram's side.
+    app.run_polling(allowed_updates=Update.ALL_TYPES)
