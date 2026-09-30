@@ -30,26 +30,23 @@
     @font-face { font-family: 'Aktiv Grotesk'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Bold_195d1b44fa/Pilat_Test_Bold_195d1b44fa.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
 
     /* ══════════════════════════════════════════════════════
-       CSS Custom Properties — Xsolla Design Tokens
-       Theme: pentagram-dark (packages/core/src/tokens/pentagram-dark.json)
+       CSS Custom Properties — Xsolla Design Tokens (Pentagram Light)
+       Theme: pentagram-light (packages/core/src/tokens/pentagram-light.json)
        ══════════════════════════════════════════════════════ */
     :root {
-      /* ── Font Stacks ── */
+      /* ── Font Stacks (same as Pentagram Dark) ── */
       --xui-font-heading-b2b: 'Pilat', 'Aktiv Grotesk', 'Noto Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       --xui-font-heading-b2c: 'Pilat Wide', 'Aktiv Grotesk', 'Noto Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       --xui-font-body: 'Aktiv Grotesk', 'Noto Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      /* Promo / marketing pages — Pilat Wide Bold for semantic h1 & h2 (see SKILL.md); aliases B2C heading stack + registered 700 face */
       --xui-font-promo-heading: var(--xui-font-heading-b2c);
       --xui-font-weight-promo-heading: 700;
 
-      /* ── Spacing ── */
+      /* ── Spacing / radius / shadows (shared) ── */
       --xui-space-xs: 4px;
       --xui-space-s: 8px;
       --xui-space-m: 16px;
       --xui-space-l: 24px;
       --xui-space-xl: 32px;
-
-      /* ── Border Radius ── */
       --xui-radius-button: 4px;
       --xui-radius-card: 12px;
       --xui-radius-input: 4px;
@@ -58,8 +55,6 @@
       --xui-radius-avatar-sm: 4px;
       --xui-radius-avatar-lg: 8px;
       --xui-radius-avatar-circle: 999px;
-
-      /* ── Shadows ── */
       --xui-shadow-active: 0px 1px 2px rgba(7,7,8,0.2), 0px 1px 3px 1px rgba(7,7,8,0.1);
       --xui-shadow-surface: 0px 1px 2px rgba(7,7,8,0.2), 0px 2px 6px 2px rgba(7,7,8,0.1);
       --xui-shadow-surface-hover: 0px 4px 8px 3px rgba(7,7,8,0.1), 0px 1px 3px rgba(7,7,8,0.2);
@@ -67,39 +62,39 @@
       --xui-shadow-modal: 0px 8px 12px 6px rgba(7,7,8,0.1), 0px 4px 4px rgba(7,7,8,0.2);
 
       /* ── Background ── */
-      --xui-bg-primary: #1b2628;
-      --xui-bg-secondary: #141d1f;
-      --xui-bg-inverse: #ffffff;
+      --xui-bg-primary: #ffffff;
+      --xui-bg-secondary: #f3f3f2;
+      --xui-bg-inverse: #000000;
       --xui-bg-brand-primary: #80eaff;
-      --xui-bg-brand-secondary: #0b3841;
+      --xui-bg-brand-secondary: #b2f2ff;
       --xui-bg-brand-extra-primary: #cef655;
-      --xui-bg-brand-extra-secondary: #566c13;
+      --xui-bg-brand-extra-secondary: #dfff80;
       --xui-bg-success-primary: #95ff80;
-      --xui-bg-success-secondary: #14410b;
+      --xui-bg-success-secondary: #bfffb2;
       --xui-bg-warning-primary: #ffc380;
-      --xui-bg-warning-secondary: #6c4313;
+      --xui-bg-warning-secondary: #ffdbb2;
       --xui-bg-alert-primary: #e84f30;
-      --xui-bg-alert-secondary: #6c2213;
+      --xui-bg-alert-secondary: #ffbfb2;
       --xui-bg-neutral-primary: #99aeb2;
-      --xui-bg-neutral-secondary: #34474b;
+      --xui-bg-neutral-secondary: #d7dee0;
 
       /* ── Content ── */
-      --xui-content-primary: #e8eced;
-      --xui-content-secondary: rgba(232,236,237,0.72);
-      --xui-content-tertiary: rgba(232,236,237,0.58);
-      --xui-content-inverse: #000000;
-      --xui-content-brand-primary: #80eaff;
-      --xui-content-brand-secondary: #55dcf6;
-      --xui-content-brand-extra-primary: #cef655;
+      --xui-content-primary: #000000;
+      --xui-content-secondary: rgba(0, 0, 0, 0.75);
+      --xui-content-tertiary: rgba(0, 0, 0, 0.6);
+      --xui-content-inverse: #ffffff;
+      --xui-content-brand-primary: #22a8c3;
+      --xui-content-brand-secondary: #31cae8;
+      --xui-content-brand-extra-primary: #79971b;
       --xui-content-brand-extra-secondary: #9bc323;
-      --xui-content-success-primary: #70f655;
+      --xui-content-success-primary: #30981b;
       --xui-content-success-secondary: #3dc322;
-      --xui-content-warning-primary: #f6ab55;
-      --xui-content-warning-secondary: #c37822;
-      --xui-content-alert-primary: #f67055;
-      --xui-content-alert-secondary: #e84f30;
-      --xui-content-neutral-primary: #99aeb2;
-      --xui-content-neutral-secondary: #4b6368;
+      --xui-content-warning-primary: #c37822;
+      --xui-content-warning-secondary: #f6ab55;
+      --xui-content-alert-primary: #e84f30;
+      --xui-content-alert-secondary: #f67055;
+      --xui-content-neutral-primary: #34474b;
+      --xui-content-neutral-secondary: #607f85;
       --xui-content-on-brand: #000000;
       --xui-content-on-brand-extra: #000000;
       --xui-content-on-success: #000000;
@@ -110,189 +105,189 @@
       --xui-content-static-dark: #000000;
 
       /* ── Border ── */
-      --xui-border-primary: #ffffff;
-      --xui-border-secondary: rgba(178,242,255,0.1);
-      --xui-border-inverse: rgba(0,0,0,0.15);
-      --xui-border-brand: #55dcf6;
-      --xui-border-brand-extra: #cef655;
-      --xui-border-success: #70f655;
-      --xui-border-warning: #f6ab55;
-      --xui-border-alert: #f67055;
-      --xui-border-neutral: #9580ff;
+      --xui-border-primary: #000000;
+      --xui-border-secondary: rgba(0, 0, 0, 0.1);
+      --xui-border-inverse: rgba(255, 255, 255, 0.15);
+      --xui-border-brand: #31cae8;
+      --xui-border-brand-extra: #bae831;
+      --xui-border-success: #30981b;
+      --xui-border-warning: #e89331;
+      --xui-border-alert: #e84f30;
+      --xui-border-neutral: #3d22c3;
 
       /* ── Overlay ── */
-      --xui-overlay-mono: rgba(178,242,255,0.06);
-      --xui-overlay-brand: rgba(128,234,255,0.2);
-      --xui-overlay-brand-extra: rgba(206,246,85,0.3);
-      --xui-overlay-success: rgba(149,255,128,0.2);
-      --xui-overlay-warning: rgba(255,195,128,0.24);
-      --xui-overlay-alert: rgba(232,79,48,0.32);
-      --xui-overlay-neutral: rgba(123,152,157,0.28);
+      --xui-overlay-mono: rgba(0, 0, 0, 0.05);
+      --xui-overlay-brand: rgba(128, 234, 255, 0.3);
+      --xui-overlay-brand-extra: rgba(206, 246, 85, 0.3);
+      --xui-overlay-success: rgba(149, 255, 128, 0.24);
+      --xui-overlay-warning: rgba(255, 195, 128, 0.28);
+      --xui-overlay-alert: rgba(232, 79, 48, 0.24);
+      --xui-overlay-neutral: rgba(96, 127, 133, 0.24);
 
       /* ── Layer ── */
-      --xui-layer-scrim: rgba(0,0,0,0.5);
-      --xui-layer-float: #000000;
+      --xui-layer-scrim: rgba(0, 0, 0, 0.75);
+      --xui-layer-float: #ffffff;
 
       /* ── Control: Brand ── */
       --xui-ctrl-brand-primary-bg: #80eaff;
       --xui-ctrl-brand-primary-bg-hover: #b2f2ff;
       --xui-ctrl-brand-primary-bg-press: #55dcf6;
-      --xui-ctrl-brand-primary-bg-disable: rgba(52,71,75,0.85);
+      --xui-ctrl-brand-primary-bg-disable: #cccccc;
       --xui-ctrl-brand-primary-border: #31cae8;
       --xui-ctrl-brand-primary-border-hover: #55dcf6;
-      --xui-ctrl-brand-secondary-bg: #135d6c;
-      --xui-ctrl-brand-secondary-bg-hover: #1b8398;
-      --xui-ctrl-brand-secondary-bg-press: #0b3841;
-      --xui-ctrl-brand-secondary-border: #22a8c3;
-      --xui-ctrl-brand-secondary-border-hover: #22a8c3;
-      --xui-ctrl-brand-tertiary-bg: transparent;
-      --xui-ctrl-brand-tertiary-bg-hover: #0b3841;
-      --xui-ctrl-brand-tertiary-bg-press: #135d6c;
-      --xui-ctrl-brand-ghost-bg: transparent;
-      --xui-ctrl-brand-ghost-bg-hover: rgba(128,234,255,0.04);
-      --xui-ctrl-brand-ghost-bg-press: rgba(128,234,255,0.08);
-      --xui-ctrl-brand-ghost-border: rgba(128,234,255,0.16);
-      --xui-ctrl-brand-ghost-border-hover: rgba(128,234,255,0.24);
+      --xui-ctrl-brand-secondary-bg: #ccf6ff;
+      --xui-ctrl-brand-secondary-bg-hover: #e5fbff;
+      --xui-ctrl-brand-secondary-bg-press: #b2f2ff;
+      --xui-ctrl-brand-secondary-border: #80eaff;
+      --xui-ctrl-brand-secondary-border-hover: #b2f2ff;
+      --xui-ctrl-brand-tertiary-bg: rgba(255, 255, 255, 0);
+      --xui-ctrl-brand-tertiary-bg-hover: #e5fbff;
+      --xui-ctrl-brand-tertiary-bg-press: #ccf6ff;
+      --xui-ctrl-brand-ghost-bg: rgba(0, 0, 0, 0);
+      --xui-ctrl-brand-ghost-bg-hover: rgba(34, 168, 195, 0.04);
+      --xui-ctrl-brand-ghost-bg-press: rgba(34, 168, 195, 0.08);
+      --xui-ctrl-brand-ghost-border: rgba(34, 168, 195, 0.1);
+      --xui-ctrl-brand-ghost-border-hover: rgba(34, 168, 195, 0.16);
       --xui-ctrl-brand-text-primary: #000000;
-      --xui-ctrl-brand-text-secondary: #80eaff;
-      --xui-ctrl-brand-text-tertiary: #80eaff;
-      --xui-ctrl-brand-text-ghost: #80eaff;
-      --xui-ctrl-brand-text-disable: rgba(232,236,237,0.2);
+      --xui-ctrl-brand-text-secondary: #000000;
+      --xui-ctrl-brand-text-tertiary: #1b8398;
+      --xui-ctrl-brand-text-ghost: #22a8c3;
+      --xui-ctrl-brand-text-disable: #999999;
 
       /* ── Control: Mono ── */
-      --xui-ctrl-mono-primary-bg: #ffffff;
-      --xui-ctrl-mono-primary-bg-hover: #e8eced;
-      --xui-ctrl-mono-primary-bg-press: #f4f5f6;
-      --xui-ctrl-mono-secondary-bg: #34474b;
-      --xui-ctrl-mono-secondary-bg-hover: #4b6368;
-      --xui-ctrl-mono-secondary-bg-press: #233134;
-      --xui-ctrl-mono-secondary-border: #4b6368;
-      --xui-ctrl-mono-secondary-border-hover: #607f85;
-      --xui-ctrl-mono-tertiary-bg: transparent;
-      --xui-ctrl-mono-tertiary-bg-hover: #233134;
-      --xui-ctrl-mono-tertiary-bg-press: #34474b;
-      --xui-ctrl-mono-ghost-bg: transparent;
-      --xui-ctrl-mono-ghost-bg-hover: rgba(255,255,255,0.04);
-      --xui-ctrl-mono-ghost-bg-press: rgba(255,255,255,0.08);
-      --xui-ctrl-mono-ghost-border: rgba(255,255,255,0.16);
-      --xui-ctrl-mono-ghost-border-hover: rgba(255,255,255,0.24);
-      --xui-ctrl-mono-text-primary: #000000;
-      --xui-ctrl-mono-text-secondary: #ffffff;
-      --xui-ctrl-mono-text-tertiary: #ffffff;
-      --xui-ctrl-mono-text-ghost: #ffffff;
-      --xui-ctrl-mono-text-disable: rgba(232,236,237,0.2);
+      --xui-ctrl-mono-primary-bg: #141d1f;
+      --xui-ctrl-mono-primary-bg-hover: #233134;
+      --xui-ctrl-mono-primary-bg-press: #000000;
+      --xui-ctrl-mono-secondary-bg: #dadbd7;
+      --xui-ctrl-mono-secondary-bg-hover: #e6e7e4;
+      --xui-ctrl-mono-secondary-bg-press: #c1c2bc;
+      --xui-ctrl-mono-secondary-border: #c1c2bc;
+      --xui-ctrl-mono-secondary-border-hover: #dadbd7;
+      --xui-ctrl-mono-tertiary-bg: rgba(255, 255, 255, 0);
+      --xui-ctrl-mono-tertiary-bg-hover: #f3f3f2;
+      --xui-ctrl-mono-tertiary-bg-press: #e6e7e4;
+      --xui-ctrl-mono-ghost-bg: rgba(0, 0, 0, 0);
+      --xui-ctrl-mono-ghost-bg-hover: rgba(0, 0, 0, 0.04);
+      --xui-ctrl-mono-ghost-bg-press: rgba(0, 0, 0, 0.08);
+      --xui-ctrl-mono-ghost-border: rgba(0, 0, 0, 0.1);
+      --xui-ctrl-mono-ghost-border-hover: rgba(0, 0, 0, 0.16);
+      --xui-ctrl-mono-text-primary: #ffffff;
+      --xui-ctrl-mono-text-secondary: #000000;
+      --xui-ctrl-mono-text-tertiary: #000000;
+      --xui-ctrl-mono-text-ghost: #000000;
+      --xui-ctrl-mono-text-disable: rgba(0, 0, 0, 0.4);
 
       /* ── Control: Alert ── */
-      --xui-ctrl-alert-primary-bg: #f67055;
-      --xui-ctrl-alert-primary-bg-hover: #ff9580;
-      --xui-ctrl-alert-primary-bg-press: #e84f30;
-      --xui-ctrl-alert-secondary-bg: rgba(232,79,48,0.4);
-      --xui-ctrl-alert-secondary-bg-hover: rgba(246,112,85,0.4);
-      --xui-ctrl-alert-secondary-bg-press: rgba(195,61,34,0.4);
-      --xui-ctrl-alert-tertiary-bg: transparent;
-      --xui-ctrl-alert-tertiary-bg-hover: rgba(255,170,153,0.07);
-      --xui-ctrl-alert-tertiary-bg-press: rgba(255,85,51,0.12);
-      --xui-ctrl-alert-ghost-bg: transparent;
-      --xui-ctrl-alert-ghost-bg-hover: rgba(246,112,85,0.04);
-      --xui-ctrl-alert-ghost-bg-press: rgba(246,112,85,0.08);
-      --xui-ctrl-alert-ghost-border: rgba(246,112,85,0.16);
-      --xui-ctrl-alert-ghost-border-hover: rgba(246,112,85,0.24);
+      --xui-ctrl-alert-primary-bg: #e84f30;
+      --xui-ctrl-alert-primary-bg-hover: #f67055;
+      --xui-ctrl-alert-primary-bg-press: #c33d22;
+      --xui-ctrl-alert-secondary-bg: rgba(232, 79, 48, 0.4);
+      --xui-ctrl-alert-secondary-bg-hover: rgba(246, 112, 85, 0.4);
+      --xui-ctrl-alert-secondary-bg-press: rgba(195, 61, 34, 0.4);
+      --xui-ctrl-alert-tertiary-bg: rgba(255, 43, 0, 0);
+      --xui-ctrl-alert-tertiary-bg-hover: rgba(255, 85, 51, 0.07);
+      --xui-ctrl-alert-tertiary-bg-press: rgba(204, 34, 0, 0.12);
+      --xui-ctrl-alert-ghost-bg: rgba(0, 0, 0, 0);
+      --xui-ctrl-alert-ghost-bg-hover: rgba(195, 61, 34, 0.04);
+      --xui-ctrl-alert-ghost-bg-press: rgba(195, 61, 34, 0.08);
+      --xui-ctrl-alert-ghost-border: rgba(195, 61, 34, 0.1);
+      --xui-ctrl-alert-ghost-border-hover: rgba(195, 61, 34, 0.16);
       --xui-ctrl-alert-text-primary: #ffffff;
-      --xui-ctrl-alert-text-secondary: #ffffff;
-      --xui-ctrl-alert-text-tertiary: #f67055;
-      --xui-ctrl-alert-text-ghost: #f67055;
-      --xui-ctrl-alert-text-disable: rgba(232,236,237,0.2);
+      --xui-ctrl-alert-text-secondary: #000000;
+      --xui-ctrl-alert-text-tertiary: #c33d22;
+      --xui-ctrl-alert-text-ghost: #c33d22;
+      --xui-ctrl-alert-text-disable: #999999;
 
       /* ── Control: BrandExtra ── */
-      --xui-ctrl-brand-extra-primary-bg: #cef655;
-      --xui-ctrl-brand-extra-primary-bg-hover: #bae831;
-      --xui-ctrl-brand-extra-primary-bg-press: #dfff80;
-      --xui-ctrl-brand-extra-secondary-bg: rgba(186,232,49,0.4);
-      --xui-ctrl-brand-extra-secondary-bg-hover: rgba(206,246,85,0.4);
-      --xui-ctrl-brand-extra-secondary-bg-press: rgba(186,232,49,0.4);
-      --xui-ctrl-brand-extra-tertiary-bg: transparent;
-      --xui-ctrl-brand-extra-tertiary-bg-hover: rgba(206,246,85,0.07);
-      --xui-ctrl-brand-extra-tertiary-bg-press: rgba(186,232,49,0.12);
-      --xui-ctrl-brand-extra-ghost-bg: transparent;
-      --xui-ctrl-brand-extra-ghost-bg-hover: rgba(206,246,85,0.04);
-      --xui-ctrl-brand-extra-ghost-bg-press: rgba(206,246,85,0.08);
-      --xui-ctrl-brand-extra-ghost-border: rgba(206,246,85,0.16);
-      --xui-ctrl-brand-extra-ghost-border-hover: rgba(206,246,85,0.24);
+      --xui-ctrl-brand-extra-primary-bg: #bae831;
+      --xui-ctrl-brand-extra-primary-bg-hover: #cef655;
+      --xui-ctrl-brand-extra-primary-bg-press: #9bc323;
+      --xui-ctrl-brand-extra-secondary-bg: rgba(186, 232, 49, 0.4);
+      --xui-ctrl-brand-extra-secondary-bg-hover: rgba(206, 246, 85, 0.4);
+      --xui-ctrl-brand-extra-secondary-bg-press: rgba(186, 232, 49, 0.4);
+      --xui-ctrl-brand-extra-tertiary-bg: rgba(186, 232, 49, 0);
+      --xui-ctrl-brand-extra-tertiary-bg-hover: rgba(206, 246, 85, 0.07);
+      --xui-ctrl-brand-extra-tertiary-bg-press: rgba(186, 232, 49, 0.12);
+      --xui-ctrl-brand-extra-ghost-bg: rgba(0, 0, 0, 0);
+      --xui-ctrl-brand-extra-ghost-bg-hover: rgba(121, 151, 27, 0.04);
+      --xui-ctrl-brand-extra-ghost-bg-press: rgba(121, 151, 27, 0.08);
+      --xui-ctrl-brand-extra-ghost-border: rgba(121, 151, 27, 0.1);
+      --xui-ctrl-brand-extra-ghost-border-hover: rgba(121, 151, 27, 0.16);
       --xui-ctrl-brand-extra-text-primary: #000000;
-      --xui-ctrl-brand-extra-text-secondary: #ffffff;
-      --xui-ctrl-brand-extra-text-tertiary: #cef655;
-      --xui-ctrl-brand-extra-text-ghost: #cef655;
-      --xui-ctrl-brand-extra-text-disable: rgba(232,236,237,0.2);
+      --xui-ctrl-brand-extra-text-secondary: #000000;
+      --xui-ctrl-brand-extra-text-tertiary: #79971b;
+      --xui-ctrl-brand-extra-text-ghost: #79971b;
+      --xui-ctrl-brand-extra-text-disable: #999999;
 
       /* ── Control: Input ── */
-      --xui-ctrl-input-bg: rgba(178,242,255,0.12);
-      --xui-ctrl-input-bg-hover: rgba(178,242,255,0.15);
-      --xui-ctrl-input-bg-disable: rgba(178,242,255,0.25);
-      --xui-ctrl-input-border: rgba(178,242,255,0.1);
-      --xui-ctrl-input-border-hover: rgba(178,242,255,0.15);
-      --xui-ctrl-input-border-disable: transparent;
-      --xui-ctrl-input-text: #ffffff;
-      --xui-ctrl-input-placeholder: rgba(255,255,255,0.56);
-      --xui-ctrl-input-text-disable: rgba(255,255,255,0.36);
+      --xui-ctrl-input-bg: rgba(0, 0, 0, 0.08);
+      --xui-ctrl-input-bg-hover: rgba(0, 0, 0, 0.15);
+      --xui-ctrl-input-bg-disable: rgba(0, 0, 0, 0.2);
+      --xui-ctrl-input-border: rgba(0, 0, 0, 0.1);
+      --xui-ctrl-input-border-hover: rgba(0, 0, 0, 0.15);
+      --xui-ctrl-input-border-disable: rgba(0, 0, 0, 0);
+      --xui-ctrl-input-text: #000000;
+      --xui-ctrl-input-placeholder: rgba(0, 0, 0, 0.6);
+      --xui-ctrl-input-text-disable: rgba(5, 5, 5, 0.36);
 
       /* ── Control: Focus ── */
-      --xui-ctrl-focus-bg: #000000;
-      --xui-ctrl-focus-border: #55dcf6;
+      --xui-ctrl-focus-bg: #ffffff;
+      --xui-ctrl-focus-border: #31cae8;
 
       /* ── Control: AppButton ── */
-      --xui-ctrl-app-btn-bg: #34474b;
-      --xui-ctrl-app-btn-bg-hover: #4b6368;
-      --xui-ctrl-app-btn-bg-press: #607f85;
-      --xui-ctrl-app-btn-border: #4b6368;
-      --xui-ctrl-app-btn-border-hover: #607f85;
-      --xui-ctrl-app-btn-text: #b7c5c8;
+      --xui-ctrl-app-btn-bg: #dadbd7;
+      --xui-ctrl-app-btn-bg-hover: #c1c2bc;
+      --xui-ctrl-app-btn-bg-press: #a8aaa2;
+      --xui-ctrl-app-btn-border: #c1c2bc;
+      --xui-ctrl-app-btn-border-hover: #a8aaa2;
+      --xui-ctrl-app-btn-text: #000000;
 
       /* ── Control: Link ── */
-      --xui-ctrl-text-disable: rgba(255,255,255,0.4);
-      --xui-ctrl-link-primary: #55dcf6;
-      --xui-ctrl-link-primary-hover: #80eaff;
-      --xui-ctrl-link-secondary: #cef655;
-      --xui-ctrl-link-secondary-hover: #dfff80;
+      --xui-ctrl-text-disable: rgba(0, 0, 0, 0.4);
+      --xui-ctrl-link-primary: #22a8c3;
+      --xui-ctrl-link-primary-hover: #31cae8;
+      --xui-ctrl-link-secondary: #9bc323;
+      --xui-ctrl-link-secondary-hover: #bae831;
 
-      /* ── Control: Check (Checkbox/Radio) ── */
-      --xui-ctrl-check-bg: #135d6c;
-      --xui-ctrl-check-bg-hover: #1b8398;
-      --xui-ctrl-check-bg-disable: rgba(178,242,255,0.25);
-      --xui-ctrl-check-border: #22a8c3;
-      --xui-ctrl-check-border-hover: #22a8c3;
-      --xui-ctrl-check-icon: #80eaff;
+      /* ── Control: Check ── */
+      --xui-ctrl-check-bg: #ccf6ff;
+      --xui-ctrl-check-bg-hover: #e5fbff;
+      --xui-ctrl-check-bg-disable: rgba(0, 0, 0, 0.25);
+      --xui-ctrl-check-border: #80eaff;
+      --xui-ctrl-check-border-hover: #b2f2ff;
+      --xui-ctrl-check-icon: #000000;
 
       /* ── Control: Switch ── */
-      --xui-ctrl-switch-bg: #135d6c;
-      --xui-ctrl-switch-bg-hover: #1b8398;
-      --xui-ctrl-switch-border: #22a8c3;
+      --xui-ctrl-switch-bg: #ccf6ff;
+      --xui-ctrl-switch-bg-hover: #e5fbff;
+      --xui-ctrl-switch-border: #80eaff;
 
       /* ── Control: Knob ── */
-      --xui-ctrl-knob-bg: #80eaff;
-      --xui-ctrl-knob-bg-hover: #b2f2ff;
-      --xui-ctrl-knob-bg-inactive: #ffffff;
+      --xui-ctrl-knob-bg: #000000;
+      --xui-ctrl-knob-bg-hover: #233134;
+      --xui-ctrl-knob-bg-inactive: #000000;
 
-      /* ── Control: Faint (unchecked Checkbox / Radio background) ── */
-      --xui-ctrl-faint-bg: rgba(178,242,255,0.15);
-      --xui-ctrl-faint-bg-hover: rgba(178,242,255,0.2);
-      --xui-ctrl-faint-border: rgba(178,242,255,0.1);
-      --xui-ctrl-faint-border-hover: rgba(178,242,255,0.15);
+      /* ── Control: Faint ── */
+      --xui-ctrl-faint-bg: rgba(0, 0, 0, 0.15);
+      --xui-ctrl-faint-bg-hover: rgba(0, 0, 0, 0.2);
+      --xui-ctrl-faint-border: rgba(0, 0, 0, 0.1);
+      --xui-ctrl-faint-border-hover: rgba(0, 0, 0, 0.15);
 
       /* ── Control: Segmented ── */
-      --xui-ctrl-segmented-bg: rgba(178,242,255,0.1);
-      --xui-ctrl-segmented-bg-hover: rgba(178,242,255,0.1);
-      --xui-ctrl-segmented-bg-active: rgba(178,242,255,0.15);
-      --xui-ctrl-segmented-text: #ffffff;
-      --xui-ctrl-segmented-text-disable: rgba(255,255,255,0.4);
+      --xui-ctrl-segmented-bg: rgba(0, 0, 0, 0.08);
+      --xui-ctrl-segmented-bg-hover: rgba(0, 0, 0, 0.08);
+      --xui-ctrl-segmented-bg-active: #ffffff;
+      --xui-ctrl-segmented-text: #000000;
+      --xui-ctrl-segmented-text-disable: rgba(0, 0, 0, 0.4);
 
       /* ── Control: ToggleButton ── */
-      --xui-ctrl-toggle-bg: rgba(178,242,255,0.12);
-      --xui-ctrl-toggle-bg-hover: rgba(178,242,255,0.15);
-      --xui-ctrl-toggle-bg-active: #135d6c;
-      --xui-ctrl-toggle-border: rgba(178,242,255,0.1);
-      --xui-ctrl-toggle-border-active: #22a8c3;
-      --xui-ctrl-toggle-text: #ffffff;
-      --xui-ctrl-toggle-text-active: #80eaff;
+      --xui-ctrl-toggle-bg: rgba(0, 0, 0, 0.08);
+      --xui-ctrl-toggle-bg-hover: rgba(0, 0, 0, 0.15);
+      --xui-ctrl-toggle-bg-active: #ccf6ff;
+      --xui-ctrl-toggle-border: rgba(0, 0, 0, 0.1);
+      --xui-ctrl-toggle-border-active: #80eaff;
+      --xui-ctrl-toggle-text: #000000;
+      --xui-ctrl-toggle-text-active: #000000;
     }
 
     /* ══════════════════════════════════════════════════════
@@ -304,14 +299,13 @@
       padding: 0;
     }
 
-    /* Page canvas: Pentagram Dark body = --xui-bg-secondary (#141d1f) — always */
     body {
       font-family: var(--xui-font-body);
       font-size: 16px;
       line-height: 20px;
       font-weight: 400;
       color: var(--xui-content-primary);
-      background-color: var(--xui-bg-secondary);
+      background-color: var(--xui-bg-primary);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -377,6 +371,13 @@
       color: var(--xui-ctrl-brand-text-tertiary);
     }
     .xui-btn--tertiary.xui-btn--brand:hover { background: var(--xui-ctrl-brand-tertiary-bg-hover); }
+    .xui-btn--primary.xui-btn--mono {
+      background: var(--xui-ctrl-mono-primary-bg);
+      color: var(--xui-ctrl-mono-text-primary);
+    }
+    .xui-btn--primary.xui-btn--mono:hover { background: var(--xui-ctrl-mono-primary-bg-hover); }
+    /* page-level: disabled dark CTA reads as light grey in the reference screen */
+    .xui-btn--primary.xui-btn--mono:disabled { opacity: 1; background: var(--xui-ctrl-mono-secondary-bg); color: var(--xui-ctrl-mono-text-disable); }
     .xui-btn--ghost.xui-btn--mono {
       background: var(--xui-ctrl-mono-ghost-bg);
       color: var(--xui-ctrl-mono-text-ghost);
@@ -787,63 +788,273 @@
     /* ══════════════════════════════════════════════════════
        Page layout — account shell (B2B dashboard context)
        ══════════════════════════════════════════════════════ */
+    /* ══════════════════════════════════════════════════════
+       Page layout — Business Account shell (Pentagram Light, B2B)
+       Matches "Get started — Xsolla" reference screen
+       ══════════════════════════════════════════════════════ */
     html, body { height: 100%; }
-    .app { display: flex; min-height: 100vh; width: 100%; }
+    body { background-color: var(--xui-bg-secondary); }
 
+    /* Top bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: var(--xui-space-m);
+      height: 52px;
+      padding: 0 var(--xui-space-s) 0 var(--xui-space-s);
+      background: var(--xui-bg-primary);
+      border-bottom: 1px solid var(--xui-border-secondary);
+    }
+    .topbar__logo { color: var(--xui-content-primary); display: flex; align-items: center; padding: 0 var(--xui-space-xs); }
+    .topbar__account { display: flex; align-items: center; gap: var(--xui-space-s); font-size: 16px; font-weight: 500; padding-right: var(--xui-space-m); border-right: 1px solid var(--xui-border-secondary); height: 32px; }
+    .topbar__acct-id { display: inline-flex; align-items: center; height: 22px; border-radius: var(--xui-radius-tag-sm); overflow: hidden; font-size: 13px; font-weight: 500; background: var(--xui-overlay-mono); }
+    .topbar__acct-id b { background: var(--xui-bg-inverse); color: var(--xui-content-inverse); padding: 0 var(--xui-space-xs); height: 100%; display: inline-flex; align-items: center; font-weight: 500; }
+    .topbar__acct-id span { padding: 0 var(--xui-space-xs); }
+    .topbar__project { display: flex; align-items: center; gap: var(--xui-space-s); font-size: 16px; font-weight: 500; }
+    .topbar__project .xui-rich-icon__icon { background: var(--xui-bg-alert-secondary); color: var(--xui-content-primary); }
+    .topbar__chev { color: var(--xui-content-tertiary); display: flex; }
+    .topbar__right { margin-left: auto; display: flex; align-items: center; gap: var(--xui-space-m); font-size: 15px; font-weight: 500; }
+    .topbar__right > span { display: inline-flex; align-items: center; gap: var(--xui-space-xs); }
+    .topbar__iconbtn { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--xui-radius-button); color: var(--xui-content-primary); }
+    .topbar__iconbtn--filled { background: var(--xui-bg-secondary); }
+
+    .app { display: flex; min-height: calc(100vh - 52px); width: 100%; }
+
+    /* Sidebar */
     .sidebar {
-      width: 248px;
+      width: 316px;
       flex-shrink: 0;
       background: var(--xui-bg-primary);
       border-right: 1px solid var(--xui-border-secondary);
       position: sticky;
-      top: 0;
-      height: 100vh;
+      top: 52px;
+      height: calc(100vh - 52px);
       overflow-y: auto;
-      padding: var(--xui-space-m);
+      padding: var(--xui-space-s);
       display: flex;
       flex-direction: column;
-      gap: var(--xui-space-l);
+      gap: var(--xui-space-xs);
     }
-    .sidebar__logo { color: var(--xui-content-primary); display: flex; align-items: center; padding: var(--xui-space-s) var(--xui-space-s) 0; }
-    .sidebar__project {
-      display: flex;
-      align-items: center;
-      gap: var(--xui-space-s);
-      padding: var(--xui-space-s);
-      border: 1px solid var(--xui-border-secondary);
-      border-radius: var(--xui-radius-button);
-    }
-    .sidebar__project-name { font-size: 14px; line-height: 18px; font-weight: 500; }
-    .sidebar__project-meta { font-size: 12px; line-height: 16px; color: var(--xui-content-tertiary); }
-    .side-nav { display: flex; flex-direction: column; gap: var(--xui-space-m); }
-    .side-nav__group { display: flex; flex-direction: column; gap: 2px; }
-    .side-nav__group-title { font-size: 12px; line-height: 16px; color: var(--xui-content-tertiary); padding: 0 12px var(--xui-space-xs); }
+    .side-nav { display: flex; flex-direction: column; gap: 2px; }
+    .side-nav__group-title { font-size: 14px; line-height: 18px; color: var(--xui-content-secondary); font-weight: 500; padding: var(--xui-space-m) var(--xui-space-s) var(--xui-space-xs); }
+    .side-nav__sep { height: 1px; background: var(--xui-border-secondary); margin: var(--xui-space-s) 0; }
     .side-nav__item {
       display: flex;
       align-items: center;
       gap: 10px;
-      height: 36px;
-      padding: 0 12px;
+      height: 35px;
+      padding: 0 var(--xui-space-s);
       border-radius: var(--xui-radius-button);
-      color: var(--xui-content-secondary);
-      font-size: 14px;
+      color: var(--xui-content-primary);
+      font-size: 16px;
+      font-weight: 500;
       text-decoration: none;
-      transition: background-color var(--page-duration-micro) ease, color var(--page-duration-micro) ease;
+      transition: background-color var(--page-duration-micro) ease;
     }
-    .side-nav__item svg { width: 18px; height: 18px; flex-shrink: 0; }
-    .side-nav__item:hover { background: var(--xui-overlay-mono); color: var(--xui-content-primary); }
-    .side-nav__item--active { background: var(--xui-ctrl-brand-tertiary-bg-hover); color: var(--xui-content-primary); }
-    .side-nav__item .xui-tag { margin-left: auto; }
+    .side-nav__item > svg:first-child { width: 20px; height: 20px; flex-shrink: 0; }
+    .side-nav__item:hover { background: var(--xui-overlay-mono); }
+    .side-nav__item--active { background: var(--xui-bg-secondary); box-shadow: inset 0 0 0 1px var(--xui-border-secondary); }
+    .side-nav__chev { margin-left: auto; color: var(--xui-content-tertiary); display: flex; }
+    .side-nav__item--open .side-nav__chev { transform: rotate(90deg); }
+    .side-nav__sub { display: flex; flex-direction: column; gap: 2px; padding-left: 30px; }
+    .side-nav__sub .side-nav__item { font-size: 15px; height: 32px; }
+    .side-nav__pill {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--xui-space-xs);
+      height: 22px;
+      padding: 0 var(--xui-space-s) 0 var(--xui-space-xs);
+      border-radius: 999px;
+      background: var(--xui-bg-brand-secondary);
+      color: var(--xui-content-primary);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .side-nav__pill--done { background: var(--xui-bg-success-secondary); }
+    .side-nav__pill svg { color: var(--xui-content-brand-primary); }
+    .side-nav__pill--done svg { color: var(--xui-content-success-primary); }
+    .side-nav__foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding: var(--xui-space-s) 0 0; border-top: 1px solid var(--xui-border-secondary); }
 
     .main-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-    .topbar__title { font-size: 14px; color: var(--xui-content-secondary); }
-    .topbar__end { flex: 4; }
-    .topbar__controls { display: flex; align-items: center; gap: var(--xui-space-s); flex-wrap: wrap; justify-content: flex-end; }
-    .topbar__label { font-size: 12px; color: var(--xui-content-tertiary); }
+    .banner {
+      display: flex;
+      align-items: center;
+      gap: var(--xui-space-s);
+      min-height: 42px;
+      padding: var(--xui-space-s) var(--xui-space-m);
+      background: var(--xui-bg-warning-secondary);
+      font-size: 14px;
+    }
+    .banner__icon { width: 18px; height: 18px; border-radius: var(--xui-radius-tag-sm); background: var(--xui-bg-inverse); color: var(--xui-content-inverse); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; }
+    .banner__text { color: var(--xui-content-secondary); }
+    .banner__action { margin-left: auto; font-weight: 600; color: var(--xui-content-primary); text-decoration: none; }
 
-    .page { width: 100%; padding: var(--xui-space-xl); display: flex; flex-direction: column; gap: var(--xui-space-xl); }
-    .page--narrow-gap { gap: var(--xui-space-l); }
+    /* Content column — the reference screen is a centered column */
+    .page { width: 100%; max-width: min(964px, 100%); margin: 0 auto; padding: calc(var(--xui-space-xl) * 2) var(--xui-space-xl) var(--xui-space-xl); display: flex; flex-direction: column; gap: var(--xui-space-l); }
 
+    /* Current setup / guide header card */
+    .gs-head {
+      display: flex;
+      align-items: center;
+      gap: var(--xui-space-s);
+      padding: var(--xui-space-s);
+      background: var(--xui-bg-primary);
+      border: 1px solid var(--xui-border-secondary);
+      border-radius: var(--xui-radius-button);
+    }
+    .gs-head .xui-rich-icon { width: 52px; height: 52px; }
+    .gs-head__icon--store { background: var(--xui-bg-alert-secondary); color: var(--xui-content-primary); }
+    .gs-head__icon--brand { background: var(--xui-bg-brand-secondary); color: var(--xui-content-primary); }
+    .gs-head__titles { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .gs-head__caption { font-size: 14px; line-height: 18px; color: var(--xui-content-secondary); }
+    .gs-head__title { font-family: var(--xui-font-body); font-size: 22px; line-height: 26px; font-weight: 500; }
+    .gs-head__aside { display: flex; align-items: center; gap: var(--xui-space-m); padding-right: var(--xui-space-s); }
+
+    /* Panel holding step cards */
+    .gs-panel {
+      background: var(--xui-bg-primary);
+      border-radius: var(--xui-radius-button);
+      padding: var(--xui-space-m);
+      display: flex;
+      flex-direction: column;
+      gap: var(--xui-space-s);
+    }
+    .gs-panel__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--xui-space-m); flex-wrap: wrap; padding: var(--xui-space-s) var(--xui-space-s) var(--xui-space-s); }
+    .gs-panel__titles { display: flex; flex-direction: column; gap: var(--xui-space-xs); }
+    .gs-panel__title { font-family: var(--xui-font-body); font-size: 20px; line-height: 24px; font-weight: 500; }
+    .gs-panel__desc { font-size: 14px; line-height: 20px; color: var(--xui-content-secondary); }
+
+    /* Step card */
+    .gs-step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--xui-space-m);
+      padding: var(--xui-space-m) var(--xui-space-m) var(--xui-space-m);
+      border: 1px solid var(--xui-border-secondary);
+      border-radius: var(--xui-radius-button);
+      background: var(--xui-bg-primary);
+      overflow: hidden;
+      transition: box-shadow var(--page-duration-micro) ease;
+    }
+    .gs-step--current { min-height: 240px; }
+    .gs-step--hover:hover { box-shadow: var(--xui-shadow-surface); }
+    .gs-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--xui-space-xs);
+      width: fit-content;
+      height: 24px;
+      padding: 0 var(--xui-space-s);
+      border: 1px solid var(--xui-border-secondary);
+      border-radius: var(--xui-radius-tag-lg);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--xui-content-secondary);
+    }
+    .gs-chip--live { border-color: var(--xui-border-success); color: var(--xui-content-success-primary); }
+    .gs-step__row { display: flex; gap: var(--xui-space-m); align-items: flex-start; }
+    .gs-step__badge { width: 36px; height: 36px; border-radius: var(--xui-radius-button); display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--xui-bg-secondary); color: var(--xui-content-tertiary); }
+    .gs-step__badge--done { background: var(--xui-bg-success-secondary); color: var(--xui-content-success-primary); }
+    .gs-step__badge--brand { background: var(--xui-bg-brand-secondary); color: var(--xui-content-primary); }
+    .gs-step__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--xui-space-xs); }
+    .gs-step__title { font-size: 17px; line-height: 22px; font-weight: 500; }
+    .gs-step--current .gs-step__title { font-size: 18px; font-weight: 600; }
+    .gs-step__desc { font-size: 15px; line-height: 21px; color: var(--xui-content-secondary); max-width: 560px; }
+    .gs-step__actions { display: flex; align-items: center; gap: var(--xui-space-m); flex-wrap: wrap; }
+    .gs-step__indent { padding-left: calc(36px + var(--xui-space-m)); display: flex; flex-direction: column; gap: var(--xui-space-m); }
+    .gs-step__req { font-size: 14px; font-weight: 500; color: var(--xui-content-warning-secondary); }
+    .gs-step__note { display: flex; gap: var(--xui-space-xs); align-items: center; font-size: 13px; line-height: 18px; color: var(--xui-content-tertiary); }
+    .gs-step__note svg { color: var(--xui-content-success-primary); flex-shrink: 0; }
+    .gs-step__body--current { display: flex; flex-direction: column; gap: var(--xui-space-m); max-width: 60%; margin-top: auto; }
+    .gs-step--current .gs-step__body--current { padding-top: var(--xui-space-xl); }
+    .gs-step--todo { opacity: 1; }
+    .gs-step--todo .gs-step__title { color: var(--xui-content-primary); }
+
+    /* Illustration on the current step card (mimics the reference storefront sketch) */
+    .gs-illo { position: absolute; right: var(--xui-space-xl); top: 50%; transform: translateY(-50%); width: 260px; height: 150px; pointer-events: none; }
+    .gs-illo__frame { position: absolute; inset: 0 0 0 30px; border: 6px solid var(--xui-bg-secondary); border-top-width: 14px; border-radius: var(--xui-radius-button); }
+    .gs-illo__col { position: absolute; top: 34px; bottom: 6px; background: var(--xui-bg-secondary); }
+    .gs-illo__badge { position: absolute; left: 0; top: 48px; width: 68px; height: 60px; border-radius: var(--xui-radius-card); background: var(--xui-bg-primary); box-shadow: var(--xui-shadow-surface); display: flex; align-items: center; justify-content: center; color: var(--xui-content-primary); }
+    .gs-illo__badge svg { width: 34px; height: 34px; }
+
+    /* Arrow text link ("Manage catalog →") */
+    .gs-link { display: inline-flex; align-items: center; gap: var(--xui-space-xs); font-size: 15px; font-weight: 600; color: var(--xui-content-primary); text-decoration: none; background: none; border: none; padding: 0; cursor: pointer; font-family: inherit; }
+    .gs-link:hover { text-decoration: underline; }
+    .gs-link:focus-visible { outline: 2px solid var(--xui-border-brand); outline-offset: 2px; }
+
+    /* Completed initial setup summary */
+    .gs-done-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--xui-space-s); }
+    .gs-done-list li { display: flex; gap: var(--xui-space-s); align-items: flex-start; padding: var(--xui-space-m); border: 1px solid var(--xui-border-secondary); border-radius: var(--xui-radius-button); }
+    .gs-done-list .gs-step__badge { width: 28px; height: 28px; }
+
+    /* Advanced setup cards */
+    .gs-adv { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--xui-space-s); }
+    .gs-adv .gs-step { gap: var(--xui-space-m); }
+    .gs-adv__top { display: flex; align-items: center; justify-content: space-between; gap: var(--xui-space-s); }
+    .gs-adv__tags { display: flex; flex-wrap: wrap; gap: var(--xui-space-xs); }
+    .gs-adv__meta { display: flex; gap: var(--xui-space-m); font-size: 13px; color: var(--xui-content-tertiary); }
+    .gs-adv__foot { margin-top: auto; display: flex; flex-direction: column; gap: var(--xui-space-s); }
+
+    /* Guide overview */
+    .gs-overview { display: flex; flex-direction: column; gap: var(--xui-space-m); padding: var(--xui-space-l); border: 1px solid var(--xui-border-secondary); border-radius: var(--xui-radius-button); }
+    .gs-overview__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--xui-space-l); }
+    .gs-list { list-style: none; display: flex; flex-direction: column; gap: var(--xui-space-s); }
+    .gs-list li { display: flex; gap: var(--xui-space-s); font-size: 15px; line-height: 21px; color: var(--xui-content-secondary); }
+    .gs-list svg { flex-shrink: 0; margin-top: 2px; color: var(--xui-content-tertiary); }
+    .gs-list__ok svg { color: var(--xui-content-success-primary); }
+    .gs-overview__label { font-size: 13px; font-weight: 600; color: var(--xui-content-tertiary); }
+
+    /* Alternative paths inside a step */
+    .pg-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--xui-space-s); }
+    .pg-choice {
+      padding: var(--xui-space-m);
+      border-radius: var(--xui-radius-button);
+      border: 1px solid var(--xui-border-secondary);
+      background: var(--xui-bg-primary);
+      cursor: pointer;
+      transition: border-color var(--page-duration-micro) ease, background-color var(--page-duration-micro) ease;
+    }
+    .pg-choice:hover { background: var(--xui-overlay-mono); }
+    .pg-choice:focus-within { outline: 2px solid var(--xui-border-brand); outline-offset: 2px; }
+    .pg-choice--checked { border-color: var(--xui-border-primary); background: var(--xui-bg-secondary); }
+    .pg-instr { font-size: 14px; line-height: 20px; color: var(--xui-content-secondary); padding-left: var(--xui-space-m); border-left: 2px solid var(--xui-border-primary); }
+    .pg-linkbtn { background: none; border: none; padding: 0; font-family: inherit; }
+
+    /* Guide success */
+    .gs-success { display: flex; flex-direction: column; gap: var(--xui-space-l); padding: var(--xui-space-l); border: 1px solid var(--xui-border-success); border-radius: var(--xui-radius-button); background: var(--xui-bg-primary); }
+    .gs-success__head { display: flex; gap: var(--xui-space-m); align-items: flex-start; }
+    .pg-summary { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--xui-space-s); }
+    .pg-summary li { display: flex; flex-direction: column; gap: var(--xui-space-xs); padding: var(--xui-space-m); border-radius: var(--xui-radius-button); background: var(--xui-bg-secondary); }
+    .pg-next { display: flex; align-items: center; gap: var(--xui-space-m); flex-wrap: wrap; padding: var(--xui-space-m); border-radius: var(--xui-radius-button); border: 1px dashed var(--xui-border-secondary); }
+    .pg-next__text { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: var(--xui-space-xs); }
+
+    /* Prototype controls (not part of the product UI) */
+    .proto {
+      position: fixed;
+      left: calc(316px + var(--xui-space-m));
+      bottom: var(--xui-space-m);
+      z-index: 45;
+      display: flex;
+      align-items: center;
+      gap: var(--xui-space-s);
+      flex-wrap: wrap;
+      padding: var(--xui-space-s) var(--xui-space-m);
+      background: var(--xui-bg-primary);
+      border: 1px dashed var(--xui-border-brand-extra);
+      border-radius: var(--xui-radius-button);
+      box-shadow: var(--xui-shadow-popover);
+      max-width: calc(100vw - 316px - var(--xui-space-xl));
+    }
+    .proto__toggle { cursor: pointer; border: none; font-family: inherit; }
+    .proto__body { display: flex; align-items: center; gap: var(--xui-space-s); flex-wrap: wrap; }
+    .proto--collapsed { padding: var(--xui-space-xs); }
+    .proto--collapsed .proto__body { display: none; }
+    .proto__label { font-size: 12px; color: var(--xui-content-tertiary); }
     /* Typography — B2B (Pilat headings) */
     .pg-h1 { font-family: var(--xui-font-heading-b2b); font-size: 32px; line-height: 38px; font-weight: 400; }
     .pg-h2 { font-family: var(--xui-font-heading-b2b); font-size: 24px; line-height: 28px; font-weight: 400; }
@@ -870,121 +1081,6 @@
     .pg-card--flat { box-shadow: none; }
     .pg-card--hover { transition: box-shadow var(--page-duration-micro) ease, transform var(--page-duration-micro) ease; }
     .pg-card--hover:hover { box-shadow: var(--xui-shadow-surface-hover); transform: translateY(-2px); }
-
-    /* Onboarding completion band — the one brand-secondary accent on Get started */
-    .pg-hero {
-      background: var(--xui-bg-brand-secondary);
-      border: 1px solid var(--xui-border-secondary);
-      border-radius: var(--xui-radius-card);
-      padding: var(--xui-space-l) var(--xui-space-xl);
-      display: grid;
-      grid-template-columns: auto 1fr minmax(220px, 320px);
-      gap: var(--xui-space-l);
-      align-items: center;
-    }
-    .pg-hero__icon { color: var(--xui-content-success-primary); display: flex; }
-    .pg-hero__icon--progress { color: var(--xui-content-warning-primary); }
-    .pg-hero__text { display: flex; flex-direction: column; gap: var(--xui-space-xs); }
-
-    /* Start with — compact completed cards */
-    .pg-grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--xui-space-m); }
-    .pg-mini { display: flex; flex-direction: column; gap: var(--xui-space-s); padding: var(--xui-space-m); }
-    .pg-mini__top { display: flex; align-items: center; justify-content: space-between; gap: var(--xui-space-s); }
-    .pg-mini__title { font-size: 16px; line-height: 20px; font-weight: 500; }
-
-    /* Advanced setup — capability cards */
-    .pg-grid-adv { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--xui-space-l); }
-    .pg-cap { display: flex; flex-direction: column; gap: var(--xui-space-m); min-height: 100%; }
-    .pg-cap__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--xui-space-m); }
-    .pg-cap__icon { color: var(--xui-content-brand-primary); }
-    .pg-cap--blocked .pg-cap__icon { color: var(--xui-content-tertiary); }
-    .pg-cap__title { font-family: var(--xui-font-heading-b2b); font-size: 20px; line-height: 24px; font-weight: 600; }
-    .pg-cap__meta { display: flex; gap: var(--xui-space-m); flex-wrap: wrap; }
-    .pg-cap__meta span { display: inline-flex; align-items: center; gap: var(--xui-space-xs); }
-    .pg-cap__examples { display: flex; gap: var(--xui-space-xs); flex-wrap: wrap; }
-    .pg-cap__foot { margin-top: auto; display: flex; align-items: center; gap: var(--xui-space-m); flex-wrap: wrap; padding-top: var(--xui-space-s); }
-    .pg-cap__blocked {
-      display: flex;
-      gap: var(--xui-space-s);
-      align-items: flex-start;
-      padding: var(--xui-space-s) var(--xui-space-m);
-      border-radius: var(--xui-radius-button);
-      background: var(--xui-overlay-mono);
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--xui-content-secondary);
-    }
-    .pg-cap__blocked svg { flex-shrink: 0; color: var(--xui-content-tertiary); margin-top: 2px; }
-
-    /* Guide page */
-    .pg-guide { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: var(--xui-space-l); align-items: start; }
-    .pg-guide__side { display: flex; flex-direction: column; gap: var(--xui-space-m); position: sticky; top: var(--xui-space-l); }
-    .pg-guide__main { display: flex; flex-direction: column; gap: var(--xui-space-l); }
-    .pg-overview { display: flex; flex-direction: column; gap: var(--xui-space-m); }
-    .pg-overview__list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--xui-space-s) var(--xui-space-l); }
-    .pg-overview__list li { display: flex; gap: var(--xui-space-s); font-size: 14px; line-height: 20px; color: var(--xui-content-secondary); }
-    .pg-overview__list svg { flex-shrink: 0; color: var(--xui-content-brand-primary); }
-    .pg-prep { list-style: none; display: flex; flex-direction: column; gap: var(--xui-space-s); }
-    .pg-prep li { display: flex; gap: var(--xui-space-s); font-size: 14px; line-height: 20px; color: var(--xui-content-secondary); }
-    .pg-prep svg { flex-shrink: 0; margin-top: 1px; }
-    .pg-prep__done svg { color: var(--xui-content-success-primary); }
-    .pg-prep__todo svg { color: var(--xui-content-tertiary); }
-
-    .pg-steps { list-style: none; display: flex; flex-direction: column; gap: var(--xui-space-s); }
-    .pg-step {
-      display: grid;
-      grid-template-columns: 32px 1fr;
-      gap: var(--xui-space-m);
-      padding: var(--xui-space-m);
-      border-radius: var(--xui-radius-card);
-      border: 1px solid var(--xui-border-secondary);
-      background: var(--xui-bg-primary);
-      transition: background-color var(--page-duration-micro) ease, box-shadow var(--page-duration-micro) ease;
-    }
-    .pg-step--current { background: var(--xui-bg-brand-secondary); box-shadow: var(--xui-shadow-surface); border-color: var(--xui-ctrl-brand-secondary-border); }
-    .pg-step--preview { opacity: 0.72; }
-    .pg-step__num {
-      width: 32px;
-      height: 32px;
-      border-radius: 1000px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 600;
-      border: 1px solid var(--xui-border-secondary);
-      color: var(--xui-content-tertiary);
-    }
-    .pg-step--current .pg-step__num { background: var(--xui-bg-brand-primary); color: var(--xui-content-on-brand); border-color: transparent; }
-    .pg-step--done .pg-step__num { background: var(--xui-bg-success-secondary); color: var(--xui-content-success-primary); border-color: transparent; }
-    .pg-step__body { display: flex; flex-direction: column; gap: var(--xui-space-s); min-width: 0; }
-    .pg-step__head { display: flex; align-items: center; justify-content: space-between; gap: var(--xui-space-m); flex-wrap: wrap; }
-    .pg-step__title { font-size: 16px; line-height: 20px; font-weight: 500; }
-    .pg-step__detail { display: flex; flex-direction: column; gap: var(--xui-space-m); padding-top: var(--xui-space-s); }
-    .pg-step__actions { display: flex; align-items: center; gap: var(--xui-space-m); flex-wrap: wrap; }
-    .pg-step__note { display: flex; gap: var(--xui-space-xs); align-items: center; font-size: 12px; line-height: 16px; color: var(--xui-content-tertiary); }
-    .pg-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--xui-space-s); }
-    .pg-choice {
-      padding: var(--xui-space-m);
-      border-radius: var(--xui-radius-button);
-      border: 1px solid var(--xui-border-secondary);
-      background: var(--xui-overlay-mono);
-      transition: border-color var(--page-duration-micro) ease, background-color var(--page-duration-micro) ease;
-    }
-    .pg-choice:hover { background: var(--xui-ctrl-faint-bg); }
-    .pg-choice:focus-within { outline: 2px solid var(--xui-border-brand); outline-offset: 2px; }
-    .pg-linkbtn { background: none; border: none; padding: 0; font-family: inherit; }
-    .pg-choice--checked { border-color: var(--xui-ctrl-check-border); background: var(--xui-overlay-brand); }
-    .pg-instr { font-size: 14px; line-height: 20px; color: var(--xui-content-secondary); padding-left: var(--xui-space-m); border-left: 2px solid var(--xui-border-brand); }
-
-    /* Guide success screen */
-    .pg-success { display: flex; flex-direction: column; gap: var(--xui-space-l); }
-    .pg-success__head { display: flex; gap: var(--xui-space-l); align-items: flex-start; }
-    .pg-success__icon { color: var(--xui-content-success-primary); flex-shrink: 0; }
-    .pg-summary { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--xui-space-m); }
-    .pg-summary li { display: flex; flex-direction: column; gap: var(--xui-space-xs); padding: var(--xui-space-m); border-radius: var(--xui-radius-button); background: var(--xui-overlay-mono); }
-    .pg-next { display: flex; align-items: center; gap: var(--xui-space-m); flex-wrap: wrap; padding: var(--xui-space-m); border-radius: var(--xui-radius-card); border: 1px dashed var(--xui-border-secondary); }
-    .pg-next__text { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: var(--xui-space-xs); }
 
     /* Embedded Promotions + Catalog screens */
     .pg-form { display: flex; flex-direction: column; gap: var(--xui-space-l); max-width: 720px; }
@@ -1062,29 +1158,35 @@
 
     /* Responsive */
     @media (max-width: 1100px) {
-      .pg-guide { grid-template-columns: 1fr; }
-      .pg-guide__side { position: static; }
-      .pg-hero { grid-template-columns: auto 1fr; }
-      .pg-hero > :last-child { grid-column: 1 / -1; }
+      .gs-illo { display: none; }
+      .gs-step__body--current { max-width: none; }
     }
     @media (max-width: 860px) {
       .app { flex-direction: column; }
-      .sidebar { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--xui-border-secondary); gap: var(--xui-space-m); }
-      .side-nav { flex-direction: row; overflow-x: auto; gap: var(--xui-space-s); }
-      .side-nav__group { flex-direction: row; }
-      .side-nav__group-title { display: none; }
+      .sidebar { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--xui-border-secondary); }
+      .side-nav { flex-direction: row; overflow-x: auto; }
+      .side-nav__group-title, .side-nav__sep, .side-nav__chev, .side-nav__foot, .side-nav__sub { display: none; }
       .side-nav__item { white-space: nowrap; }
-      .xui-nav-bar--md { height: auto; padding: var(--xui-space-s) var(--xui-space-m); flex-wrap: wrap; gap: var(--xui-space-s); }
-      .page { padding: var(--xui-space-l) var(--xui-space-m); }
-      .pg-grid-adv { grid-template-columns: 1fr; }
+      .topbar { gap: var(--xui-space-s); }
+      .topbar { overflow: hidden; }
+      .topbar__account-name, .topbar__right > span, .topbar__project-name, .topbar__acct-id, .topbar__right > a:not(:last-child) { display: none; }
+      .topbar__account { border-right: none; padding-right: 0; }
+      .page { padding: var(--xui-space-l) var(--xui-space-m) calc(var(--xui-space-xl) * 4); }
+      .gs-head { flex-wrap: wrap; }
+      .gs-step__indent { padding-left: 0; }
+      .proto { left: var(--xui-space-m); max-width: calc(100vw - var(--xui-space-xl)); }
     }
+    /* Light Business Account look: flat cards, Aktiv Grotesk headings (reference screen) */
+    .pg-h1 { font-family: var(--xui-font-body); font-size: 28px; line-height: 34px; font-weight: 500; }
+    .pg-h2 { font-family: var(--xui-font-body); font-size: 22px; line-height: 26px; font-weight: 500; }
+    .pg-h3 { font-family: var(--xui-font-body); font-size: 18px; line-height: 22px; font-weight: 600; }
+    .pg-card { border-radius: var(--xui-radius-button); box-shadow: none; }
+    .pg-shop__frame { border-radius: var(--xui-radius-button); }
   </style>
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar" aria-label="Account navigation">
-      <a class="sidebar__logo" href="#get-started" aria-label="Xsolla — Get started">
-        <svg width="112" height="24" viewBox="0 0 180 38" fill="none" role="img" aria-label="Xsolla">
+  <header class="topbar">
+    <a class="topbar__logo" href="#get-started" aria-label="Xsolla — Get started"><svg width="130" height="28" height="24" viewBox="0 0 180 38" fill="none" role="img" aria-label="Xsolla">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M101.783 3.66064C110.095 3.6607 116.831 10.3968 116.831 18.7091C116.831 27.0213 110.095 33.7576 101.783 33.7577C93.4705 33.7577 86.7344 27.0213 86.7344 18.7091C86.7344 10.3968 93.4705 3.66065 101.783 3.66064ZM101.783 9.42078C96.8911 9.42078 92.9245 13.1948 92.9245 18.7093C92.9245 24.2238 96.8911 27.998 101.783 27.998C106.676 27.9979 110.642 24.3117 110.642 18.7093C110.642 13.1069 106.676 9.42086 101.783 9.42078Z" fill="currentColor"/>
           <path fill-rule="evenodd" clip-rule="evenodd" d="M149.42 29.1397L161.591 4.33103H165.892L180 33.088L144.568 33.0877L129.288 4.33103H136.101L149.42 29.1397ZM156.053 28.0371H171.277L163.665 11.852L156.053 28.0371Z" fill="currentColor"/>
           <path d="M137.404 33.0877H130.432L115.152 4.33103H121.965L137.404 33.0877Z" fill="currentColor"/>
@@ -1093,38 +1195,46 @@
           <path d="M28.7501 16.5412V21.6609H23.6305V16.5412H28.7501Z" fill="currentColor"/>
           <path d="M15.83 16.536V21.6525H10.7134V16.536H15.83Z" fill="currentColor"/>
           <path fill-rule="evenodd" clip-rule="evenodd" d="M19.887 0.00175794C23.6385 0.0809693 26.7841 2.62335 27.7719 6.07654L27.8556 6.36284C28.7164 9.24857 29.4851 9.87975 32.5857 10.4669L32.585 10.4673C36.4715 11.1989 39.4121 14.6107 39.4121 18.7097C39.4119 22.8386 36.4283 26.2708 32.4995 26.9679C29.3783 27.5684 28.664 28.2355 27.777 31.3229C26.7903 34.801 23.6157 37.3587 19.8349 37.4155C19.7918 37.4163 19.7486 37.4172 19.7053 37.4172C15.8647 37.4171 12.6269 34.8356 11.6323 31.3132C10.7465 28.2341 10.0305 27.5677 6.9126 26.9679C2.98394 26.2707 0.000186751 22.8386 0 18.7097C0 14.6108 2.9407 11.1989 6.82712 10.4673L6.82646 10.4669C9.92695 9.87976 10.6957 9.24856 11.5565 6.36284L11.64 6.07654C12.6436 2.56814 15.8746 9.9479e-05 19.7053 1.26543e-07C19.7061 1.4036e-07 19.7071 -1.64965e-07 19.7079 1.26543e-07L19.887 0.00175794ZM26.2085 13.4119C23.0669 13.4119 20.5201 15.9587 20.52 19.1004C20.52 22.242 23.0669 24.7889 26.2085 24.7889C29.3502 24.7889 31.897 22.2421 31.897 19.1004C31.897 15.9587 29.3502 13.4119 26.2085 13.4119ZM13.2704 13.4086C10.1306 13.4086 7.58522 15.9538 7.58518 19.0936C7.5852 22.2333 10.1306 24.7788 13.2704 24.7788C16.4101 24.7787 18.9553 22.2333 18.9554 19.0936C18.9553 15.9539 16.4101 13.4086 13.2704 13.4086Z" fill="currentColor"/>
-        </svg>
-      </a>
-      <div class="sidebar__project">
-        <div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--md">
-          <div class="xui-rich-icon__icon"><span class="xui-rich-icon__text">NR</span></div>
-        </div>
-        <div>
-          <div class="sidebar__project-name">Nova Rift</div>
-          <div class="sidebar__project-meta" id="project-meta">Free-to-play account</div>
-        </div>
-      </div>
+        </svg></a>
+    <div class="topbar__account">
+      <span class="topbar__acct-id"><b>ACCT</b><span id="acct-id">F2P-02</span></span>
+      <span class="topbar__account-name" id="acct-name">Free-to-Play PC Games</span>
+      <span class="topbar__chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.7178 15.7808C12.3273 16.1713 11.6942 16.1713 11.3036 15.7808L4.30371 8.78084L5.71777 7.36678L12.0107 13.6597L18.3037 7.36678L19.7178 8.78084L12.7178 15.7808Z" fill="currentColor"/></svg></span>
+    </div>
+    <div class="topbar__project">
+      <div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--md"><div class="xui-rich-icon__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10.4084 2.57516C11.4135 2.02312 12.6309 2.02312 13.636 2.57516L19.3948 5.73727C21.0798 6.66276 21.1221 9.02137 19.5735 10.0361C21.0809 11.0255 21.0656 13.2491 19.5735 14.2265C21.1638 15.2702 21.0606 17.6888 19.3157 18.5673L13.5295 21.4804C12.5813 21.9577 11.463 21.9577 10.5149 21.4804L4.72973 18.5683C2.98449 17.6898 2.88036 15.2692 4.47094 14.2255C2.97947 13.2478 2.96436 11.0252 4.47191 10.0361C2.92271 9.02157 2.96441 6.66287 4.64965 5.73727L10.4084 2.57516ZM12.7766 17.6689L12.595 17.748C12.2255 17.8823 11.8199 17.8821 11.4504 17.748L11.2688 17.6689L6.25902 15.1464L5.45629 15.5879C4.86517 15.9127 4.88044 16.7667 5.48265 17.0703L11.2688 19.9834C11.6837 20.1921 12.1638 20.2182 12.595 20.0615L12.7756 19.9834L18.5618 17.0703C19.1267 16.7859 19.1758 16.0171 18.6926 15.6543L18.5891 15.5879L17.7864 15.1464L12.7766 17.6689ZM12.7766 13.4785L12.595 13.5566C12.225 13.6911 11.8193 13.6912 11.4495 13.5566L11.2688 13.4785L6.26 10.956L5.45629 11.3974C4.86521 11.7224 4.88104 12.5775 5.48363 12.8808L11.2688 15.7929C11.6837 16.0017 12.1638 16.0278 12.595 15.8711L12.7756 15.7929L18.5618 12.8798C19.1264 12.5954 19.1756 11.8266 18.6926 11.4638L18.5881 11.3974L17.7854 10.956L12.7766 13.4785ZM12.8293 4.04391C12.3268 3.76789 11.7176 3.76789 11.2151 4.04391L5.45629 7.207C4.86528 7.53201 4.88106 8.38706 5.48363 8.69039L11.2688 11.6025C11.7427 11.841 12.3017 11.8409 12.7756 11.6025L18.5608 8.69039C19.1259 8.40593 19.1752 7.63606 18.6916 7.2734L18.5881 7.207L12.8293 4.04391Z" fill="currentColor"/></svg></div></div>
+      <span class="topbar__project-name">Mystic Adventures</span>
+      <span class="topbar__chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.7178 15.7808C12.3273 16.1713 11.6942 16.1713 11.3036 15.7808L4.30371 8.78084L5.71777 7.36678L12.0107 13.6597L18.3037 7.36678L19.7178 8.78084L12.7178 15.7808Z" fill="currentColor"/></svg></span>
+    </div>
+    <div class="topbar__right">
+      <a class="topbar__iconbtn" href="#page/docs" aria-label="Documentation"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 3C20.5523 3 21 3.44772 21 4V18C21 19.6569 19.6569 21 18 21H6L5.8457 20.9961C4.26055 20.9158 3 19.6051 3 18V12C3 11.4477 3.44772 11 4 11H7V4C7 3.44772 7.44772 3 8 3H20ZM5 18C5 18.5523 5.44772 19 6 19C6.55228 19 7 18.5523 7 18V13H5V18ZM9 19H18C18.5523 19 19 18.5523 19 18V5H9V19ZM15 13H11V11H15V13ZM17 9H11V7H17V9Z" fill="currentColor"/></svg></a>
+      <a class="topbar__iconbtn" href="#page/support" aria-label="Messages"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 2.70605C21.1046 2.70605 22 3.60148 22 4.70605V15.7061C22 16.8106 21.1046 17.7061 20 17.7061H7L3.70703 20.999C3.07709 21.6288 2.00012 21.1828 2 20.292V4.70605C2 3.60149 2.89543 2.70605 4 2.70605H20ZM4 17.8906L6.17969 15.7061H20V4.70605H4V17.8906Z" fill="currentColor"/></svg></a>
+      <span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21.8819H3V19.8819H21V21.8819Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M11.5527 2.10556C11.8342 1.96481 12.1658 1.96481 12.4473 2.10556L21.4473 6.60556C21.7859 6.77493 21.9999 7.12146 22 7.50009V10.8819H19V15.8819H21V17.8819H3V15.8819H5V10.8819H2V7.50009C2.00011 7.12147 2.21409 6.77493 2.55273 6.60556L11.5527 2.10556ZM7 15.8819H9V10.8819H7V15.8819ZM11 15.8819H13V10.8819H11V15.8819ZM15 15.8819H17V10.8819H15V15.8819ZM4 8.11728V8.88193H20V8.11728L12 4.11728L4 8.11728Z" fill="currentColor"/></svg> Energy Studio <span class="topbar__chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.7178 15.7808C12.3273 16.1713 11.6942 16.1713 11.3036 15.7808L4.30371 8.78084L5.71777 7.36678L12.0107 13.6597L18.3037 7.36678L19.7178 8.78084L12.7178 15.7808Z" fill="currentColor"/></svg></span></span>
+      <span>EN <span class="topbar__chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.7178 15.7808C12.3273 16.1713 11.6942 16.1713 11.3036 15.7808L4.30371 8.78084L5.71777 7.36678L12.0107 13.6597L18.3037 7.36678L19.7178 8.78084L12.7178 15.7808Z" fill="currentColor"/></svg></span></span>
+      <a class="topbar__iconbtn topbar__iconbtn--filled" href="#page/notifications" aria-label="Notifications"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.7988 20C14.3902 21.1643 13.2932 21.9997 11.999 22L11.7578 21.9902C10.5692 21.894 9.58031 21.0917 9.19731 20H14.7988ZM15.9472 8C15.9472 5.69259 14.4478 4.00055 11.999 4C9.55073 4.00076 8.05182 5.69252 8.05182 8V12.752L7.55573 13.3174L5.20712 16H18.7929L15.9472 12.752V8ZM17.9472 12L21.7079 16.293C22.2931 16.8835 21.9408 17.8666 21.1669 17.9873L21.0068 18H2.99328C2.11026 17.9999 1.66794 16.923 2.29211 16.293L6.05184 12V8C6.05184 4.68664 8.35049 2.00056 12 2C15.649 2.00105 17.9472 4.68694 17.9472 8V12Z" fill="currentColor"/></svg></a>
+      <a class="topbar__iconbtn topbar__iconbtn--filled" href="#page/profile" aria-label="Profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.0002 14.8154C16.0051 14.8154 19.5091 16.9562 21.4329 20.1553L19.718 21.1846C18.1441 18.567 15.277 16.8154 12.0002 16.8154C8.72329 16.8154 5.8554 18.5668 4.28149 21.1846L2.56665 20.1553C4.49036 16.956 7.99522 14.8154 12.0002 14.8154Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0002 2.81543C14.7617 2.81543 17.0002 5.05401 17.0002 7.81543C17.0002 10.5769 14.7617 12.8154 12.0002 12.8154C9.23882 12.8154 7.00024 10.5769 7.00024 7.81543C7.00024 5.05401 9.23882 2.81543 12.0002 2.81543ZM12.0002 4.81543C10.3434 4.81543 9.00024 6.15858 9.00024 7.81543C9.00024 9.47228 10.3434 10.8154 12.0002 10.8154C13.6571 10.8154 15.0002 9.47228 15.0002 7.81543C15.0002 6.15858 13.6571 4.81543 12.0002 4.81543Z" fill="currentColor"/></svg></a>
+    </div>
+  </header>
+  <div class="app">
+    <aside class="sidebar" aria-label="Account navigation">
       <nav class="side-nav" id="side-nav"></nav>
+      <div class="side-nav__foot">
+        <a class="xui-btn xui-btn--primary xui-btn--brand xui-btn--xs" href="#page/support"><svg class="xui-btn__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 2.70605C21.1046 2.70605 22 3.60148 22 4.70605V15.7061C22 16.8106 21.1046 17.7061 20 17.7061H7L3.70703 20.999C3.07709 21.6288 2.00012 21.1828 2 20.292V4.70605C2 3.60149 2.89543 2.70605 4 2.70605H20ZM4 17.8906L6.17969 15.7061H20V4.70605H4V17.8906Z" fill="currentColor"/></svg><span class="xui-btn__label">Chat</span></a>
+        <button class="xui-icon-btn xui-btn--ghost xui-btn--mono xui-btn--xs" type="button" aria-label="Collapse sidebar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.0008 4.92871L5.92852 11H20.9998V13H5.92852L11.9998 19.0713L10.5857 20.4854L2.80754 12.7071C2.417 12.3166 2.41702 11.6834 2.80758 11.2929L10.5867 3.51465L12.0008 4.92871Z" fill="currentColor"/></svg></button>
+      </div>
     </aside>
-
     <div class="main-col">
-      <header class="xui-nav-bar xui-nav-bar--md xui-nav-bar--bordered">
-        <div class="xui-nav-bar__start">
-          <span class="topbar__title" id="topbar-title">Get started</span>
-        </div>
-        <div class="xui-nav-bar__end topbar__end">
-          <div class="topbar__controls" aria-label="Prototype controls">
-            <span class="xui-tag xui-tag--xs xui-tag--brand-extra">Prototype</span>
-            <span class="topbar__label" id="lbl-account">Account</span>
-            <div class="xui-segmented xui-segmented--sm" role="radiogroup" aria-labelledby="lbl-account" id="seg-account"></div>
-            <span class="topbar__label" id="lbl-setup">Initial setup</span>
-            <div class="xui-segmented xui-segmented--sm" role="radiogroup" aria-labelledby="lbl-setup" id="seg-setup"></div>
-            <button class="xui-btn xui-btn--ghost xui-btn--mono xui-btn--xs" type="button" data-action="reset">Reset</button>
-          </div>
-        </div>
-      </header>
+      <div id="banner-root"></div>
       <main class="page" id="view" tabindex="-1"></main>
     </div>
+  </div>
+  <div class="proto" aria-label="Prototype controls">
+    <button class="xui-tag xui-tag--xs xui-tag--brand-extra proto__toggle" type="button" id="proto-toggle" data-action="toggle-proto" aria-expanded="true" aria-controls="proto-body">Prototype controls</button><div class="proto__body" id="proto-body">
+    <span class="proto__label" id="lbl-account">Account</span>
+    <div class="xui-segmented xui-segmented--sm" role="radiogroup" aria-labelledby="lbl-account" id="seg-account"></div>
+    <span class="proto__label" id="lbl-setup">Initial setup</span>
+    <div class="xui-segmented xui-segmented--sm" role="radiogroup" aria-labelledby="lbl-setup" id="seg-setup"></div>
+    <button class="xui-btn xui-btn--ghost xui-btn--mono xui-btn--xs" type="button" data-action="reset">Reset</button></div>
   </div>
   <div id="widget-root"></div>
 
@@ -1134,6 +1244,16 @@
 
   /* ── Icons (assets/icons-inline.md, fill="currentColor") ── */
   var P = {
+    flag: '<path d="M8.87917 2C10.2374 2 11.5401 2.53957 12.5005 3.5C13.4609 4.46043 14.7635 5 16.1218 5H20.0005C20.5528 5 21.0005 5.44772 21.0005 6V16C21.0005 16.5523 20.5528 17 20.0005 17H16.1218C14.7636 17 13.4609 16.4604 12.5005 15.5C11.5401 14.5396 10.2374 14 8.87917 14H5.00048L5.00049 22H3.00049V3C3.00049 2.44772 3.4482 2 4.00049 2H8.87917Z"/><path d="M8.87917 2C10.2374 2 11.5401 2.53957 12.5005 3.5C13.4609 4.46043 14.7635 5 16.1218 5H20.0005C20.5528 5 21.0005 5.44772 21.0005 6V16C21.0005 16.5523 20.5528 17 20.0005 17H16.1218C14.7636 17 13.4609 16.4604 12.5005 15.5C11.5401 14.5396 10.2374 14 8.87917 14H5.00048L5.00049 22H3.00049V3C3.00049 2.44772 3.4482 2 4.00049 2H8.87917Z" stroke="black" stroke-width="4" mask="url(#path-1-inside-1_12914_164)"/>',
+    grid: '<path d="M10 16L10 20H4L4 16H10ZM20 12L20 20L14 20L14 12L20 12ZM10 4L10 12L4 12L4 4L10 4ZM20 4V8L14 8V4L20 4Z" stroke="black" stroke-width="2"/>',
+    layer: '<path d="M10.4084 2.57516C11.4135 2.02312 12.6309 2.02312 13.636 2.57516L19.3948 5.73727C21.0798 6.66276 21.1221 9.02137 19.5735 10.0361C21.0809 11.0255 21.0656 13.2491 19.5735 14.2265C21.1638 15.2702 21.0606 17.6888 19.3157 18.5673L13.5295 21.4804C12.5813 21.9577 11.463 21.9577 10.5149 21.4804L4.72973 18.5683C2.98449 17.6898 2.88036 15.2692 4.47094 14.2255C2.97947 13.2478 2.96436 11.0252 4.47191 10.0361C2.92271 9.02157 2.96441 6.66287 4.64965 5.73727L10.4084 2.57516ZM12.7766 17.6689L12.595 17.748C12.2255 17.8823 11.8199 17.8821 11.4504 17.748L11.2688 17.6689L6.25902 15.1464L5.45629 15.5879C4.86517 15.9127 4.88044 16.7667 5.48265 17.0703L11.2688 19.9834C11.6837 20.1921 12.1638 20.2182 12.595 20.0615L12.7756 19.9834L18.5618 17.0703C19.1267 16.7859 19.1758 16.0171 18.6926 15.6543L18.5891 15.5879L17.7864 15.1464L12.7766 17.6689ZM12.7766 13.4785L12.595 13.5566C12.225 13.6911 11.8193 13.6912 11.4495 13.5566L11.2688 13.4785L6.26 10.956L5.45629 11.3974C4.86521 11.7224 4.88104 12.5775 5.48363 12.8808L11.2688 15.7929C11.6837 16.0017 12.1638 16.0278 12.595 15.8711L12.7756 15.7929L18.5618 12.8798C19.1264 12.5954 19.1756 11.8266 18.6926 11.4638L18.5881 11.3974L17.7854 10.956L12.7766 13.4785ZM12.8293 4.04391C12.3268 3.76789 11.7176 3.76789 11.2151 4.04391L5.45629 7.207C4.86528 7.53201 4.88106 8.38706 5.48363 8.69039L11.2688 11.6025C11.7427 11.841 12.3017 11.8409 12.7756 11.6025L18.5608 8.69039C19.1259 8.40593 19.1752 7.63606 18.6916 7.2734L18.5881 7.207L12.8293 4.04391Z" fill="currentColor"/>',
+    user: '<path d="M12.0002 14.8154C16.0051 14.8154 19.5091 16.9562 21.4329 20.1553L19.718 21.1846C18.1441 18.567 15.277 16.8154 12.0002 16.8154C8.72329 16.8154 5.8554 18.5668 4.28149 21.1846L2.56665 20.1553C4.49036 16.956 7.99522 14.8154 12.0002 14.8154Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12.0002 2.81543C14.7617 2.81543 17.0002 5.05401 17.0002 7.81543C17.0002 10.5769 14.7617 12.8154 12.0002 12.8154C9.23882 12.8154 7.00024 10.5769 7.00024 7.81543C7.00024 5.05401 9.23882 2.81543 12.0002 2.81543ZM12.0002 4.81543C10.3434 4.81543 9.00024 6.15858 9.00024 7.81543C9.00024 9.47228 10.3434 10.8154 12.0002 10.8154C13.6571 10.8154 15.0002 9.47228 15.0002 7.81543C15.0002 6.15858 13.6571 4.81543 12.0002 4.81543Z" fill="currentColor"/>',
+    chat: '<path fill-rule="evenodd" clip-rule="evenodd" d="M20 2.70605C21.1046 2.70605 22 3.60148 22 4.70605V15.7061C22 16.8106 21.1046 17.7061 20 17.7061H7L3.70703 20.999C3.07709 21.6288 2.00012 21.1828 2 20.292V4.70605C2 3.60149 2.89543 2.70605 4 2.70605H20ZM4 17.8906L6.17969 15.7061H20V4.70605H4V17.8906Z" fill="currentColor"/>',
+    swap: '<path d="M7.98681 13.415L5.45556 15.9619H16.0005V18L5.45556 17.9746L7.98681 20.5381L6.53368 22L2.28857 17.6807C1.90189 17.2868 1.90412 16.652 2.29345 16.2607L6.53368 12L7.98681 13.415ZM21.7114 6.31934C22.0983 6.71317 22.096 7.34796 21.7065 7.73926L17.4663 12L16.0132 10.585L18.5444 8.03809H8.00048V6.02539H18.5444L16.0132 3.46191L17.4663 2L21.7114 6.31934Z" fill="currentColor"/>',
+    chevronR: '<path d="M15.7807 11.3036C16.1712 11.6942 16.1712 12.3273 15.7807 12.7178L8.78076 19.7178L7.3667 18.3037L13.6597 12.0107L7.3667 5.71777L8.78076 4.30371L15.7807 11.3036Z" fill="currentColor"/>',
+    bell: '<path d="M14.7988 20C14.3902 21.1643 13.2932 21.9997 11.999 22L11.7578 21.9902C10.5692 21.894 9.58031 21.0917 9.19731 20H14.7988ZM15.9472 8C15.9472 5.69259 14.4478 4.00055 11.999 4C9.55073 4.00076 8.05182 5.69252 8.05182 8V12.752L7.55573 13.3174L5.20712 16H18.7929L15.9472 12.752V8ZM17.9472 12L21.7079 16.293C22.2931 16.8835 21.9408 17.8666 21.1669 17.9873L21.0068 18H2.99328C2.11026 17.9999 1.66794 16.923 2.29211 16.293L6.05184 12V8C6.05184 4.68664 8.35049 2.00056 12 2C15.649 2.00105 17.9472 4.68694 17.9472 8V12Z" fill="currentColor"/>',
+    news: '<path d="M20 3C20.5523 3 21 3.44772 21 4V18C21 19.6569 19.6569 21 18 21H6L5.8457 20.9961C4.26055 20.9158 3 19.6051 3 18V12C3 11.4477 3.44772 11 4 11H7V4C7 3.44772 7.44772 3 8 3H20ZM5 18C5 18.5523 5.44772 19 6 19C6.55228 19 7 18.5523 7 18V13H5V18ZM9 19H18C18.5523 19 19 18.5523 19 18V5H9V19ZM15 13H11V11H15V13ZM17 9H11V7H17V9Z" fill="currentColor"/>',
+    bank: '<path d="M21 21.8819H3V19.8819H21V21.8819Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M11.5527 2.10556C11.8342 1.96481 12.1658 1.96481 12.4473 2.10556L21.4473 6.60556C21.7859 6.77493 21.9999 7.12146 22 7.50009V10.8819H19V15.8819H21V17.8819H3V15.8819H5V10.8819H2V7.50009C2.00011 7.12147 2.21409 6.77493 2.55273 6.60556L11.5527 2.10556ZM7 15.8819H9V10.8819H7V15.8819ZM11 15.8819H13V10.8819H11V15.8819ZM15 15.8819H17V10.8819H15V15.8819ZM4 8.11728V8.88193H20V8.11728L12 4.11728L4 8.11728Z" fill="currentColor"/>',
     arrowR: '<path d="M11.9983 19.0824L18.0706 13.0111L2.99927 13.0111L2.99927 11.0111L18.0706 11.0111L11.9993 4.93985L13.4133 3.52579L21.1915 11.304C21.5821 11.6945 21.5821 12.3277 21.1915 12.7182L13.4124 20.4965L11.9983 19.0824Z" fill="currentColor"/>',
     arrowL: '<path d="M12.0008 4.92871L5.92852 11H20.9998V13H5.92852L11.9998 19.0713L10.5857 20.4854L2.80754 12.7071C2.417 12.3166 2.41702 11.6834 2.80758 11.2929L10.5867 3.51465L12.0008 4.92871Z" fill="currentColor"/>',
     check: '<path d="M21.0918 6.56055L10.0919 17.5605C9.7014 17.951 9.06823 17.951 8.67771 17.5605L2.90625 11.7862L4.31891 10.3736L9.38482 15.4395L19.6778 5.14648L21.0918 6.56055Z" fill="currentColor"/>',
@@ -1176,6 +1296,8 @@
   var ACCOUNTS = {
     f2p: {
       label: 'Free-to-play',
+      acctName: 'Free-to-Play PC Games',
+      acctId: 'F2P-02',
       meta: 'Free-to-play account',
       catalogNav: 'Virtual items',
       items: [
@@ -1198,6 +1320,8 @@
     },
     premium: {
       label: 'Premium PC',
+      acctName: 'Premium PC Games',
+      acctId: 'PRM-01',
       meta: 'Premium PC account',
       catalogNav: 'Game keys',
       items: [
@@ -1255,7 +1379,7 @@
       name: 'Sales, discounts & offers',
       icon: 'discount',
       short: function () { return 'Run time-limited discounts or add bonus rewards to purchases.'; },
-      goal: 'Run a time-limited discount or bonus offer in your Web Shop.',
+      goal: 'Run a time-limited discount or bonus offer in your Game Store.',
       minutes: 15,
       accomplish: [
         'Pick the items to promote',
@@ -1308,10 +1432,10 @@
         },
         {
           id: 'check', title: 'Check it in your store', detect: 'confirm',
-          desc: function () { return 'Open your Web Shop and make a test purchase to see the offer applied.'; },
+          desc: function () { return 'Open your Game Store and make a test purchase to see the offer applied.'; },
           done: function () { return !!PJ().guides.sales.confirmed.check; },
           doneNote: function () { return 'Confirmed by you'; },
-          cta: function () { return { label: 'Open Web Shop', href: '#webshop?mode=offer' }; }
+          cta: function () { return { label: 'Open Game Store', href: '#webshop?mode=offer' }; }
         }
       ]
     },
@@ -1333,7 +1457,7 @@
           { text: 'The reward each code gives' },
           { text: 'The code text, or how many coupons you need' },
           { text: 'Validity dates and redemption limits' },
-          { text: 'Where players enter codes: your Web Shop or the game' }
+          { text: 'Where players enter codes: your Game Store or the game' }
         ];
       },
       examples: function () { return A().examplesCodes; },
@@ -1381,10 +1505,10 @@
         },
         {
           id: 'redeem', title: 'Let players redeem', detect: 'confirm',
-          desc: function () { return 'Add the promo code block to your Web Shop, or connect redemption in your game.'; },
+          desc: function () { return 'Add the promo code block to your Game Store, or connect redemption in your game.'; },
           paths: function () {
             return [
-              { id: 'webshop', label: 'Web Shop', desc: 'Add the promo code block to your storefront', instr: 'Open the Web Shop editor, add the promo code block, and publish your storefront.', cta: { label: 'Open Web Shop editor', href: '#webshop?mode=editor' } },
+              { id: 'webshop', label: 'Game Store', desc: 'Add the promo code block to your storefront', instr: 'Open the Game Store editor, add the promo code block, and publish your storefront.', cta: { label: 'Open Game Store editor', href: '#webshop?mode=editor' } },
               { id: 'game', label: 'In game', desc: A().redeemGame, instr: 'Share the redemption API guide with your developer. This path may need help from your integration manager.', cta: { label: 'Open integration guide', href: '#page/docs' } }
             ];
           },
@@ -1396,7 +1520,7 @@
           desc: function () { return 'Redeem a code and check that the reward is granted.'; },
           done: function () { return !!PJ().guides.codes.confirmed.test; },
           doneNote: function () { return 'Confirmed by you'; },
-          cta: function () { return { label: 'Open Web Shop', href: '#webshop?mode=redeem' }; }
+          cta: function () { return { label: 'Open Game Store', href: '#webshop?mode=redeem' }; }
         }
       ]
     }
@@ -1442,7 +1566,7 @@
   }
   function btn(label, opts) {
     opts = opts || {};
-    var cls = 'xui-btn xui-btn--' + (opts.variant || 'primary') + ' xui-btn--' + (opts.tone || 'brand') + ' xui-btn--' + (opts.size || 'md') + (opts.arrow ? ' xui-btn--spread' : '') + (opts.full ? ' xui-btn--full-width' : '');
+    var cls = 'xui-btn xui-btn--' + (opts.variant || 'primary') + ' xui-btn--' + (opts.tone || 'mono') + ' xui-btn--' + (opts.size || 'md') + (opts.arrow ? ' xui-btn--spread' : '') + (opts.full ? ' xui-btn--full-width' : '');
     var iconSize = opts.size === 'xs' ? 24 : 28;
     var inner = '<span class="xui-btn__label">' + esc(label) + '</span>' + (opts.arrow ? ic('arrowR', iconSize, 'xui-btn__icon') : '');
     var data = opts.action ? ' data-action="' + opts.action + '"' : '';
@@ -1524,163 +1648,181 @@
 
   /* ══════════════════ Views ══════════════════ */
 
-  /* Get started — final onboarding screen + Advanced setup (D2) */
-  var START_WITH = [
-    { id: 'catalog', title: 'Create your catalog', desc: function () { return A().catalogDesc; }, href: '#catalog' },
-    { id: 'webshop', title: 'Build your Web Shop', desc: function () { return 'Publish a storefront where players buy directly.'; }, href: '#webshop' },
-    { id: 'payments', title: 'Set up payments', desc: function () { return 'Connect payment methods and payout details.'; }, href: '#page/payments' },
-    { id: 'launch', title: 'Go live', desc: function () { return 'Open your store to players.'; }, href: '#page/launch' }
+  /* Get started — final onboarding state (all initial steps done) + Advanced setup (D2) */
+  var INITIAL_STEPS = [
+    {
+      id: 'catalog', n: 1,
+      done: { title: 'Item catalog is ready', desc: 'Your catalog has items ready to sell in your Game Store', link: { label: 'Manage catalog', href: '#catalog' } }
+    },
+    {
+      id: 'store', n: 2,
+      current: { title: 'Set up your Game Store', desc: 'Share a Steam link or choose a storefront template to generate your branded Game Store', cta: { label: 'Set up store', href: '#page/store-setup' } },
+      done: { title: 'Game Store is ready', desc: 'Your branded Game Store is set up and ready for players', link: { label: 'Open Game Store', href: '#webshop' } }
+    },
+    {
+      id: 'online', n: 3,
+      todo: { title: 'Go online', desc: 'Thousands of payment methods are already available to you. Publish your Game Store and start accepting payments.', cta: 'Publish your store', req: 'Requires a Game Store first' },
+      done: { title: 'Your store is online', desc: 'Your Game Store is published and accepting payments', link: { label: 'View payments', href: '#page/payments' } }
+    }
   ];
-  function startWithState(id) {
-    if (S.setupDone) return 'done';
-    if (id === 'payments') return 'progress';
-    if (id === 'launch') return 'todo';
-    return 'done';
+
+  function chip(text, cls) { return '<span class="gs-chip' + (cls ? ' ' + cls : '') + '">' + esc(text) + '</span>'; }
+  function arrowLink(label, href, action) {
+    if (action) return '<button class="gs-link" type="button" data-action="' + action + '">' + esc(label) + ic('arrowR', 16) + '</button>';
+    return '<a class="gs-link" href="' + href + '">' + esc(label) + ic('arrowR', 16) + '</a>';
+  }
+  function darkBtn(label, opts) {
+    opts = opts || {};
+    opts.tone = 'mono'; opts.variant = opts.variant || 'primary'; opts.size = opts.size || 'sm'; opts.arrow = opts.arrow !== false;
+    return btn(label, opts);
+  }
+  function illo(iconName) {
+    return '<div class="gs-illo" aria-hidden="true"><div class="gs-illo__frame"></div>' +
+      '<div class="gs-illo__col" style="left: 40px; width: 140px;"></div><div class="gs-illo__col" style="left: 190px; width: 60px;"></div>' +
+      '<div class="gs-illo__badge">' + (iconName ? ic(iconName, 34) : '<span style="font-size: 36px; font-weight: 400;">Aa</span>') + '</div></div>';
   }
 
   function viewGetStarted() {
-    var doneCount = START_WITH.filter(function (s) { return startWithState(s.id) === 'done'; }).length;
-    var hero = S.setupDone
-      ? '<section class="pg-hero" aria-label="Initial setup status">' +
-          '<span class="pg-hero__icon">' + ic('checkCr', 40) + '</span>' +
-          '<div class="pg-hero__text"><h2 class="pg-h2">Your initial setup is complete</h2>' +
-          '<p class="pg-body">Your Web Shop is live and accepting payments. Grow revenue with the Advanced setup below.</p></div>' +
-          progressBar(doneCount, START_WITH.length, { label: 'Initial setup' }) + '</section>'
-      : '<section class="pg-hero" aria-label="Initial setup status">' +
-          '<span class="pg-hero__icon pg-hero__icon--progress">' + ic('info', 40) + '</span>' +
-          '<div class="pg-hero__text"><h2 class="pg-h2">Finish your initial setup</h2>' +
-          '<p class="pg-body">Complete the remaining steps to launch your store and unlock Advanced setup.</p></div>' +
-          progressBar(doneCount, START_WITH.length, { label: 'Initial setup' }) + '</section>';
+    var head = '<section class="gs-head" aria-label="Current setup">' +
+      '<div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--lg"><div class="xui-rich-icon__icon gs-head__icon--store">' + ic('shop', 24) + '</div></div>' +
+      '<div class="gs-head__titles"><span class="gs-head__caption">Current setup</span><h1 class="gs-head__title">Sell virtual goods</h1></div>' +
+      '<div class="gs-head__aside">' + '<a class="xui-btn xui-btn--secondary xui-btn--mono xui-btn--sm" href="#page/switch-setup">' + ic('swap', 20, 'xui-btn__icon') + '<span class="xui-btn__label">Switch setup</span></a></div></section>';
 
-    var start = '<section class="pg-section" aria-labelledby="h-start">' +
-      '<div class="pg-section__head"><div class="pg-section__titles"><h2 class="pg-h2" id="h-start">Start with</h2>' +
-      '<p class="pg-body-sm">The foundation every store needs.</p></div></div><div class="pg-grid-4">' +
-      START_WITH.map(function (s) {
-        var st = startWithState(s.id);
-        var badge = st === 'done' ? status('success', 'Done') : st === 'progress' ? status('warning', 'In progress') : status('default', 'To do');
-        return '<article class="pg-card pg-card--flat pg-card--hover pg-mini">' +
-          '<div class="pg-mini__top">' + badge + '</div>' +
-          '<h3 class="pg-mini__title">' + esc(s.title) + '</h3>' +
-          '<p class="pg-body-sm">' + esc(s.desc()) + '</p>' +
-          '<div><a class="xui-link xui-link--md" href="' + s.href + '">' + (st === 'done' ? 'Open' : 'Continue') + '</a></div></article>';
-      }).join('') + '</div></section>';
+    var initial;
+    if (S.setupDone) {
+      initial = '<section class="gs-panel" aria-labelledby="h-initial">' +
+        '<div class="gs-panel__head"><div class="gs-panel__titles">' + chip('Step 3 of 3 · Complete', 'gs-chip--live') +
+        '<h2 class="gs-panel__title" id="h-initial">Your Game Store is live</h2>' +
+        '<p class="gs-panel__desc">Players can buy your items and every payment method is on. Next, grow revenue with Advanced setup.</p></div></div>' +
+        '<ul class="gs-done-list">' + INITIAL_STEPS.map(function (s) {
+          return '<li><span class="gs-step__badge gs-step__badge--done">' + ic('check', 16) + '</span><div class="gs-step__text">' +
+            '<span class="gs-step__title" style="font-size: 15px;">' + esc(s.done.title) + '</span>' + arrowLink(s.done.link.label, s.done.link.href) + '</div></li>';
+        }).join('') + '</ul></section>';
+    } else {
+      /* Reference screen order: current step first, then done, then locked */
+      var cur = INITIAL_STEPS[1], done = INITIAL_STEPS[0], todo = INITIAL_STEPS[2];
+      initial = '<section class="gs-panel" aria-label="Initial setup">' +
+        '<article class="gs-step gs-step--current">' + chip('Step 2 of 3') + illo() +
+        '<div class="gs-step__body--current"><div class="gs-step__text"><h2 class="gs-step__title">' + esc(cur.current.title) + '</h2><p class="gs-step__desc">' + esc(cur.current.desc) + '</p></div>' +
+        '<div class="gs-step__actions">' + darkBtn(cur.current.cta.label, { href: cur.current.cta.href }) + '</div></div></article>' +
+        '<article class="gs-step">' + chip('Step 1 of 3') + '<div class="gs-step__row"><span class="gs-step__badge gs-step__badge--done">' + ic('check', 18) + '</span>' +
+        '<div class="gs-step__text"><h3 class="gs-step__title">' + esc(done.done.title) + '</h3><p class="gs-step__desc">' + esc(done.done.desc) + '</p></div></div>' +
+        '<div class="gs-step__indent">' + arrowLink(done.done.link.label, done.done.link.href) + '</div></article>' +
+        '<article class="gs-step gs-step--todo">' + chip('Step 3 of 3') + '<div class="gs-step__row"><span class="gs-step__badge">' + ic('card', 18) + '</span>' +
+        '<div class="gs-step__text"><h3 class="gs-step__title">' + esc(todo.todo.title) + '</h3><p class="gs-step__desc">' + esc(todo.todo.desc) + '</p></div></div>' +
+        '<div class="gs-step__indent"><div class="gs-step__actions">' + darkBtn(todo.todo.cta, { disabled: true }) + '<span class="gs-step__req">' + esc(todo.todo.req) + '</span></div></div></article></section>';
+    }
 
-    var adv = '<section class="pg-section" aria-labelledby="h-adv">' +
-      '<div class="pg-section__head"><div class="pg-section__titles"><h2 class="pg-h2" id="h-adv">Advanced setup</h2>' +
-      '<p class="pg-body-sm">Tools that build on your live store. Each one comes with a step-by-step guide.</p></div></div>' +
-      '<div class="pg-grid-adv">' + ['sales', 'codes'].map(capCard).join('') + '</div></section>';
+    var adv = '<section class="gs-panel" aria-labelledby="h-adv">' +
+      '<div class="gs-panel__head"><div class="gs-panel__titles"><h2 class="gs-panel__title" id="h-adv">Advanced setup</h2>' +
+      '<p class="gs-panel__desc">Promotion tools that build on your live Game Store. Each one comes with a step-by-step setup guide.</p></div></div>' +
+      '<div class="gs-adv">' + ['sales', 'codes'].map(capCard).join('') + '</div></section>';
 
-    return pageHeader('Get started', 'Set up your store, then add the tools that grow revenue.') + flashHtml() + hero + adv + start;
+    return flashHtml() + head + (S.setupDone ? adv + initial : initial + adv);
   }
 
   function capCard(gid) {
     var g = GUIDES[gid], state = cardState(gid), pr = progress(gid), gs = PJ().guides[gid];
-    var badge = state === 'live' ? status('success', 'Live') : state === 'blocked' ? status('default', 'Blocked') : status('neutral', 'Available');
-    var progressLine = '';
-    if (state !== 'blocked' && gs.started && !pr.complete) {
-      progressLine = progressBar(pr.done, pr.total, { size: 'sm', label: 'Step ' + (pr.current + 1) + ' of ' + pr.total + ': ' + g.steps[pr.current].title });
-    }
+    var badge = state === 'live' ? status('success', 'Live') : state === 'blocked' ? status('default', 'Blocked') : gs.started && !pr.complete ? status('warning', 'In progress') : status('neutral', 'Available');
     var foot;
     if (state === 'live') {
-      foot = btn('Open', { href: '#promotions?tab=' + (gid === 'sales' ? (PJ().promo.kind === 'bonus' ? 'bonus' : 'discount') : (PJ().code.type === 'coupon' ? 'coupons' : 'codes')), arrow: true }) +
-        '<a class="xui-link xui-link--md" href="#guide/' + gid + '">View guide</a>';
+      var openHref = '#promotions?tab=' + (gid === 'sales' ? (PJ().promo.kind === 'bonus' ? 'bonus' : 'discount') : (PJ().code.type === 'coupon' ? 'coupons' : 'codes'));
+      foot = '<div class="gs-step__actions">' + darkBtn('Open', { href: openHref }) + arrowLink('View guide', '#guide/' + gid) + '</div>';
     } else if (state === 'available') {
-      foot = btn('Set up', { href: '#guide/' + gid, arrow: true });
+      foot = (gs.started && !pr.complete ? progressBar(pr.done, pr.total, { size: 'sm', label: 'Step ' + (pr.current + 1) + ' of ' + pr.total + ': ' + g.steps[pr.current].title }) : '') +
+        '<div class="gs-step__actions">' + darkBtn('Set up', { href: '#guide/' + gid }) + '</div>';
     } else {
-      foot = btn('Set up', { disabled: true, arrow: true });
+      foot = '<div class="gs-step__actions">' + darkBtn('Set up', { disabled: true }) + '<span class="gs-step__req">Requires initial setup first</span></div>';
     }
-    var blocked = state === 'blocked'
-      ? '<div class="pg-cap__blocked">' + ic('lock', 16) + '<span>Available after your initial setup is complete. Remaining: <strong class="pg-strong">Set up payments</strong>, <strong class="pg-strong">Go live</strong>. <a class="xui-link xui-link--md xui-link--underline" href="#page/payments">Finish setup</a></span></div>'
-      : '';
-    return '<article class="pg-card pg-card--hover pg-cap' + (state === 'blocked' ? ' pg-cap--blocked' : '') + '" aria-labelledby="cap-' + gid + '">' +
-      '<div class="pg-cap__top"><div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--lg"><div class="xui-rich-icon__icon pg-cap__icon">' + ic(g.icon, 22) + '</div></div>' + badge + '</div>' +
-      '<div class="pg-section__titles"><h3 class="pg-cap__title" id="cap-' + gid + '">' + esc(g.name) + '</h3><p class="pg-body-sm">' + esc(g.short()) + '</p></div>' +
-      '<div class="pg-cap__examples">' + g.examples().map(function (x) { return '<span class="xui-tag xui-tag--xs xui-tag--secondary">' + esc(x) + '</span>'; }).join('') + '</div>' +
-      '<div class="pg-cap__meta pg-caption"><span>' + g.steps.length + ' steps</span><span>About ' + g.minutes + ' min</span><span>Self-serve</span></div>' +
-      progressLine + blocked + '<div class="pg-cap__foot">' + foot + '</div></article>';
+    return '<article class="gs-step gs-step--hover" aria-labelledby="cap-' + gid + '">' +
+      '<div class="gs-adv__top">' + chip('Advanced') + badge + '</div>' +
+      '<div class="gs-step__row"><span class="gs-step__badge ' + (state === 'blocked' ? '' : 'gs-step__badge--brand') + '">' + ic(g.icon, 20) + '</span>' +
+      '<div class="gs-step__text"><h3 class="gs-step__title" id="cap-' + gid + '">' + esc(g.name) + '</h3><p class="gs-step__desc">' + esc(g.short()) + '</p></div></div>' +
+      '<div class="gs-step__indent"><div class="gs-adv__tags">' + g.examples().map(function (x) { return '<span class="xui-tag xui-tag--xs xui-tag--secondary">' + esc(x) + '</span>'; }).join('') + '</div>' +
+      '<div class="gs-adv__meta"><span>' + g.steps.length + ' steps</span><span>About ' + g.minutes + ' min</span><span>Self-serve</span></div>' +
+      '<div class="gs-adv__foot">' + foot + '</div></div></article>';
   }
 
-  /* Setup guide (D3) */
+  /* Setup guide (D3) — same step-card pattern as Get started */
   function viewGuide(gid) {
     var g = GUIDES[gid];
     if (!g) return viewNotFound();
     if (!S.setupDone) {
-      flash = { tone: 'warning', title: 'Finish your initial setup first', msg: 'Setup guides for Advanced tools unlock after your store goes live.', action: { label: 'Finish setup', href: '#page/payments' } };
+      flash = { tone: 'warning', title: 'Finish your initial setup first', msg: 'Setup guides for Advanced tools unlock after your Game Store goes online.' };
       location.hash = '#get-started';
       return '';
     }
     var gs = PJ().guides[gid], pr = progress(gid), state = cardState(gid);
     PJ().lastGuide = gid; save();
+    var badge = pr.complete || state === 'live' ? status('success', 'Live') : gs.started ? status('warning', 'In progress') : status('neutral', 'Available');
 
-    var badge = pr.complete ? status('success', 'Live') : state === 'live' ? status('success', 'Live') : gs.started ? status('warning', 'In progress') : status('neutral', 'Available');
-    var head = '<div class="pg-header">' + crumbs([{ label: 'Get started', href: '#get-started' }, { label: 'Advanced setup', href: '#get-started' }, { label: g.name }]) +
-      '<div class="pg-header__row"><div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--lg"><div class="xui-rich-icon__icon pg-cap__icon">' + ic(g.icon, 22) + '</div></div>' +
-      '<h1 class="pg-h1">' + esc(g.name) + '</h1>' + badge + '</div></div>';
+    var head = crumbs([{ label: 'Get started', href: '#get-started' }, { label: 'Advanced setup', href: '#get-started' }, { label: g.name }]) +
+      '<section class="gs-head" aria-label="Setup guide">' +
+      '<div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--lg"><div class="xui-rich-icon__icon gs-head__icon--brand">' + ic(g.icon, 24) + '</div></div>' +
+      '<div class="gs-head__titles"><span class="gs-head__caption">Setup guide · ' + pr.done + ' of ' + pr.total + ' steps done</span><h1 class="gs-head__title">' + esc(g.name) + '</h1></div>' +
+      '<div class="gs-head__aside">' + badge + '<a class="xui-btn xui-btn--secondary xui-btn--mono xui-btn--sm" href="#get-started">' + ic('arrowL', 20, 'xui-btn__icon') + '<span class="xui-btn__label">Get started</span></a></div></section>';
 
-    var main = '';
-    if (pr.complete) main += successPanel(gid);
-    if (!gs.started && !pr.complete) {
-      main += '<section class="pg-card pg-overview" aria-labelledby="ov-title">' +
-        '<p class="pg-caption">Overview</p><h2 class="pg-h2" id="ov-title">' + esc(g.goal) + '</h2>' +
-        '<p class="pg-body">In ' + g.steps.length + ' steps, about ' + g.minutes + ' minutes, you will:</p>' +
-        '<ul class="pg-overview__list">' + g.accomplish.map(function (a) { return '<li>' + ic('check', 18) + '<span>' + esc(a) + '</span></li>'; }).join('') + '</ul>' +
-        '<div class="pg-step__actions">' + btn('Start setup', { action: 'start-guide', data: { guide: gid }, arrow: true }) +
-        '<span class="pg-caption">Your progress is saved. You can leave and come back at any time.</span></div></section>';
-    }
-    main += '<section class="pg-section" aria-labelledby="steps-title"><div class="pg-section__head"><h2 class="pg-h3" id="steps-title">Steps</h2>' +
-      '<span class="pg-caption">Done steps are detected automatically from your account</span></div>' +
-      '<ol class="pg-steps">' + g.steps.map(function (st, i) { return stepHtml(g, st, i, pr, gs); }).join('') + '</ol></section>';
+    var body = '';
+    if (pr.complete) body += successPanel(gid);
 
-    var side = '<aside class="pg-guide__side" aria-label="Guide summary">' +
-      '<div class="pg-card pg-card--flat">' + progressBar(pr.done, pr.total, { label: pr.complete ? 'All steps done' : 'Your progress', helper: pr.complete ? 'Reopen any step to review your settings.' : 'Next: ' + g.steps[pr.current].title }) + '</div>' +
-      '<div class="pg-card pg-card--flat pg-section"><h2 class="pg-h3">Before you start</h2><ul class="pg-prep">' +
-      g.prep().map(function (p) { return '<li class="' + (p.done ? 'pg-prep__done' : 'pg-prep__todo') + '">' + ic(p.done ? 'checkCr' : 'info', 18) + '<span>' + esc(p.text) + (p.done ? ' <span class="pg-caption">— ready</span>' : '') + '</span></li>'; }).join('') +
-      '</ul></div>' +
-      '<div class="pg-card pg-card--flat pg-section"><h2 class="pg-h3">Need help?</h2><p class="pg-body-sm">Everything you set up here lives in <a class="xui-link xui-link--md" href="#promotions">LiveOps › Promotions</a>. You can edit it there at any time.</p>' +
-      '<a class="xui-link xui-link--md" href="#page/docs">Promotions documentation ' + ic('openIn', 16) + '</a></div></aside>';
+    var overview = '<div class="gs-overview">' +
+      '<div class="gs-step__text"><span class="gs-overview__label">Overview</span><h2 class="gs-step__title" style="font-size: 20px;">' + esc(g.goal) + '</h2>' +
+      '<p class="gs-step__desc">' + g.steps.length + ' steps · about ' + g.minutes + ' minutes. Your progress is saved, so you can leave and come back at any time.</p></div>' +
+      '<div class="gs-overview__cols"><div class="gs-step__text"><span class="gs-overview__label">You will</span><ul class="gs-list">' +
+      g.accomplish.map(function (a) { return '<li>' + ic('check', 16) + '<span>' + esc(a) + '</span></li>'; }).join('') + '</ul></div>' +
+      '<div class="gs-step__text"><span class="gs-overview__label">Before you start, prepare</span><ul class="gs-list">' +
+      g.prep().map(function (p) { return '<li class="' + (p.done ? 'gs-list__ok' : '') + '">' + ic(p.done ? 'checkCr' : 'info', 16) + '<span>' + esc(p.text) + (p.done ? ' — ready' : '') + '</span></li>'; }).join('') + '</ul></div></div>' +
+      (!gs.started && !pr.complete ? '<div class="gs-step__actions">' + darkBtn('Start setup', { action: 'start-guide', data: { guide: gid }, size: 'md' }) + '</div>' : '') + '</div>';
 
-    return head + flashHtml() + '<div class="pg-guide"><div class="pg-guide__main">' + main + '</div>' + side + '</div>';
+    /* Order like the reference: current step, then done steps, then remaining steps */
+    var idx = g.steps.map(function (s, i) { return i; });
+    var order = gs.started && !pr.complete
+      ? [pr.current].concat(idx.filter(function (i) { return g.steps[i].done() && i !== pr.current; }), idx.filter(function (i) { return !g.steps[i].done() && i !== pr.current; }))
+      : idx;
+    var steps = order.map(function (i) { return stepHtml(g, g.steps[i], i, pr, gs); }).join('');
+
+    body += '<section class="gs-panel" aria-label="Guide steps">' + (gs.started && !pr.complete ? '' : overview) + steps + '</section>';
+    if (gs.started && !pr.complete) body += '<section class="gs-panel" aria-label="Guide overview">' + overview + '</section>';
+    return flashHtml() + head + body;
   }
 
   function stepHtml(g, st, i, pr, gs) {
-    var done = st.done(), current = pr.current === i && gs.started;
-    var preview = !gs.started && !pr.complete;
-    var cls = 'pg-step' + (done ? ' pg-step--done' : '') + (current ? ' pg-step--current' : '') + (preview ? ' pg-step--preview' : '');
-    var badge = done ? status('success', 'Done', 'sm') : current ? status('warning', 'Current step', 'sm') : status('default', 'To do', 'sm');
-    var num = done ? ic('check', 18) : String(i + 1);
-    var body = '<div class="pg-step__head"><h3 class="pg-step__title">' + esc(st.title) + '</h3>' + badge + '</div><p class="pg-body-sm">' + esc(st.desc()) + '</p>';
+    var done = st.done(), current = pr.current === i && gs.started && !pr.complete;
+    var label = 'Step ' + (i + 1) + ' of ' + g.steps.length;
+    var cta = stepCta(g, st);
+    var ctaHref = cta ? cta.href + (cta.href.indexOf('?') > -1 ? '&' : '?') + 'guide=' + g.id : null;
 
-    if (preview) return '<li class="' + cls + '"><span class="pg-step__num" aria-hidden="true">' + (i + 1) + '</span><div class="pg-step__body">' + body + '</div></li>';
-
-    var detail = '';
     if (current) {
+      var detail = '';
       if (st.paths) {
-        var sel = gs.paths[st.id];
-        var paths = st.paths();
+        var sel = gs.paths[st.id], paths = st.paths();
         detail += '<div class="pg-choices" role="radiogroup" aria-label="' + esc(st.title) + '">' +
           paths.map(function (p) { return radio('path-' + g.id + '-' + st.id, p.id, p.label, p.desc, p.id === sel); }).join('') + '</div>';
         var chosen = paths.filter(function (p) { return p.id === sel; })[0];
         if (chosen && chosen.instr) detail += '<p class="pg-instr">' + esc(chosen.instr) + '</p>';
       }
-      var cta = stepCta(g, st), actions = '';
-      if (st.detect === 'choice') {
-        actions += btn(st.choiceLabel, { action: 'save-choice', data: { guide: g.id, step: st.id }, arrow: true, size: 'sm' });
-      } else if (cta) {
-        actions += btn(cta.label, { href: cta.href + (cta.href.indexOf('?') > -1 ? '&' : '?') + 'guide=' + g.id, arrow: true, size: 'sm' });
-      }
-      if (st.detect === 'confirm') {
-        actions += btn('I’ve done this', { variant: 'secondary', size: 'sm', action: 'confirm-step', data: { guide: g.id, step: st.id } });
-      }
-      detail += '<div class="pg-step__actions">' + actions + '</div>';
-      if (st.detect === 'auto') detail += '<p class="pg-step__note">' + ic('info', 14) + 'This step is marked done automatically when the guide detects it in your account.</p>';
-      detail = '<div class="pg-step__detail">' + detail + '</div>';
-    } else if (done) {
-      var c2 = stepCta(g, st);
-      detail = '<div class="pg-step__actions"><span class="pg-step__note">' + ic('checkCr', 14) + esc(st.doneNote()) + '</span>' +
-        (c2 ? '<a class="xui-link xui-link--md" href="' + c2.href + (c2.href.indexOf('?') > -1 ? '&' : '?') + 'guide=' + g.id + '">Review</a>' : '') +
-        (st.detect === 'choice' ? '<button class="xui-link xui-link--md pg-linkbtn" type="button" data-action="reopen-choice" data-guide="' + g.id + '" data-step="' + st.id + '">Change</button>' : '') + '</div>';
+      var actions = st.detect === 'choice'
+        ? darkBtn(st.choiceLabel, { action: 'save-choice', data: { guide: g.id, step: st.id } })
+        : (cta ? darkBtn(cta.label, { href: ctaHref }) : '');
+      if (st.detect === 'confirm') actions += btn('I’ve done this', { variant: 'secondary', tone: 'mono', size: 'sm', action: 'confirm-step', data: { guide: g.id, step: st.id } });
+      return '<article class="gs-step gs-step--current" id="current-step" aria-current="step">' + chip(label) + (st.paths ? '' : illo(g.icon)) +
+        '<div class="gs-step__body--current"' + (st.paths ? ' style="max-width: none;"' : '') + '><div class="gs-step__text"><h2 class="gs-step__title">' + esc(st.title) + '</h2><p class="gs-step__desc">' + esc(st.desc()) + '</p></div>' +
+        detail + '<div class="gs-step__actions">' + actions + '</div>' +
+        (st.detect === 'auto' ? '<p class="gs-step__note">' + ic('info', 14) + 'Marked done automatically when the guide detects it in your account</p>' : '') + '</div></article>';
     }
-    return '<li class="' + cls + '"' + (current ? ' aria-current="step" id="current-step"' : '') + '><span class="pg-step__num" aria-hidden="true">' + num + '</span><div class="pg-step__body">' + body + detail + '</div></li>';
+    if (done) {
+      var links = (cta ? arrowLink('Review', ctaHref) : '') +
+        (st.detect === 'choice' ? '<button class="gs-link" type="button" data-action="reopen-choice" data-guide="' + g.id + '" data-step="' + st.id + '">Change' + ic('arrowR', 16) + '</button>' : '');
+      return '<article class="gs-step">' + chip(label) + '<div class="gs-step__row"><span class="gs-step__badge gs-step__badge--done">' + ic('check', 18) + '</span>' +
+        '<div class="gs-step__text"><h3 class="gs-step__title">' + esc(st.title) + '</h3><p class="gs-step__desc">' + esc(st.doneNote()) + '</p></div></div>' +
+        (links ? '<div class="gs-step__indent"><div class="gs-step__actions">' + links + '</div></div>' : '') + '</article>';
+    }
+    /* To do: locked until the previous step is done, like "Requires a Game Store first" */
+    var needs = pr.current !== null && pr.current < i ? 'Requires step ' + (pr.current + 1) + ' first' : (gs.started ? '' : 'Start the guide first');
+    return '<article class="gs-step gs-step--todo">' + chip(label) + '<div class="gs-step__row"><span class="gs-step__badge">' + (i + 1) + '</span>' +
+      '<div class="gs-step__text"><h3 class="gs-step__title">' + esc(st.title) + '</h3><p class="gs-step__desc">' + esc(st.desc()) + '</p></div></div>' +
+      '<div class="gs-step__indent"><div class="gs-step__actions">' + darkBtn(st.detect === 'choice' ? st.choiceLabel : (cta ? cta.label : 'Continue'), { disabled: true }) +
+      (needs ? '<span class="gs-step__req">' + esc(needs) + '</span>' : '') + '</div></div></article>';
   }
 
   function successPanel(gid) {
@@ -1705,22 +1847,19 @@
         { k: 'Redemptions', v: c.type === 'coupon' ? 'Once per coupon' : c.uses + ' in total' }
       ];
     }
-    var otherLive = cardState(other) === 'live' && progress(other).complete;
-    var next = otherLive
-      ? '<div class="pg-next"><div class="pg-next__text"><span class="pg-caption">Up next</span><span class="pg-strong">Both promotion tools are live</span><span class="pg-body-sm">Track redemptions and revenue in Analytics.</span></div>' +
-        btn('Open Analytics', { variant: 'secondary', size: 'sm', href: '#page/analytics' }) + '</div>'
-      : '<div class="pg-next"><div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--lg"><div class="xui-rich-icon__icon pg-cap__icon">' + ic(GUIDES[other].icon, 22) + '</div></div>' +
+    var otherDone = cardState(other) === 'live' && progress(other).complete;
+    var next = otherDone
+      ? '<div class="pg-next"><div class="pg-next__text"><span class="pg-caption">Up next</span><span class="pg-strong">Both promotion tools are live</span><span class="pg-body-sm">Track redemptions and revenue in Analytics.</span></div>' + darkBtn('Open Analytics', { variant: 'secondary', href: '#page/analytics' }) + '</div>'
+      : '<div class="pg-next"><span class="gs-step__badge gs-step__badge--brand">' + ic(GUIDES[other].icon, 20) + '</span>' +
         '<div class="pg-next__text"><span class="pg-caption">Suggested next</span><span class="pg-strong">' + esc(GUIDES[other].name) + '</span><span class="pg-body-sm">' + esc(GUIDES[other].short()) + '</span></div>' +
-        btn('Set up', { variant: 'secondary', size: 'sm', href: '#guide/' + other, arrow: true }) + '</div>';
-    return '<section class="pg-card pg-success" aria-labelledby="success-title">' +
-      '<div class="pg-success__head"><span class="pg-success__icon">' + ic('trophy', 48) + '</span><div class="pg-section__titles">' +
-      '<p class="pg-caption">Well done!</p><h2 class="pg-h2" id="success-title">' + title + '</h2>' +
-      '<p class="pg-body">Players can use ' + (/coupons/.test(title) ? 'them' : 'it') + ' in your Web Shop now. The ' + esc(g.name) + ' card on Get started shows it as Live.</p></div></div>' +
+        darkBtn('Set up', { href: '#guide/' + other }) + '</div>';
+    return '<section class="gs-success" aria-labelledby="success-title">' +
+      '<div class="gs-success__head"><span class="gs-step__badge gs-step__badge--done" style="width: 48px; height: 48px;">' + ic('trophy', 26) + '</span><div class="gs-step__text">' +
+      '<span class="gs-overview__label">Well done!</span><h2 class="gs-step__title" id="success-title" style="font-size: 22px; line-height: 26px;">' + title + '</h2>' +
+      '<p class="gs-step__desc">Players can use ' + (/coupons/.test(title) ? 'them' : 'it') + ' in your Game Store now. The ' + esc(g.name) + ' card on Get started shows it as Live.</p></div></div>' +
       '<ul class="pg-summary">' + summary.map(function (s) { return '<li><span class="pg-caption">' + esc(s.k) + '</span><span class="pg-strong">' + esc(s.v) + '</span></li>'; }).join('') + '</ul>' +
-      '<div class="pg-step__actions">' + btn('Open Promotions', { href: '#promotions', arrow: true }) + btn('Back to Get started', { variant: 'secondary', href: '#get-started' }) + '</div>' +
-      next + '</section>';
+      '<div class="gs-step__actions">' + darkBtn('Open Promotions', { href: '#promotions' }) + arrowLink('Back to Get started', '#get-started') + '</div>' + next + '</section>';
   }
-
   /* Embedded Promotions section (D1) — LiveOps › Promotions */
   var PROMO_TABS = [
     { id: 'discount', label: 'Discounts' },
@@ -1876,17 +2015,17 @@
 
   /* Catalog (read-only mock) */
   function viewCatalog(q) {
-    return pageHeader(A().catalogNav, 'Items players can buy in your Web Shop.', [{ label: 'Catalog', href: '#catalog' }, { label: A().catalogNav }], '') + guideReturn(q) +
+    return pageHeader(A().catalogNav, 'Items players can buy in your Game Store.', [{ label: 'Catalog', href: '#catalog' }, { label: A().catalogNav }], '') + guideReturn(q) +
       '<div class="pg-card pg-table-wrap"><table class="pg-table"><thead><tr><th>Name</th><th>Type</th><th>Price</th><th>Status</th></tr></thead><tbody>' +
       A().items.map(function (it) { return '<tr><td>' + esc(it.name) + '</td><td class="pg-table__muted">' + esc(it.type) + '</td><td>' + money(it.price) + '</td><td>' + status('success', 'Published') + '</td></tr>'; }).join('') +
       '</tbody></table></div>';
   }
 
-  /* Web Shop preview (storefront, editor, redemption) */
+  /* Game Store preview (storefront, editor, redemption) */
   function viewWebshop(q) {
     var pj = PJ(), a = A(), mode = q.mode || 'offer', p = pj.promo;
-    var head = pageHeader('Web Shop', 'Preview your storefront as players see it.', [{ label: 'Storefronts', href: '#webshop' }, { label: 'Web Shop' }], '');
-    var modeTabs = '<nav class="xui-tabs xui-tabs--line xui-tabs--sm" role="tablist" aria-label="Web Shop views">' +
+    var head = pageHeader('Game Store', 'Preview your storefront as players see it.', [{ label: 'Storefronts', href: '#webshop' }, { label: 'Game Store' }], '');
+    var modeTabs = '<nav class="xui-tabs xui-tabs--line xui-tabs--sm" role="tablist" aria-label="Game Store views">' +
       [{ id: 'offer', l: 'Storefront' }, { id: 'editor', l: 'Editor' }, { id: 'redeem', l: 'Redeem code' }].map(function (t) {
         return '<a class="xui-tab' + (t.id === mode ? ' xui-tab--active' : '') + '" role="tab" aria-selected="' + (t.id === mode) + '" href="#webshop?mode=' + t.id + guideSuffix(q) + '">' + t.l + '</a>';
       }).join('') + '</nav>';
@@ -1921,31 +2060,52 @@
     var titles = { dashboard: 'Dashboard', payments: 'Payments', launch: 'Go live', analytics: 'Analytics', settings: 'Settings', team: 'Team', docs: 'Documentation', bundles: 'Bundles', currency: 'Virtual currency' };
     var t = titles[name] || 'Section';
     var msg = name === 'payments' && !S.setupDone
-      ? '<div class="pg-card pg-empty">' + ic('card', 40) + '<h2 class="pg-h3">Finish payment setup</h2><p class="pg-body-sm">In this prototype, switch Initial setup to Complete in the top bar to continue.</p>' + btn('Mark initial setup complete', { size: 'sm', action: 'complete-setup', arrow: true }) + '</div>'
+      ? '<div class="pg-card pg-empty">' + ic('card', 40) + '<h2 class="pg-h3">Finish payment setup</h2><p class="pg-body-sm">In this prototype, switch Initial setup to Complete in the prototype panel to continue.</p>' + btn('Mark initial setup complete', { size: 'sm', action: 'complete-setup', arrow: true }) + '</div>'
       : '<div class="pg-card pg-empty">' + ic('layout', 40) + '<h2 class="pg-h3">' + esc(t) + ' is embedded as is</h2><p class="pg-body-sm">This section is outside the scope of the prototype.</p>' + btn('Back to Get started', { size: 'sm', variant: 'secondary', href: '#get-started' }) + '</div>';
     return pageHeader(t, null, null, '') + msg;
   }
   function viewNotFound() { return viewPlaceholder('x'); }
 
-  /* ── Sidebar nav ── */
+  /* ── Sidebar nav (reference screen structure) ── */
   function renderNav(route) {
-    var active = route.split('?')[0].split('/')[0];
-    var sub = route.split('?')[0];
-    var groups = [
-      { items: [{ id: 'get-started', label: 'Get started', icon: 'home', href: '#get-started', match: ['get-started', 'guide'] }, { id: 'dashboard', label: 'Dashboard', icon: 'chart', href: '#page/dashboard', match: ['page/dashboard'] }] },
-      { title: 'Catalog', items: [{ label: A().catalogNav, icon: 'boxes', href: '#catalog', match: ['catalog'] }, { label: 'Bundles', icon: 'gift', href: '#page/bundles', match: ['page/bundles'] }] },
-      { title: 'Storefronts', items: [{ label: 'Web Shop', icon: 'shop', href: '#webshop', match: ['webshop'] }] },
-      { title: 'LiveOps', items: [{ label: 'Promotions', icon: 'discount', href: '#promotions', match: ['promotions'], tag: 'New' }] },
-      { title: 'Business', items: [{ label: 'Payments', icon: 'card', href: '#page/payments', match: ['page/payments'] }, { label: 'Analytics', icon: 'chart', href: '#page/analytics', match: ['page/analytics'] }, { label: 'Team', icon: 'users', href: '#page/team', match: ['page/team'] }, { label: 'Settings', icon: 'settings', href: '#page/settings', match: ['page/settings'] }] }
-    ];
-    document.getElementById('side-nav').innerHTML = groups.map(function (g) {
-      return '<div class="side-nav__group">' + (g.title ? '<span class="side-nav__group-title">' + g.title + '</span>' : '') +
-        g.items.map(function (it) {
-          var isActive = it.match.some(function (m) { return m.indexOf('/') > -1 ? sub === m : active === m; });
-          return '<a class="side-nav__item' + (isActive ? ' side-nav__item--active' : '') + '" href="' + it.href + '"' + (isActive ? ' aria-current="page"' : '') + '>' + ic(it.icon, 18) + '<span>' + esc(it.label) + '</span>' +
-            (it.tag ? '<span class="xui-tag xui-tag--xs xui-tag--brand-extra">' + it.tag + '</span>' : '') + '</a>';
+    var path = route.split('?')[0], top = path.split('/')[0];
+    var pct = S.setupDone ? 100 : 67;
+    var ring = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="4"/>' +
+      '<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="' + (56.5 * pct / 100).toFixed(1) + ' 56.5" transform="rotate(-90 12 12)"/></svg>';
+    function item(it) {
+      var active = it.match.indexOf(top) > -1 || it.match.indexOf(path) > -1;
+      var open = it.children && (active || it.children.some(function (c) { return c.match.indexOf(top) > -1; }));
+      var html = '<a class="side-nav__item' + (active && !it.children ? ' side-nav__item--active' : '') + (open ? ' side-nav__item--open' : '') + '" href="' + it.href + '"' + (active && !it.children ? ' aria-current="page"' : '') + '>' +
+        ic(it.icon, 20) + '<span>' + esc(it.label) + '</span>' + (it.extra || '') + (it.chev ? '<span class="side-nav__chev">' + ic('chevronR', 14) + '</span>' : '') + '</a>';
+      if (open) {
+        html += '<div class="side-nav__sub">' + it.children.map(function (c) {
+          var a = c.match.indexOf(top) > -1;
+          return '<a class="side-nav__item' + (a ? ' side-nav__item--active' : '') + '" href="' + c.href + '"' + (a ? ' aria-current="page"' : '') + '><span>' + esc(c.label) + '</span>' + (c.tag ? '<span class="xui-tag xui-tag--xs xui-tag--brand-extra" style="margin-left: auto;">' + c.tag + '</span>' : '') + '</a>';
         }).join('') + '</div>';
-    }).join('');
+      }
+      return html;
+    }
+    var main = [
+      { label: 'Get started', icon: 'flag', href: '#get-started', match: ['get-started', 'guide'], extra: '<span class="side-nav__pill' + (pct === 100 ? ' side-nav__pill--done' : '') + '">' + ring + pct + '%</span>' },
+      { label: 'Dashboard', icon: 'grid', href: '#page/dashboard', match: ['page/dashboard'] },
+      { label: 'Projects', icon: 'layer', href: '#page/projects', match: ['page/projects'], chev: true },
+      { label: 'Player support', icon: 'user', href: '#page/support', match: ['page/support'], chev: true },
+      { label: 'Analytics', icon: 'chart', href: '#page/analytics', match: ['page/analytics'], chev: true }
+    ];
+    var tools = [
+      { label: 'Payments', icon: 'card', href: '#page/payments', match: ['page/payments'], chev: true },
+      { label: 'Storefronts', icon: 'shop', href: '#webshop', match: ['webshop'], chev: true },
+      { label: 'Item catalog', icon: 'boxes', href: '#catalog', match: ['catalog'], chev: true },
+      { label: 'LiveOps', icon: 'gift', href: '#promotions', match: [], chev: true, children: [{ label: 'Promotions', href: '#promotions', match: ['promotions'], tag: 'New' }] }
+    ];
+    var bottom = [
+      { label: 'Billing', icon: 'news', href: '#page/billing', match: ['page/billing'], chev: true },
+      { label: 'Documents', icon: 'news', href: '#page/docs', match: ['page/docs'], chev: true },
+      { label: 'Settings', icon: 'settings', href: '#page/settings', match: ['page/settings'], chev: true }
+    ];
+    document.getElementById('side-nav').innerHTML = main.map(item).join('') +
+      '<span class="side-nav__group-title">Tools</span>' + tools.map(item).join('') +
+      '<div class="side-nav__sep" aria-hidden="true"></div>' + bottom.map(item).join('');
   }
 
   function renderControls() {
@@ -1955,11 +2115,15 @@
         return '<button class="xui-segmented__item' + (on ? ' xui-segmented__item--active' : '') + '" type="button" role="radio" aria-checked="' + on + '" tabindex="' + (on ? 0 : -1) + '" data-action="' + action + '" data-value="' + it.v + '"><span class="xui-segmented__label">' + it.l + '</span></button>';
       }).join('');
     }
+    document.querySelector('.proto').classList.toggle('proto--collapsed', !!S.protoCollapsed);
+    document.getElementById('proto-toggle').setAttribute('aria-expanded', String(!S.protoCollapsed));
     document.getElementById('seg-account').innerHTML = seg([{ v: 'f2p', l: 'Free-to-play' }, { v: 'premium', l: 'Premium PC' }], S.account, 'set-account');
-    document.getElementById('seg-setup').innerHTML = seg([{ v: 'done', l: 'Complete' }, { v: 'progress', l: 'In progress' }], S.setupDone ? 'done' : 'progress', 'set-setup');
-    document.getElementById('project-meta').textContent = A().meta;
+    document.getElementById('seg-setup').innerHTML = seg([{ v: 'done', l: 'Complete' }, { v: 'progress', l: 'Step 2 of 3' }], S.setupDone ? 'done' : 'progress', 'set-setup');
+    document.getElementById('acct-name').textContent = A().acctName;
+    document.getElementById('acct-id').textContent = A().acctId;
+    document.getElementById('banner-root').innerHTML = S.setupDone ? '' :
+      '<div class="banner" role="status"><span class="banner__icon" aria-hidden="true">!</span><strong>Sign agreement</strong><span class="banner__text">Complete your Xsolla agreement to accept live payments and publish your store</span><a class="banner__action" href="#page/agreement">Sign agreement</a></div>';
   }
-
   /* Floating setup widget (D3-FR10) */
   function renderWidget(route) {
     var root = document.getElementById('widget-root');
@@ -1972,7 +2136,7 @@
     if (!shown) { root.innerHTML = ''; return; }
     var id = candidates[0], g = GUIDES[id], pr = progress(id), st = g.steps[pr.current];
     if (S.widgetCollapsed) {
-      root.innerHTML = '<button class="pg-widget pg-widget--collapsed xui-btn xui-btn--secondary xui-btn--brand xui-btn--sm" type="button" data-action="expand-widget" aria-label="Show setup progress">' +
+      root.innerHTML = '<button class="pg-widget pg-widget--collapsed xui-btn xui-btn--primary xui-btn--mono xui-btn--sm" type="button" data-action="expand-widget" aria-label="Show setup progress">' +
         '<span class="xui-btn__label">Setup: step ' + (pr.current + 1) + ' of ' + pr.total + '</span></button>';
       return;
     }
@@ -1983,7 +2147,7 @@
       '<div class="pg-widget__titles"><span class="pg-caption">' + esc(g.name) + '</span><span class="pg-strong">Step ' + (pr.current + 1) + ': ' + esc(st.title) + '</span></div>' +
       '<button class="xui-icon-btn xui-btn--tertiary xui-btn--brand xui-btn--xs" type="button" aria-label="Minimize setup progress" data-action="collapse-widget">' + ic('chevronDown', 20) + '</button></div>' +
       progressBar(pr.done, pr.total, { size: 'sm' }) +
-      '<div class="pg-widget__actions"><a class="xui-link xui-link--md" href="#guide/' + id + '">View full guide</a>' + btn('Go to step', { size: 'xs', href: goHref, arrow: true }) + '</div></aside>';
+      '<div class="pg-widget__actions"><a class="xui-link xui-link--md" href="#guide/' + id + '">View full guide</a>' + darkBtn('Go to step', { size: 'xs', href: goHref }) + '</div></aside>';
   }
 
   /* ── Router ── */
@@ -1994,7 +2158,7 @@
     (parts[1] || '').split('&').forEach(function (kv) { if (!kv) return; var p = kv.split('='); q[decodeURIComponent(p[0])] = decodeURIComponent(p[1] || ''); });
     return { path: parts[0] || 'get-started', q: q, raw: h };
   }
-  var TITLES = { 'get-started': 'Get started', guide: 'Get started', promotions: 'LiveOps › Promotions', catalog: 'Catalog', webshop: 'Storefronts › Web Shop', page: 'Nova Rift' };
+  var TITLES = { 'get-started': 'Get started', guide: 'Get started', promotions: 'LiveOps › Promotions', catalog: 'Catalog', webshop: 'Storefronts › Game Store', page: 'Nova Rift' };
   function render() {
     var r = parse(), seg = r.path.split('/'), html;
     if (r.q.guide && !GUIDES[r.q.guide]) delete r.q.guide;
@@ -2016,7 +2180,6 @@
     if (html === '') return; /* redirected */
     var view = document.getElementById('view');
     view.innerHTML = html;
-    document.getElementById('topbar-title').textContent = TITLES[seg[0]] || 'Get started';
     renderNav(r.path);
     renderControls();
     renderWidget(r.path);
@@ -2050,7 +2213,7 @@
       case 'confirm-step': pj.guides[gid].confirmed[sid] = true; save(); render(); focusCurrent(); break;
       case 'activate-promo':
         pj.promo.active = true; save();
-        flash = gid ? nextStepFlash('sales', 'Offer activated') : { tone: 'success', title: 'Offer activated', msg: 'Players see it in your Web Shop now.' };
+        flash = gid ? nextStepFlash('sales', 'Offer activated') : { tone: 'success', title: 'Offer activated', msg: 'Players see it in your Game Store now.' };
         render(); break;
       case 'deactivate-promo': pj.promo.active = false; save(); render(); break;
       case 'add-block': pj.shopBlock = true; save(); flash = { tone: 'success', title: 'Promo code block published', msg: 'Players can enter codes on your storefront now.' }; render(); break;
@@ -2064,6 +2227,7 @@
       }
       case 'collapse-widget': S.widgetCollapsed = true; save(); renderWidget(parse().path); break;
       case 'expand-widget': S.widgetCollapsed = false; save(); renderWidget(parse().path); break;
+      case 'toggle-proto': S.protoCollapsed = !S.protoCollapsed; save(); renderControls(); break;
       case 'close-note': el.closest('.xui-notification').remove(); break;
     }
   });
