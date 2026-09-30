@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promotions advanced setup</title>
+  <style>
+    /* ══════════════════════════════════════════════════════
+       @font-face — Xsolla CDN
+       ══════════════════════════════════════════════════════ */
+
+    /* Pilat Wide (B2C headings) */
+    @font-face { font-family: 'Pilat Wide'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Medium_/Pilat_Test_Medium.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Pilat Wide'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Demi_Bold_bee67c470a/Pilat_Test_Demi_Bold_bee67c470a.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Pilat Wide'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Bold_b12b40d234/Pilat_Test_Bold_b12b40d234.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Pilat Wide'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Heavy_2885678ca4/Pilat_Test_Heavy_2885678ca4.otf') format('opentype'); font-weight: 800; font-style: normal; font-display: swap; }
+
+    /* Pilat (B2B headings) */
+    @font-face { font-family: 'Pilat'; src: url('https://cdn.xsolla.net/merchant-bucket-prod/files/uploaded/722279/55a03110b2400b778d485de2c8d064c0.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Pilat'; src: url('https://cdn.xsolla.net/merchant-bucket-prod/files/uploaded/722279/e968c9cc76e48ff6111c90534549bbf9.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Pilat'; src: url('https://cdn.xsolla.net/merchant-bucket-prod/files/uploaded/722279/ed4fe74e88aaacc6978f06a862e75b08.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Pilat'; src: url('https://cdn.xsolla.net/merchant-bucket-prod/files/uploaded/722279/7450f429979af7eaa8fa4d4d91cee927.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Pilat'; src: url('https://cdn.xsolla.net/merchant-bucket-prod/files/uploaded/722279/218d647ff7690c1e312f6943e29af375.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
+
+    /* Aktiv Grotesk (body, all contexts) */
+    @font-face { font-family: 'Aktiv Grotesk'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Light_c4650750bb/Pilat_Test_Light_c4650750bb.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Aktiv Grotesk'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Book_5cb49cd592/Pilat_Test_Book_5cb49cd592.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Aktiv Grotesk'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Demi_e9bed59107/Pilat_Test_Demi_e9bed59107.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Aktiv Grotesk'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Bold_195d1b44fa/Pilat_Test_Bold_195d1b44fa.otf') format('opentype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Aktiv Grotesk'; src: url('https://cdn.xsolla.net/strapi-v2-bucket-prod/Pilat_Test_Bold_195d1b44fa/Pilat_Test_Bold_195d1b44fa.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+
+    /* ══════════════════════════════════════════════════════
+       CSS Custom Properties — Xsolla Design Tokens
+       Theme: pentagram-dark (packages/core/src/tokens/pentagram-dark.json)
+       ══════════════════════════════════════════════════════ */
+    :root {
+      /* ── Font Stacks ── */
+      --xui-font-heading-b2b: 'Pilat', 'Aktiv Grotesk', 'Noto Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --xui-font-heading-b2c: 'Pilat Wide', 'Aktiv Grotesk', 'Noto Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --xui-font-body: 'Aktiv Grotesk', 'Noto Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      /* Promo / marketing pages — Pilat Wide Bold for semantic h1 & h2 (see SKILL.md); aliases B2C heading stack + registered 700 face */
+      --xui-font-promo-heading: var(--xui-font-heading-b2c);
+      --xui-font-weight-promo-heading: 700;
+
+      /* ── Spacing ── */
+      --xui-space-xs: 4px;
+      --xui-space-s: 8px;
+      --xui-space-m: 16px;
+      --xui-space-l: 24px;
+      --xui-space-xl: 32px;
+
+      /* ── Border Radius ── */
+      --xui-radius-button: 4px;
+      --xui-radius-card: 12px;
+      --xui-radius-input: 4px;
+      --xui-radius-tag-sm: 2px;
+      --xui-radius-tag-lg: 4px;
+      --xui-radius-avatar-sm: 4px;
+      --xui-radius-avatar-lg: 8px;
+      --xui-radius-avatar-circle: 999px;
+
+      /* ── Shadows ── */
+      --xui-shadow-active: 0px 1px 2px rgba(7,7,8,0.2), 0px 1px 3px 1px rgba(7,7,8,0.1);
+      --xui-shadow-surface: 0px 1px 2px rgba(7,7,8,0.2), 0px 2px 6px 2px rgba(7,7,8,0.1);
+      --xui-shadow-surface-hover: 0px 4px 8px 3px rgba(7,7,8,0.1), 0px 1px 3px rgba(7,7,8,0.2);
+      --xui-shadow-popover: 0px 6px 10px 4px rgba(7,7,8,0.1), 0px 2px 3px rgba(7,7,8,0.2);
+      --xui-shadow-modal: 0px 8px 12px 6px rgba(7,7,8,0.1), 0px 4px 4px rgba(7,7,8,0.2);
+
+      /* ── Background ── */
+      --xui-bg-primary: #1b2628;
+      --xui-bg-secondary: #141d1f;
+      --xui-bg-inverse: #ffffff;
+      --xui-bg-brand-primary: #80eaff;
+      --xui-bg-brand-secondary: #0b3841;
+      --xui-bg-brand-extra-primary: #cef655;
+      --xui-bg-brand-extra-secondary: #566c13;
+      --xui-bg-success-primary: #95ff80;
+      --xui-bg-success-secondary: #14410b;
+      --xui-bg-warning-primary: #ffc380;
+      --xui-bg-warning-secondary: #6c4313;
+      --xui-bg-alert-primary: #e84f30;
+      --xui-bg-alert-secondary: #6c2213;
+      --xui-bg-neutral-primary: #99aeb2;
+      --xui-bg-neutral-secondary: #34474b;
+
+      /* ── Content ── */
+      --xui-content-primary: #e8eced;
+      --xui-content-secondary: rgba(232,236,237,0.72);
+      --xui-content-tertiary: rgba(232,236,237,0.58);
+      --xui-content-inverse: #000000;
+      --xui-content-brand-primary: #80eaff;
+      --xui-content-brand-secondary: #55dcf6;
+      --xui-content-brand-extra-primary: #cef655;
+      --xui-content-brand-extra-secondary: #9bc323;
+      --xui-content-success-primary: #70f655;
+      --xui-content-success-secondary: #3dc322;
+      --xui-content-warning-primary: #f6ab55;
+      --xui-content-warning-secondary: #c37822;
+      --xui-content-alert-primary: #f67055;
+      --xui-content-alert-secondary: #e84f30;
+      --xui-content-neutral-primary: #99aeb2;
+      --xui-content-neutral-secondary: #4b6368;
+      --xui-content-on-brand: #000000;
+      --xui-content-on-brand-extra: #000000;
+      --xui-content-on-success: #000000;
+      --xui-content-on-warning: #000000;
+      --xui-content-on-alert: #ffffff;
+      --xui-content-on-neutral: #ffffff;
+      --xui-content-static-light: #ffffff;
+      --xui-content-static-dark: #000000;
+
+      /* ── Border ── */
+      --xui-border-primary: #ffffff;
+      --xui-border-secondary: rgba(178,242,255,0.1);
+      --xui-border-inverse: rgba(0,0,0,0.15);
+      --xui-border-brand: #55dcf6;
+      --xui-border-brand-extra: #cef655;
+      --xui-border-success: #70f655;
+      --xui-border-warning: #f6ab55;
+      --xui-border-alert: #f67055;
+      --xui-border-neutral: #9580ff;
+
+      /* ── Overlay ── */
+      --xui-overlay-mono: rgba(178,242,255,0.06);
+      --xui-overlay-brand: rgba(128,234,255,0.2);
+      --xui-overlay-brand-extra: rgba(206,246,85,0.3);
+      --xui-overlay-success: rgba(149,255,128,0.2);
+      --xui-overlay-warning: rgba(255,195,128,0.24);
+      --xui-overlay-alert: rgba(232,79,48,0.32);
+      --xui-overlay-neutral: rgba(123,152,157,0.28);
+
+      /* ── Layer ── */
+      --xui-layer-scrim: rgba(0,0,0,0.5);
+      --xui-layer-float: #000000;
+
+      /* ── Control: Brand ── */
+      --xui-ctrl-brand-primary-bg: #80eaff;
+      --xui-ctrl-brand-primary-bg-hover: #b2f2ff;
+      --xui-ctrl-brand-primary-bg-press: #55dcf6;
+      --xui-ctrl-brand-primary-bg-disable: rgba(52,71,75,0.85);
+      --xui-ctrl-brand-primary-border: #31cae8;
+      --xui-ctrl-brand-primary-border-hover: #55dcf6;
+      --xui-ctrl-brand-secondary-bg: #135d6c;
+      --xui-ctrl-brand-secondary-bg-hover: #1b8398;
+      --xui-ctrl-brand-secondary-bg-press: #0b3841;
+      --xui-ctrl-brand-secondary-border: #22a8c3;
+      --xui-ctrl-brand-secondary-border-hover: #22a8c3;
+      --xui-ctrl-brand-tertiary-bg: transparent;
+      --xui-ctrl-brand-tertiary-bg-hover: #0b3841;
+      --xui-ctrl-brand-tertiary-bg-press: #135d6c;
+      --xui-ctrl-brand-ghost-bg: transparent;
+      --xui-ctrl-brand-ghost-bg-hover: rgba(128,234,255,0.04);
+      --xui-ctrl-brand-ghost-bg-press: rgba(128,234,255,0.08);
+      --xui-ctrl-brand-ghost-border: rgba(128,234,255,0.16);
+      --xui-ctrl-brand-ghost-border-hover: rgba(128,234,255,0.24);
+      --xui-ctrl-brand-text-primary: #000000;
+      --xui-ctrl-brand-text-secondary: #80eaff;
+      --xui-ctrl-brand-text-tertiary: #80eaff;
+      --xui-ctrl-brand-text-ghost: #80eaff;
+      --xui-ctrl-brand-text-disable: rgba(232,236,237,0.2);
+
+      /* ── Control: Mono ── */
+      --xui-ctrl-mono-primary-bg: #ffffff;
+      --xui-ctrl-mono-primary-bg-hover: #e8eced;
+      --xui-ctrl-mono-primary-bg-press: #f4f5f6;
+      --xui-ctrl-mono-secondary-bg: #34474b;
+      --xui-ctrl-mono-secondary-bg-hover: #4b6368;
+      --xui-ctrl-mono-secondary-bg-press: #233134;
+      --xui-ctrl-mono-secondary-border: #4b6368;
+      --xui-ctrl-mono-secondary-border-hover: #607f85;
+      --xui-ctrl-mono-tertiary-bg: transparent;
+      --xui-ctrl-mono-tertiary-bg-hover: #233134;
+      --xui-ctrl-mono-tertiary-bg-press: #34474b;
+      --xui-ctrl-mono-ghost-bg: transparent;
+      --xui-ctrl-mono-ghost-bg-hover: rgba(255,255,255,0.04);
+      --xui-ctrl-mono-ghost-bg-press: rgba(255,255,255,0.08);
+      --xui-ctrl-mono-ghost-border: rgba(255,255,255,0.16);
+      --xui-ctrl-mono-ghost-border-hover: rgba(255,255,255,0.24);
+      --xui-ctrl-mono-text-primary: #000000;
+      --xui-ctrl-mono-text-secondary: #ffffff;
+      --xui-ctrl-mono-text-tertiary: #ffffff;
+      --xui-ctrl-mono-text-ghost: #ffffff;
+      --xui-ctrl-mono-text-disable: rgba(232,236,237,0.2);
+
+      /* ── Control: Alert ── */
+      --xui-ctrl-alert-primary-bg: #f67055;
+      --xui-ctrl-alert-primary-bg-hover: #ff9580;
+      --xui-ctrl-alert-primary-bg-press: #e84f30;
+      --xui-ctrl-alert-secondary-bg: rgba(232,79,48,0.4);
+      --xui-ctrl-alert-secondary-bg-hover: rgba(246,112,85,0.4);
+      --xui-ctrl-alert-secondary-bg-press: rgba(195,61,34,0.4);
+      --xui-ctrl-alert-tertiary-bg: transparent;
+      --xui-ctrl-alert-tertiary-bg-hover: rgba(255,170,153,0.07);
+      --xui-ctrl-alert-tertiary-bg-press: rgba(255,85,51,0.12);
+      --xui-ctrl-alert-ghost-bg: transparent;
+      --xui-ctrl-alert-ghost-bg-hover: rgba(246,112,85,0.04);
+      --xui-ctrl-alert-ghost-bg-press: rgba(246,112,85,0.08);
+      --xui-ctrl-alert-ghost-border: rgba(246,112,85,0.16);
+      --xui-ctrl-alert-ghost-border-hover: rgba(246,112,85,0.24);
+      --xui-ctrl-alert-text-primary: #ffffff;
+      --xui-ctrl-alert-text-secondary: #ffffff;
+      --xui-ctrl-alert-text-tertiary: #f67055;
+      --xui-ctrl-alert-text-ghost: #f67055;
+      --xui-ctrl-alert-text-disable: rgba(232,236,237,0.2);
+
+      /* ── Control: BrandExtra ── */
+      --xui-ctrl-brand-extra-primary-bg: #cef655;
+      --xui-ctrl-brand-extra-primary-bg-hover: #bae831;
+      --xui-ctrl-brand-extra-primary-bg-press: #dfff80;
+      --xui-ctrl-brand-extra-secondary-bg: rgba(186,232,49,0.4);
+      --xui-ctrl-brand-extra-secondary-bg-hover: rgba(206,246,85,0.4);
+      --xui-ctrl-brand-extra-secondary-bg-press: rgba(186,232,49,0.4);
+      --xui-ctrl-brand-extra-tertiary-bg: transparent;
+      --xui-ctrl-brand-extra-tertiary-bg-hover: rgba(206,246,85,0.07);
+      --xui-ctrl-brand-extra-tertiary-bg-press: rgba(186,232,49,0.12);
+      --xui-ctrl-brand-extra-ghost-bg: transparent;
+      --xui-ctrl-brand-extra-ghost-bg-hover: rgba(206,246,85,0.04);
+      --xui-ctrl-brand-extra-ghost-bg-press: rgba(206,246,85,0.08);
+      --xui-ctrl-brand-extra-ghost-border: rgba(206,246,85,0.16);
+      --xui-ctrl-brand-extra-ghost-border-hover: rgba(206,246,85,0.24);
+      --xui-ctrl-brand-extra-text-primary: #000000;
+      --xui-ctrl-brand-extra-text-secondary: #ffffff;
+      --xui-ctrl-brand-extra-text-tertiary: #cef655;
+      --xui-ctrl-brand-extra-text-ghost: #cef655;
+      --xui-ctrl-brand-extra-text-disable: rgba(232,236,237,0.2);
+
+      /* ── Control: Input ── */
+      --xui-ctrl-input-bg: rgba(178,242,255,0.12);
+      --xui-ctrl-input-bg-hover: rgba(178,242,255,0.15);
+      --xui-ctrl-input-bg-disable: rgba(178,242,255,0.25);
+      --xui-ctrl-input-border: rgba(178,242,255,0.1);
+      --xui-ctrl-input-border-hover: rgba(178,242,255,0.15);
+      --xui-ctrl-input-border-disable: transparent;
+      --xui-ctrl-input-text: #ffffff;
+      --xui-ctrl-input-placeholder: rgba(255,255,255,0.56);
+      --xui-ctrl-input-text-disable: rgba(255,255,255,0.36);
+
+      /* ── Control: Focus ── */
+      --xui-ctrl-focus-bg: #000000;
+      --xui-ctrl-focus-border: #55dcf6;
+
+      /* ── Control: AppButton ── */
+      --xui-ctrl-app-btn-bg: #34474b;
+      --xui-ctrl-app-btn-bg-hover: #4b6368;
+      --xui-ctrl-app-btn-bg-press: #607f85;
+      --xui-ctrl-app-btn-border: #4b6368;
+      --xui-ctrl-app-btn-border-hover: #607f85;
+      --xui-ctrl-app-btn-text: #b7c5c8;
+
+      /* ── Control: Link ── */
+      --xui-ctrl-text-disable: rgba(255,255,255,0.4);
+      --xui-ctrl-link-primary: #55dcf6;
+      --xui-ctrl-link-primary-hover: #80eaff;
+      --xui-ctrl-link-secondary: #cef655;
+      --xui-ctrl-link-secondary-hover: #dfff80;
+
+      /* ── Control: Check (Checkbox/Radio) ── */
+      --xui-ctrl-check-bg: #135d6c;
+      --xui-ctrl-check-bg-hover: #1b8398;
+      --xui-ctrl-check-bg-disable: rgba(178,242,255,0.25);
+      --xui-ctrl-check-border: #22a8c3;
+      --xui-ctrl-check-border-hover: #22a8c3;
+      --xui-ctrl-check-icon: #80eaff;
+
+      /* ── Control: Switch ── */
+      --xui-ctrl-switch-bg: #135d6c;
+      --xui-ctrl-switch-bg-hover: #1b8398;
+      --xui-ctrl-switch-border: #22a8c3;
+
+      /* ── Control: Knob ── */
+      --xui-ctrl-knob-bg: #80eaff;
+      --xui-ctrl-knob-bg-hover: #b2f2ff;
+      --xui-ctrl-knob-bg-inactive: #ffffff;
+
+      /* ── Control: Faint (unchecked Checkbox / Radio background) ── */
+      --xui-ctrl-faint-bg: rgba(178,242,255,0.15);
+      --xui-ctrl-faint-bg-hover: rgba(178,242,255,0.2);
+      --xui-ctrl-faint-border: rgba(178,242,255,0.1);
+      --xui-ctrl-faint-border-hover: rgba(178,242,255,0.15);
+
+      /* ── Control: Segmented ── */
+      --xui-ctrl-segmented-bg: rgba(178,242,255,0.1);
+      --xui-ctrl-segmented-bg-hover: rgba(178,242,255,0.1);
+      --xui-ctrl-segmented-bg-active: rgba(178,242,255,0.15);
+      --xui-ctrl-segmented-text: #ffffff;
+      --xui-ctrl-segmented-text-disable: rgba(255,255,255,0.4);
+
+      /* ── Control: ToggleButton ── */
+      --xui-ctrl-toggle-bg: rgba(178,242,255,0.12);
+      --xui-ctrl-toggle-bg-hover: rgba(178,242,255,0.15);
+      --xui-ctrl-toggle-bg-active: #135d6c;
+      --xui-ctrl-toggle-border: rgba(178,242,255,0.1);
+      --xui-ctrl-toggle-border-active: #22a8c3;
+      --xui-ctrl-toggle-text: #ffffff;
+      --xui-ctrl-toggle-text-active: #80eaff;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       CSS Reset & Base Styles
+       ══════════════════════════════════════════════════════ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Page canvas: Pentagram Dark body = --xui-bg-secondary (#141d1f) — always */
+    body {
+      font-family: var(--xui-font-body);
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 400;
+      color: var(--xui-content-primary);
+      background-color: var(--xui-bg-secondary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       Component Styles — injected per page
+       ══════════════════════════════════════════════════════ */
+    /* ── Page-level motion tokens (SKILL.md step 7) ── */
+    :root {
+      --page-duration-micro: 150ms;
+      --page-duration-macro: 300ms;
+      --page-duration-slow: 500ms;
+      --page-easing: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* from components/button.md */
+    .xui-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: fit-content;
+      max-width: 100%;
+      box-sizing: border-box;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-family: var(--xui-font-body);
+      font-weight: 500;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+      white-space: nowrap;
+      outline: none;
+    }
+    .xui-btn:focus-visible { outline: 2px solid var(--xui-border-brand); outline-offset: 2px; }
+    .xui-btn:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+    .xui-btn--full-width { width: 100%; }
+    .xui-btn--spread { justify-content: space-between; }
+    .xui-btn--md { height: 48px; padding: 0 20px; font-size: 16px; border-radius: 8px; }
+    .xui-btn--sm { height: 40px; padding: 0 20px; font-size: 14px; border-radius: 4px; }
+    .xui-btn--xs { height: 32px; padding: 0 20px; font-size: 12px; border-radius: 4px; }
+    .xui-btn--primary.xui-btn--brand {
+      background: var(--xui-ctrl-brand-primary-bg);
+      border-color: var(--xui-ctrl-brand-primary-border);
+      color: var(--xui-ctrl-brand-text-primary);
+    }
+    .xui-btn--primary.xui-btn--brand:hover {
+      background: var(--xui-ctrl-brand-primary-bg-hover);
+      border-color: var(--xui-ctrl-brand-primary-border-hover);
+    }
+    .xui-btn--primary.xui-btn--brand:active { background: var(--xui-ctrl-brand-primary-bg-press); }
+    .xui-btn--secondary.xui-btn--brand {
+      background: var(--xui-ctrl-brand-secondary-bg);
+      border-color: var(--xui-ctrl-brand-secondary-border);
+      color: var(--xui-ctrl-brand-text-secondary);
+    }
+    .xui-btn--secondary.xui-btn--brand:hover {
+      background: var(--xui-ctrl-brand-secondary-bg-hover);
+      border-color: var(--xui-ctrl-brand-secondary-border-hover);
+    }
+    .xui-btn--tertiary.xui-btn--brand {
+      background: var(--xui-ctrl-brand-tertiary-bg);
+      color: var(--xui-ctrl-brand-text-tertiary);
+    }
+    .xui-btn--tertiary.xui-btn--brand:hover { background: var(--xui-ctrl-brand-tertiary-bg-hover); }
+    .xui-btn--ghost.xui-btn--mono {
+      background: var(--xui-ctrl-mono-ghost-bg);
+      color: var(--xui-ctrl-mono-text-ghost);
+      border-color: var(--xui-ctrl-mono-ghost-border);
+    }
+    .xui-btn--ghost.xui-btn--mono:hover {
+      background: var(--xui-ctrl-mono-ghost-bg-hover);
+      border-color: var(--xui-ctrl-mono-ghost-border-hover);
+    }
+    .xui-btn--secondary.xui-btn--mono {
+      background: var(--xui-ctrl-mono-secondary-bg);
+      border-color: var(--xui-ctrl-mono-secondary-border);
+      color: var(--xui-ctrl-mono-text-secondary);
+    }
+    .xui-btn--secondary.xui-btn--mono:hover {
+      background: var(--xui-ctrl-mono-secondary-bg-hover);
+      border-color: var(--xui-ctrl-mono-secondary-border-hover);
+    }
+    .xui-btn--md .xui-btn__icon,
+    .xui-btn--sm .xui-btn__icon { width: 28px; height: 28px; }
+    .xui-btn--xs .xui-btn__icon { width: 24px; height: 24px; }
+
+    /* from components/button.md — IconButton */
+    .xui-icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: inherit;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+      outline: none;
+    }
+    .xui-icon-btn:focus-visible { outline: 2px solid var(--xui-border-brand); outline-offset: 2px; }
+    .xui-icon-btn.xui-btn--xs { width: 32px; height: 32px; border-radius: 4px; }
+    .xui-icon-btn.xui-btn--tertiary.xui-btn--brand:hover { background: var(--xui-ctrl-brand-tertiary-bg-hover); }
+
+    /* from components/link.md */
+    .xui-link {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      font-weight: 400;
+      text-decoration: none;
+      color: var(--xui-ctrl-link-primary);
+      cursor: pointer;
+      outline: none;
+    }
+    .xui-link:hover { opacity: 0.8; }
+    .xui-link:focus-visible { outline: 2px solid var(--xui-border-brand); outline-offset: 2px; }
+    .xui-link--sm { font-size: 12px; }
+    .xui-link--md { font-size: 14px; }
+    .xui-link--lg { font-size: 16px; }
+    .xui-link--underline { text-decoration: underline; }
+
+    /* from components/status.md */
+    .xui-status { display: inline-flex; flex-direction: row; align-items: center; }
+    .xui-status--sm { gap: 4px; }
+    .xui-status--md { gap: 6px; }
+    .xui-status__dot { display: block; border-radius: 50%; flex-shrink: 0; }
+    .xui-status--sm .xui-status__dot { width: 4px; height: 4px; }
+    .xui-status--md .xui-status__dot { width: 6px; height: 6px; }
+    .xui-status__dot--default { background-color: var(--xui-content-tertiary); }
+    .xui-status__dot--success { background-color: var(--xui-content-success-primary); }
+    .xui-status__dot--warning { background-color: var(--xui-content-warning-primary); }
+    .xui-status__dot--alert { background-color: var(--xui-content-alert-primary); }
+    .xui-status__dot--neutral { background-color: var(--xui-content-neutral-primary); }
+    .xui-status__label { color: var(--xui-content-primary); font-weight: 400; font-family: var(--xui-font-body); }
+    .xui-status--sm .xui-status__label { font-size: 12px; line-height: 16px; }
+    .xui-status--md .xui-status__label { font-size: 14px; line-height: 20px; }
+    .xui-status__label--dot-color.xui-status__label--success { color: var(--xui-content-success-primary); }
+    .xui-status__label--dot-color.xui-status__label--warning { color: var(--xui-content-warning-primary); }
+    .xui-status__label--dot-color.xui-status__label--neutral { color: var(--xui-content-neutral-primary); }
+    .xui-status__label--dot-color.xui-status__label--default { color: var(--xui-content-tertiary); }
+
+    /* from components/tag.md */
+    .xui-tag {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      font-family: var(--xui-font-body);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border: none;
+      background: transparent;
+    }
+    .xui-tag--sm { height: 24px; padding: 0 8px; font-size: 14px; gap: 4px; border-radius: var(--xui-radius-tag-sm); }
+    .xui-tag--xs { height: 20px; padding: 0 6px; font-size: 12px; gap: 4px; border-radius: var(--xui-radius-tag-sm); }
+    .xui-tag__icon { display: block; flex-shrink: 0; }
+    .xui-tag--sm .xui-tag__icon { width: 16px; height: 16px; }
+    .xui-tag--xs .xui-tag__icon { width: 16px; height: 16px; }
+    .xui-tag--primary { background: var(--xui-bg-primary); color: var(--xui-content-primary); }
+    .xui-tag--secondary { background: var(--xui-bg-secondary); color: var(--xui-content-primary); }
+    .xui-tag--brand { background: var(--xui-bg-brand-primary); color: var(--xui-content-on-brand); }
+    .xui-tag--brand-extra { background: var(--xui-bg-brand-extra-primary); color: var(--xui-content-on-brand-extra); }
+    .xui-tag--success { background: var(--xui-bg-success-primary); color: var(--xui-content-on-success); }
+
+    /* from components/rich-icon.md */
+    .xui-rich-icon { display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; flex-shrink: 0; }
+    .xui-rich-icon--sm { width: 24px; height: 24px; }
+    .xui-rich-icon--md { width: 32px; height: 32px; }
+    .xui-rich-icon--lg { width: 40px; height: 40px; }
+    .xui-rich-icon--xl { width: 64px; height: 64px; }
+    .xui-rich-icon--rounded { border-radius: 8px; }
+    .xui-rich-icon--circle { border-radius: 1000px; }
+    .xui-rich-icon__icon {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--xui-ctrl-mono-secondary-bg);
+    }
+    .xui-rich-icon__text { color: var(--xui-content-primary); font-weight: 600; text-align: center; user-select: none; }
+    .xui-rich-icon--sm .xui-rich-icon__text { font-size: 10px; }
+    .xui-rich-icon--md .xui-rich-icon__text { font-size: 12px; }
+
+    /* from components/progress-bar.md */
+    .xui-progress-bar { display: flex; flex-direction: column; width: 100%; }
+    .xui-progress-bar--lg { gap: 8px; }
+    .xui-progress-bar--md { gap: 6px; }
+    .xui-progress-bar--sm { gap: 4px; }
+    .xui-progress-bar__header { display: flex; flex-direction: row; align-items: center; justify-content: space-between; }
+    .xui-progress-bar__label-group { display: flex; flex-direction: row; align-items: center; gap: 8px; }
+    .xui-progress-bar__label { color: var(--xui-content-secondary); font-weight: 500; }
+    .xui-progress-bar__status-icon { flex-shrink: 0; }
+    .xui-progress-bar__track { width: 100%; border-radius: 100px; overflow: hidden; background-color: var(--xui-ctrl-input-bg); }
+    .xui-progress-bar--lg .xui-progress-bar__track { height: 8px; }
+    .xui-progress-bar--md .xui-progress-bar__track { height: 6px; }
+    .xui-progress-bar--sm .xui-progress-bar__track { height: 4px; }
+    .xui-progress-bar__fill { height: 100%; border-radius: 100px; }
+    .xui-progress-bar--default .xui-progress-bar__fill { background-color: var(--xui-content-brand-primary); }
+    .xui-progress-bar--success .xui-progress-bar__fill { background-color: var(--xui-content-success-primary); }
+    .xui-progress-bar--default .xui-progress-bar__status-icon { color: var(--xui-content-brand-primary); }
+    .xui-progress-bar--success .xui-progress-bar__status-icon { color: var(--xui-content-success-primary); }
+    .xui-progress-bar__helper { color: var(--xui-content-secondary); }
+    .xui-progress-bar--lg .xui-progress-bar__label { font-size: 14px; }
+    .xui-progress-bar--lg .xui-progress-bar__helper { font-size: 12px; }
+    .xui-progress-bar--md .xui-progress-bar__label,
+    .xui-progress-bar--md .xui-progress-bar__helper,
+    .xui-progress-bar--sm .xui-progress-bar__label { font-size: 12px; }
+
+    /* from components/navigation.md — NavBar */
+    .xui-nav-bar {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background-color: var(--xui-bg-primary);
+    }
+    .xui-nav-bar--md { height: 64px; padding: 0 16px; }
+    .xui-nav-bar--bordered { border-bottom: 1px solid var(--xui-border-secondary); }
+    .xui-nav-bar__start { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; flex: 1; flex-basis: 0; gap: 8px; }
+    .xui-nav-bar__end { display: flex; flex-direction: row; align-items: center; justify-content: flex-end; flex: 1; flex-basis: 0; gap: 8px; }
+
+    /* from components/navigation.md — Breadcrumbs */
+    .xui-breadcrumbs { display: flex; flex-direction: row; align-items: center; flex-wrap: wrap; }
+    .xui-breadcrumbs__list { display: flex; flex-direction: row; align-items: center; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; gap: 8px; }
+    .xui-breadcrumbs__link { color: var(--xui-content-tertiary); font-size: 14px; font-weight: 400; text-decoration: none; cursor: pointer; }
+    .xui-breadcrumbs__link:hover { opacity: 0.8; }
+    .xui-breadcrumbs__link--active { color: var(--xui-content-primary); font-weight: 600; cursor: default; }
+    .xui-breadcrumbs__sep { display: flex; align-items: center; color: var(--xui-content-tertiary); }
+
+    /* from components/segmented.md */
+    .xui-segmented {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-shrink: 0;
+      position: relative;
+      width: fit-content;
+      background-color: var(--xui-ctrl-segmented-bg);
+      border: 1px solid var(--xui-border-secondary);
+      overflow: hidden;
+    }
+    .xui-segmented__item {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      flex-shrink: 0;
+      outline: none;
+    }
+    .xui-segmented__item:hover { background-color: var(--xui-ctrl-segmented-bg-hover); }
+    .xui-segmented__item:focus-visible { outline: 2px solid var(--xui-border-brand); outline-offset: -2px; }
+    .xui-segmented__label { color: var(--xui-ctrl-segmented-text); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* Size sm, from the segmented.md size table (height 40, padding 4, radius 4, item 6/12, item radius 2, font 14).
+       Active fill applied to the item instead of the JS-measured sliding indicator. */
+    .xui-segmented--sm { height: 40px; padding: 4px; border-radius: 4px; gap: 2px; }
+    .xui-segmented--sm .xui-segmented__item { height: 100%; padding: 6px 12px; border-radius: 2px; font-family: var(--xui-font-body); }
+    .xui-segmented--sm .xui-segmented__label { font-size: 14px; }
+    .xui-segmented__item--active { background-color: var(--xui-ctrl-segmented-bg-active); }
+
+    /* from components/tabs.md — line variant */
+    .xui-tabs--line { display: flex; flex-direction: row; align-items: flex-end; width: fit-content; border-bottom: 1px solid var(--xui-border-secondary); }
+    .xui-tabs--line.xui-tabs--sm { height: 40px; }
+    .xui-tab {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      position: relative;
+      height: inherit;
+      padding: 0 20px;
+      background: transparent;
+      border: none;
+      border-bottom: 0px solid transparent;
+      margin-bottom: -1px;
+      cursor: pointer;
+      white-space: nowrap;
+      color: var(--xui-content-tertiary);
+      font-weight: 500;
+      font-family: var(--xui-font-body);
+      outline: none;
+      text-decoration: none;
+      transition: background-color 0.15s ease;
+    }
+    .xui-tabs--sm .xui-tab { font-size: 14px; }
+    .xui-tab:hover:not(.xui-tab--disabled):not(.xui-tab--active) { background-color: var(--xui-overlay-mono); }
+    .xui-tab--active { color: var(--xui-content-primary); font-weight: 600; border-bottom: 2px solid var(--xui-border-primary); border-bottom-style: solid; }
+    .xui-tab:focus-visible { outline: 2px solid var(--xui-border-brand); outline-offset: -2px; }
+    .xui-tab__counter { color: var(--xui-content-brand-primary); font-weight: 500; }
+
+    /* from components/notification.md */
+    .xui-notification {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 16px;
+      width: 100%;
+      border-radius: var(--xui-radius-card);
+      padding: 16px;
+    }
+    .xui-notification--inline { align-items: center; }
+    .xui-notification--neutral { background: var(--xui-bg-neutral-secondary); }
+    .xui-notification--success { background: var(--xui-bg-success-secondary); }
+    .xui-notification--warning { background: var(--xui-bg-warning-secondary); }
+    .xui-notification--alert { background: var(--xui-bg-alert-secondary); }
+    .xui-notification__icon-wrap { width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .xui-notification--neutral .xui-notification__icon-wrap { color: var(--xui-content-neutral-primary); }
+    .xui-notification--success .xui-notification__icon-wrap { color: var(--xui-content-success-primary); }
+    .xui-notification--warning .xui-notification__icon-wrap { color: var(--xui-content-warning-primary); }
+    .xui-notification--alert .xui-notification__icon-wrap { color: var(--xui-content-alert-primary); }
+    .xui-notification__body { flex: 1; display: flex; }
+    .xui-notification__body--column { flex-direction: column; gap: 8px; align-items: flex-start; }
+    .xui-notification__body--row { flex-direction: row; gap: 28px; align-items: center; }
+    .xui-notification__text-group { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .xui-notification__title { font-family: var(--xui-font-body); font-size: 16px; font-weight: 500; color: var(--xui-content-primary); margin: 0; }
+    .xui-notification__message { font-family: var(--xui-font-body); font-size: 14px; font-weight: 400; color: var(--xui-content-secondary); margin: 0; }
+    .xui-notification__action {
+      font-family: var(--xui-font-body);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--xui-content-primary);
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+      background: none;
+      border: none;
+      padding: 8px 0;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s ease;
+    }
+    .xui-notification__action:hover { opacity: 0.75; }
+    .xui-notification__action:focus-visible { outline: 2px solid var(--xui-border-brand); outline-offset: 2px; border-radius: 2px; }
+    .xui-notification--inline .xui-notification__action { padding: 0; }
+    .xui-notification__close {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: var(--xui-content-primary);
+      margin-top: 2px;
+      transition: opacity 0.15s ease;
+    }
+    .xui-notification--inline .xui-notification__close { margin-top: 0; }
+    .xui-notification__close:hover { opacity: 0.7; }
+
+    /* from components/radio.md */
+    .xui-radio { display: flex; align-items: flex-start; cursor: pointer; }
+    .xui-radio--md { gap: 8px; }
+    .xui-radio__control {
+      border-radius: 50%;
+      border-style: solid;
+      border-color: var(--xui-ctrl-faint-border);
+      background: var(--xui-ctrl-faint-bg);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+    .xui-radio--md .xui-radio__control { width: 18px; height: 18px; border-width: 1px; }
+    .xui-radio__control:hover { background: var(--xui-ctrl-faint-bg-hover); border-color: var(--xui-ctrl-faint-border-hover); }
+    .xui-radio--checked .xui-radio__control { border-color: var(--xui-ctrl-check-border); background: var(--xui-ctrl-check-bg); }
+    .xui-radio--checked .xui-radio__control:hover { background: var(--xui-ctrl-check-bg-hover); border-color: var(--xui-ctrl-check-border-hover); }
+    .xui-radio__dot { border-radius: 50%; background: var(--xui-ctrl-check-icon); display: none; }
+    .xui-radio--md .xui-radio__dot { width: 8px; height: 8px; }
+    .xui-radio--checked .xui-radio__dot { display: block; }
+    .xui-radio__text { display: flex; flex-direction: column; }
+    .xui-radio--md .xui-radio__text { gap: 2px; }
+    .xui-radio__label { font-family: var(--xui-font-body); color: var(--xui-content-primary); }
+    .xui-radio--md .xui-radio__label { font-size: 16px; line-height: 18px; }
+    .xui-radio__description { font-family: var(--xui-font-body); color: var(--xui-content-tertiary); }
+    .xui-radio--md .xui-radio__description { font-size: 14px; line-height: 16px; }
+
+    /* from components/checkbox.md */
+    .xui-checkbox { display: flex; align-items: flex-start; cursor: pointer; }
+    .xui-checkbox--md { gap: 8px; }
+    .xui-checkbox__control {
+      border: 2px solid var(--xui-ctrl-faint-border);
+      background: var(--xui-ctrl-faint-bg);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+    .xui-checkbox--md .xui-checkbox__control { width: 18px; height: 18px; border-radius: 2px; }
+    .xui-checkbox__control:hover { background: var(--xui-ctrl-faint-bg-hover); border-color: var(--xui-ctrl-faint-border-hover); }
+    .xui-checkbox--checked .xui-checkbox__control { border-color: var(--xui-ctrl-check-border); background: var(--xui-ctrl-check-bg); }
+    .xui-checkbox__icon { display: none; color: var(--xui-ctrl-check-icon); }
+    .xui-checkbox--checked .xui-checkbox__icon { display: flex; }
+    .xui-checkbox--md .xui-checkbox__icon { width: 14px; height: 14px; }
+    .xui-checkbox__text { display: flex; flex-direction: column; }
+    .xui-checkbox--md .xui-checkbox__text { gap: 2px; }
+    .xui-checkbox__label { font-family: var(--xui-font-body); color: var(--xui-content-primary); }
+    .xui-checkbox--md .xui-checkbox__label { font-size: 16px; line-height: 18px; }
+    .xui-checkbox__description { font-family: var(--xui-font-body); color: var(--xui-content-tertiary); }
+    .xui-checkbox--md .xui-checkbox__description { font-size: 14px; line-height: 16px; }
+
+    /* from components/input.md */
+    .xui-input-wrapper { display: flex; flex-direction: column; }
+    .xui-input__container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--xui-ctrl-input-bg);
+      border: 1px solid var(--xui-ctrl-input-border);
+      transition: background-color 0.15s ease, border-color 0.15s ease, outline 0.15s ease;
+    }
+    .xui-input__container:hover { background: var(--xui-ctrl-input-bg-hover); border-color: var(--xui-ctrl-input-border-hover); }
+    .xui-input__container:focus-within {
+      background: var(--xui-ctrl-focus-bg);
+      border-color: transparent;
+      outline: 1px solid var(--xui-border-brand);
+      outline-offset: -1px;
+    }
+    .xui-input--error .xui-input__container { border-color: transparent; outline: 1px solid var(--xui-border-alert); outline-offset: -1px; }
+    .xui-input--disabled .xui-input__container { background: var(--xui-ctrl-input-bg-disable); border-color: var(--xui-ctrl-input-border-disable); cursor: not-allowed; }
+    .xui-input--disabled .xui-input { color: var(--xui-ctrl-input-text-disable); cursor: not-allowed; }
+    .xui-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--xui-ctrl-input-text);
+      font-family: var(--xui-font-body);
+      width: 100%;
+    }
+    .xui-input::placeholder { color: var(--xui-ctrl-input-placeholder); }
+    .xui-input--md .xui-input__container { height: 48px; padding: 11px 12px; border-radius: 8px; }
+    .xui-input--md .xui-input { font-size: 16px; }
+    .xui-input__icon-right { flex-shrink: 0; color: var(--xui-content-secondary); }
+    .xui-input__error { color: var(--xui-content-alert-primary); font-size: 14px; line-height: 16px; margin-top: 4px; }
+    /* page-level: dark native date picker inside xui-input */
+    .xui-input[type="date"] { color-scheme: dark; }
+
+    /* from components/field-group.md */
+    .xui-field-group { display: flex; flex-direction: column; width: 100%; }
+    .xui-field-group--md { gap: 4px; }
+    .xui-field-group__label-row { display: flex; align-items: center; gap: 6px; }
+    .xui-field-group__label { font-family: var(--xui-font-body); color: var(--xui-content-tertiary); }
+    .xui-field-group--md .xui-field-group__label { font-size: 14px; line-height: 16px; }
+    .xui-field-group__label--required::before { content: '*'; color: var(--xui-content-alert-primary); }
+    .xui-field-group__description { font-family: var(--xui-font-body); color: var(--xui-content-tertiary); }
+    .xui-field-group--md .xui-field-group__description { font-size: 14px; line-height: 16px; }
+    .xui-field-group__helper { font-family: var(--xui-font-body); color: var(--xui-content-tertiary); }
+    .xui-field-group--md .xui-field-group__helper { font-size: 14px; line-height: 16px; }
+    .xui-field-group__error { font-family: var(--xui-font-body); color: var(--xui-content-alert-primary); }
+    .xui-field-group--md .xui-field-group__error { font-size: 14px; line-height: 16px; }
+
+    /* from components/divider.md */
+    .xui-divider { display: flex; flex-direction: row; align-items: center; width: 100%; }
+    .xui-divider--md { height: 16px; }
+    .xui-divider__line { flex: 1; border: none; border-top: 1px solid var(--xui-border-secondary); margin: 0; }
+
+    /* ══════════════════════════════════════════════════════
+       Page layout — account shell (B2B dashboard context)
+       ══════════════════════════════════════════════════════ */
+    html, body { height: 100%; }
+    .app { display: flex; min-height: 100vh; width: 100%; }
+
+    .sidebar {
+      width: 248px;
+      flex-shrink: 0;
+      background: var(--xui-bg-primary);
+      border-right: 1px solid var(--xui-border-secondary);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: var(--xui-space-m);
+      display: flex;
+      flex-direction: column;
+      gap: var(--xui-space-l);
+    }
+    .sidebar__logo { color: var(--xui-content-primary); display: flex; align-items: center; padding: var(--xui-space-s) var(--xui-space-s) 0; }
+    .sidebar__project {
+      display: flex;
+      align-items: center;
+      gap: var(--xui-space-s);
+      padding: var(--xui-space-s);
+      border: 1px solid var(--xui-border-secondary);
+      border-radius: var(--xui-radius-button);
+    }
+    .sidebar__project-name { font-size: 14px; line-height: 18px; font-weight: 500; }
+    .sidebar__project-meta { font-size: 12px; line-height: 16px; color: var(--xui-content-tertiary); }
+    .side-nav { display: flex; flex-direction: column; gap: var(--xui-space-m); }
+    .side-nav__group { display: flex; flex-direction: column; gap: 2px; }
+    .side-nav__group-title { font-size: 12px; line-height: 16px; color: var(--xui-content-tertiary); padding: 0 12px var(--xui-space-xs); }
+    .side-nav__item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: var(--xui-radius-button);
+      color: var(--xui-content-secondary);
+      font-size: 14px;
+      text-decoration: none;
+      transition: background-color var(--page-duration-micro) ease, color var(--page-duration-micro) ease;
+    }
+    .side-nav__item svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .side-nav__item:hover { background: var(--xui-overlay-mono); color: var(--xui-content-primary); }
+    .side-nav__item--active { background: var(--xui-ctrl-brand-tertiary-bg-hover); color: var(--xui-content-primary); }
+    .side-nav__item .xui-tag { margin-left: auto; }
+
+    .main-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .topbar__title { font-size: 14px; color: var(--xui-content-secondary); }
+    .topbar__end { flex: 4; }
+    .topbar__controls { display: flex; align-items: center; gap: var(--xui-space-s); flex-wrap: wrap; justify-content: flex-end; }
+    .topbar__label { font-size: 12px; color: var(--xui-content-tertiary); }
+
+    .page { width: 100%; padding: var(--xui-space-xl); display: flex; flex-direction: column; gap: var(--xui-space-xl); }
+    .page--narrow-gap { gap: var(--xui-space-l); }
+
+    /* Typography — B2B (Pilat headings) */
+    .pg-h1 { font-family: var(--xui-font-heading-b2b); font-size: 32px; line-height: 38px; font-weight: 400; }
+    .pg-h2 { font-family: var(--xui-font-heading-b2b); font-size: 24px; line-height: 28px; font-weight: 400; }
+    .pg-h3 { font-family: var(--xui-font-heading-b2b); font-size: 20px; line-height: 24px; font-weight: 600; }
+    .pg-body-lg { font-size: 18px; line-height: 26px; color: var(--xui-content-secondary); }
+    .pg-body { font-size: 16px; line-height: 22px; color: var(--xui-content-secondary); }
+    .pg-body-sm { font-size: 14px; line-height: 20px; color: var(--xui-content-secondary); }
+    .pg-caption { font-size: 12px; line-height: 16px; color: var(--xui-content-tertiary); }
+    .pg-strong { color: var(--xui-content-primary); font-weight: 500; }
+
+    .pg-header { display: flex; flex-direction: column; gap: var(--xui-space-s); }
+    .pg-header__row { display: flex; align-items: center; gap: var(--xui-space-m); flex-wrap: wrap; }
+    .pg-section { display: flex; flex-direction: column; gap: var(--xui-space-m); }
+    .pg-section__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--xui-space-m); flex-wrap: wrap; }
+    .pg-section__titles { display: flex; flex-direction: column; gap: var(--xui-space-xs); }
+
+    .pg-card {
+      background: var(--xui-bg-primary);
+      border: 1px solid var(--xui-border-secondary);
+      border-radius: var(--xui-radius-card);
+      box-shadow: var(--xui-shadow-surface);
+      padding: var(--xui-space-l);
+    }
+    .pg-card--flat { box-shadow: none; }
+    .pg-card--hover { transition: box-shadow var(--page-duration-micro) ease, transform var(--page-duration-micro) ease; }
+    .pg-card--hover:hover { box-shadow: var(--xui-shadow-surface-hover); transform: translateY(-2px); }
+
+    /* Onboarding completion band — the one brand-secondary accent on Get started */
+    .pg-hero {
+      background: var(--xui-bg-brand-secondary);
+      border: 1px solid var(--xui-border-secondary);
+      border-radius: var(--xui-radius-card);
+      padding: var(--xui-space-l) var(--xui-space-xl);
+      display: grid;
+      grid-template-columns: auto 1fr minmax(220px, 320px);
+      gap: var(--xui-space-l);
+      align-items: center;
+    }
+    .pg-hero__icon { color: var(--xui-content-success-primary); display: flex; }
+    .pg-hero__icon--progress { color: var(--xui-content-warning-primary); }
+    .pg-hero__text { display: flex; flex-direction: column; gap: var(--xui-space-xs); }
+
+    /* Start with — compact completed cards */
+    .pg-grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--xui-space-m); }
+    .pg-mini { display: flex; flex-direction: column; gap: var(--xui-space-s); padding: var(--xui-space-m); }
+    .pg-mini__top { display: flex; align-items: center; justify-content: space-between; gap: var(--xui-space-s); }
+    .pg-mini__title { font-size: 16px; line-height: 20px; font-weight: 500; }
+
+    /* Advanced setup — capability cards */
+    .pg-grid-adv { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--xui-space-l); }
+    .pg-cap { display: flex; flex-direction: column; gap: var(--xui-space-m); min-height: 100%; }
+    .pg-cap__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--xui-space-m); }
+    .pg-cap__icon { color: var(--xui-content-brand-primary); }
+    .pg-cap--blocked .pg-cap__icon { color: var(--xui-content-tertiary); }
+    .pg-cap__title { font-family: var(--xui-font-heading-b2b); font-size: 20px; line-height: 24px; font-weight: 600; }
+    .pg-cap__meta { display: flex; gap: var(--xui-space-m); flex-wrap: wrap; }
+    .pg-cap__meta span { display: inline-flex; align-items: center; gap: var(--xui-space-xs); }
+    .pg-cap__examples { display: flex; gap: var(--xui-space-xs); flex-wrap: wrap; }
+    .pg-cap__foot { margin-top: auto; display: flex; align-items: center; gap: var(--xui-space-m); flex-wrap: wrap; padding-top: var(--xui-space-s); }
+    .pg-cap__blocked {
+      display: flex;
+      gap: var(--xui-space-s);
+      align-items: flex-start;
+      padding: var(--xui-space-s) var(--xui-space-m);
+      border-radius: var(--xui-radius-button);
+      background: var(--xui-overlay-mono);
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--xui-content-secondary);
+    }
+    .pg-cap__blocked svg { flex-shrink: 0; color: var(--xui-content-tertiary); margin-top: 2px; }
+
+    /* Guide page */
+    .pg-guide { display: grid; grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr); gap: var(--xui-space-l); align-items: start; }
+    .pg-guide__side { display: flex; flex-direction: column; gap: var(--xui-space-m); position: sticky; top: var(--xui-space-l); }
+    .pg-guide__main { display: flex; flex-direction: column; gap: var(--xui-space-l); }
+    .pg-overview { display: flex; flex-direction: column; gap: var(--xui-space-m); }
+    .pg-overview__list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--xui-space-s) var(--xui-space-l); }
+    .pg-overview__list li { display: flex; gap: var(--xui-space-s); font-size: 14px; line-height: 20px; color: var(--xui-content-secondary); }
+    .pg-overview__list svg { flex-shrink: 0; color: var(--xui-content-brand-primary); }
+    .pg-prep { list-style: none; display: flex; flex-direction: column; gap: var(--xui-space-s); }
+    .pg-prep li { display: flex; gap: var(--xui-space-s); font-size: 14px; line-height: 20px; color: var(--xui-content-secondary); }
+    .pg-prep svg { flex-shrink: 0; margin-top: 1px; }
+    .pg-prep__done svg { color: var(--xui-content-success-primary); }
+    .pg-prep__todo svg { color: var(--xui-content-tertiary); }
+
+    .pg-steps { list-style: none; display: flex; flex-direction: column; gap: var(--xui-space-s); }
+    .pg-step {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: var(--xui-space-m);
+      padding: var(--xui-space-m);
+      border-radius: var(--xui-radius-card);
+      border: 1px solid var(--xui-border-secondary);
+      background: var(--xui-bg-primary);
+      transition: background-color var(--page-duration-micro) ease, box-shadow var(--page-duration-micro) ease;
+    }
+    .pg-step--current { background: var(--xui-bg-brand-secondary); box-shadow: var(--xui-shadow-surface); border-color: var(--xui-ctrl-brand-secondary-border); }
+    .pg-step--preview { opacity: 0.72; }
+    .pg-step__num {
+      width: 32px;
+      height: 32px;
+      border-radius: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid var(--xui-border-secondary);
+      color: var(--xui-content-tertiary);
+    }
+    .pg-step--current .pg-step__num { background: var(--xui-bg-brand-primary); color: var(--xui-content-on-brand); border-color: transparent; }
+    .pg-step--done .pg-step__num { background: var(--xui-bg-success-secondary); color: var(--xui-content-success-primary); border-color: transparent; }
+    .pg-step__body { display: flex; flex-direction: column; gap: var(--xui-space-s); min-width: 0; }
+    .pg-step__head { display: flex; align-items: center; justify-content: space-between; gap: var(--xui-space-m); flex-wrap: wrap; }
+    .pg-step__title { font-size: 16px; line-height: 20px; font-weight: 500; }
+    .pg-step__detail { display: flex; flex-direction: column; gap: var(--xui-space-m); padding-top: var(--xui-space-s); }
+    .pg-step__actions { display: flex; align-items: center; gap: var(--xui-space-m); flex-wrap: wrap; }
+    .pg-step__note { display: flex; gap: var(--xui-space-xs); align-items: center; font-size: 12px; line-height: 16px; color: var(--xui-content-tertiary); }
+    .pg-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--xui-space-s); }
+    .pg-choice {
+      padding: var(--xui-space-m);
+      border-radius: var(--xui-radius-button);
+      border: 1px solid var(--xui-border-secondary);
+      background: var(--xui-overlay-mono);
+      transition: border-color var(--page-duration-micro) ease, background-color var(--page-duration-micro) ease;
+    }
+    .pg-choice:hover { background: var(--xui-ctrl-faint-bg); }
+    .pg-choice:focus-within { outline: 2px solid var(--xui-border-brand); outline-offset: 2px; }
+    .pg-linkbtn { background: none; border: none; padding: 0; font-family: inherit; }
+    .pg-choice--checked { border-color: var(--xui-ctrl-check-border); background: var(--xui-overlay-brand); }
+    .pg-instr { font-size: 14px; line-height: 20px; color: var(--xui-content-secondary); padding-left: var(--xui-space-m); border-left: 2px solid var(--xui-border-brand); }
+
+    /* Guide success screen */
+    .pg-success { display: flex; flex-direction: column; gap: var(--xui-space-l); }
+    .pg-success__head { display: flex; gap: var(--xui-space-l); align-items: flex-start; }
+    .pg-success__icon { color: var(--xui-content-success-primary); flex-shrink: 0; }
+    .pg-summary { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--xui-space-m); }
+    .pg-summary li { display: flex; flex-direction: column; gap: var(--xui-space-xs); padding: var(--xui-space-m); border-radius: var(--xui-radius-button); background: var(--xui-overlay-mono); }
+    .pg-next { display: flex; align-items: center; gap: var(--xui-space-m); flex-wrap: wrap; padding: var(--xui-space-m); border-radius: var(--xui-radius-card); border: 1px dashed var(--xui-border-secondary); }
+    .pg-next__text { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: var(--xui-space-xs); }
+
+    /* Embedded Promotions + Catalog screens */
+    .pg-form { display: flex; flex-direction: column; gap: var(--xui-space-l); max-width: 720px; }
+    .pg-form__row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--xui-space-m); }
+    .pg-form__group { display: flex; flex-direction: column; gap: var(--xui-space-s); }
+    .pg-form__actions { display: flex; gap: var(--xui-space-m); flex-wrap: wrap; }
+    .pg-table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 20px; }
+    .pg-table th { text-align: left; font-weight: 500; color: var(--xui-content-tertiary); padding: var(--xui-space-s) var(--xui-space-m); border-bottom: 1px solid var(--xui-border-secondary); }
+    .pg-table td { padding: var(--xui-space-m); border-bottom: 1px solid var(--xui-border-secondary); color: var(--xui-content-primary); vertical-align: middle; }
+    .pg-table tr:last-child td { border-bottom: none; }
+    .pg-table__muted { color: var(--xui-content-tertiary); }
+    .pg-table-wrap { overflow-x: auto; padding: 0; }
+    .pg-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--xui-space-s); padding: calc(var(--xui-space-xl) * 1.5) var(--xui-space-l); }
+    .pg-empty svg { color: var(--xui-content-tertiary); }
+    .pg-review { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--xui-space-m); }
+    .pg-review__item { display: flex; flex-direction: column; gap: var(--xui-space-xs); }
+    .pg-price-old { text-decoration: line-through; color: var(--xui-content-tertiary); margin-right: var(--xui-space-s); }
+    .pg-price-new { color: var(--xui-content-success-primary); font-weight: 600; }
+
+    /* Web Shop preview */
+    .pg-shop { display: flex; flex-direction: column; gap: var(--xui-space-l); }
+    .pg-shop__frame { border: 1px solid var(--xui-border-secondary); border-radius: var(--xui-radius-card); overflow: hidden; background: var(--xui-bg-secondary); }
+    .pg-shop__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--xui-space-m); padding: var(--xui-space-m) var(--xui-space-l); background: var(--xui-bg-primary); border-bottom: 1px solid var(--xui-border-secondary); }
+    .pg-shop__body { padding: var(--xui-space-l); display: flex; flex-direction: column; gap: var(--xui-space-l); }
+    .pg-shop__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--xui-space-m); }
+    .pg-shop__item { display: flex; flex-direction: column; gap: var(--xui-space-s); padding: var(--xui-space-m); }
+    .pg-shop__thumb { height: 96px; border-radius: var(--xui-radius-button); background: var(--xui-overlay-mono); display: flex; align-items: center; justify-content: center; color: var(--xui-content-tertiary); position: relative; }
+    .pg-shop__thumb .xui-tag { position: absolute; top: var(--xui-space-s); left: var(--xui-space-s); }
+    .pg-shop__redeem { display: flex; gap: var(--xui-space-s); align-items: flex-end; flex-wrap: wrap; }
+    .pg-shop__redeem .xui-field-group { max-width: 320px; }
+    .pg-block { display: flex; align-items: center; gap: var(--xui-space-m); padding: var(--xui-space-m); border-radius: var(--xui-radius-button); border: 1px solid var(--xui-border-secondary); background: var(--xui-bg-primary); }
+    .pg-block--dashed { border-style: dashed; background: transparent; }
+    .pg-block__text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+
+    /* Floating setup widget (D3-FR10) */
+    .pg-widget {
+      position: fixed;
+      right: var(--xui-space-l);
+      bottom: var(--xui-space-l);
+      width: 340px;
+      max-width: calc(100vw - var(--xui-space-xl));
+      background: var(--xui-bg-primary);
+      border: 1px solid var(--xui-ctrl-brand-secondary-border);
+      border-radius: var(--xui-radius-card);
+      box-shadow: var(--xui-shadow-popover);
+      padding: var(--xui-space-m);
+      display: flex;
+      flex-direction: column;
+      gap: var(--xui-space-m);
+      z-index: 50;
+      animation: pg-rise var(--page-duration-macro) var(--page-easing) both;
+    }
+    .pg-widget__head { display: flex; align-items: flex-start; gap: var(--xui-space-s); }
+    .pg-widget__titles { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .pg-widget__actions { display: flex; align-items: center; justify-content: space-between; gap: var(--xui-space-s); }
+    /* keep page content clear of the floating widget */
+    .has-widget .page { padding-bottom: calc(var(--xui-space-xl) * 6); }
+    .has-widget-mini .page { padding-bottom: calc(var(--xui-space-xl) * 3); }
+    .pg-widget--collapsed { width: auto; padding: var(--xui-space-s) var(--xui-space-m); flex-direction: row; align-items: center; cursor: pointer; }
+
+    /* Motion */
+    @keyframes pg-fadeSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pg-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .page > * { animation: pg-fadeSlideUp var(--page-duration-macro) var(--page-easing) both; }
+    .page > *:nth-child(2) { animation-delay: 60ms; }
+    .page > *:nth-child(3) { animation-delay: 120ms; }
+    .page > *:nth-child(4) { animation-delay: 180ms; }
+    .page > *:nth-child(5) { animation-delay: 240ms; }
+    @media (prefers-reduced-motion: reduce) {
+      .page > *, .pg-widget { animation: none; }
+      .pg-card--hover:hover { transform: none; }
+    }
+
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .pg-guide { grid-template-columns: 1fr; }
+      .pg-guide__side { position: static; }
+      .pg-hero { grid-template-columns: auto 1fr; }
+      .pg-hero > :last-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 860px) {
+      .app { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--xui-border-secondary); gap: var(--xui-space-m); }
+      .side-nav { flex-direction: row; overflow-x: auto; gap: var(--xui-space-s); }
+      .side-nav__group { flex-direction: row; }
+      .side-nav__group-title { display: none; }
+      .side-nav__item { white-space: nowrap; }
+      .xui-nav-bar--md { height: auto; padding: var(--xui-space-s) var(--xui-space-m); flex-wrap: wrap; gap: var(--xui-space-s); }
+      .page { padding: var(--xui-space-l) var(--xui-space-m); }
+      .pg-grid-adv { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Account navigation">
+      <a class="sidebar__logo" href="#get-started" aria-label="Xsolla — Get started">
+        <svg width="112" height="24" viewBox="0 0 180 38" fill="none" role="img" aria-label="Xsolla">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M101.783 3.66064C110.095 3.6607 116.831 10.3968 116.831 18.7091C116.831 27.0213 110.095 33.7576 101.783 33.7577C93.4705 33.7577 86.7344 27.0213 86.7344 18.7091C86.7344 10.3968 93.4705 3.66065 101.783 3.66064ZM101.783 9.42078C96.8911 9.42078 92.9245 13.1948 92.9245 18.7093C92.9245 24.2238 96.8911 27.998 101.783 27.998C106.676 27.9979 110.642 24.3117 110.642 18.7093C110.642 13.1069 106.676 9.42086 101.783 9.42078Z" fill="currentColor"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M149.42 29.1397L161.591 4.33103H165.892L180 33.088L144.568 33.0877L129.288 4.33103H136.101L149.42 29.1397ZM156.053 28.0371H171.277L163.665 11.852L156.053 28.0371Z" fill="currentColor"/>
+          <path d="M137.404 33.0877H130.432L115.152 4.33103H121.965L137.404 33.0877Z" fill="currentColor"/>
+          <path d="M49.8825 4.32576L56.6956 13.8421L63.4374 4.32576H70.5625L60.0523 18.4025L71.0694 33.0827H63.2843L56.3748 23.3824L49.1822 33.0827H41.9805L53.0237 18.8383L42.2925 4.32576H49.8825Z" fill="currentColor"/>
+          <path d="M76.9238 12.7063L82.5196 19.5264C83.997 21.6339 84.3389 22.4699 84.3389 24.1651C84.3389 25.8603 83.7865 27.2201 82.6646 28.6218L79.1055 33.0783H71.5049L78.8058 24.5718L73.6637 18.3718C72.1066 16.2127 71.6234 14.6548 71.6233 13.2346C71.6233 11.8143 71.9094 10.3492 73.4717 8.45771L76.8386 4.32576H84.3517L76.9238 12.7063Z" fill="currentColor"/>
+          <path d="M28.7501 16.5412V21.6609H23.6305V16.5412H28.7501Z" fill="currentColor"/>
+          <path d="M15.83 16.536V21.6525H10.7134V16.536H15.83Z" fill="currentColor"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M19.887 0.00175794C23.6385 0.0809693 26.7841 2.62335 27.7719 6.07654L27.8556 6.36284C28.7164 9.24857 29.4851 9.87975 32.5857 10.4669L32.585 10.4673C36.4715 11.1989 39.4121 14.6107 39.4121 18.7097C39.4119 22.8386 36.4283 26.2708 32.4995 26.9679C29.3783 27.5684 28.664 28.2355 27.777 31.3229C26.7903 34.801 23.6157 37.3587 19.8349 37.4155C19.7918 37.4163 19.7486 37.4172 19.7053 37.4172C15.8647 37.4171 12.6269 34.8356 11.6323 31.3132C10.7465 28.2341 10.0305 27.5677 6.9126 26.9679C2.98394 26.2707 0.000186751 22.8386 0 18.7097C0 14.6108 2.9407 11.1989 6.82712 10.4673L6.82646 10.4669C9.92695 9.87976 10.6957 9.24856 11.5565 6.36284L11.64 6.07654C12.6436 2.56814 15.8746 9.9479e-05 19.7053 1.26543e-07C19.7061 1.4036e-07 19.7071 -1.64965e-07 19.7079 1.26543e-07L19.887 0.00175794ZM26.2085 13.4119C23.0669 13.4119 20.5201 15.9587 20.52 19.1004C20.52 22.242 23.0669 24.7889 26.2085 24.7889C29.3502 24.7889 31.897 22.2421 31.897 19.1004C31.897 15.9587 29.3502 13.4119 26.2085 13.4119ZM13.2704 13.4086C10.1306 13.4086 7.58522 15.9538 7.58518 19.0936C7.5852 22.2333 10.1306 24.7788 13.2704 24.7788C16.4101 24.7787 18.9553 22.2333 18.9554 19.0936C18.9553 15.9539 16.4101 13.4086 13.2704 13.4086Z" fill="currentColor"/>
+        </svg>
+      </a>
+      <div class="sidebar__project">
+        <div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--md">
+          <div class="xui-rich-icon__icon"><span class="xui-rich-icon__text">NR</span></div>
+        </div>
+        <div>
+          <div class="sidebar__project-name">Nova Rift</div>
+          <div class="sidebar__project-meta" id="project-meta">Free-to-play account</div>
+        </div>
+      </div>
+      <nav class="side-nav" id="side-nav"></nav>
+    </aside>
+
+    <div class="main-col">
+      <header class="xui-nav-bar xui-nav-bar--md xui-nav-bar--bordered">
+        <div class="xui-nav-bar__start">
+          <span class="topbar__title" id="topbar-title">Get started</span>
+        </div>
+        <div class="xui-nav-bar__end topbar__end">
+          <div class="topbar__controls" aria-label="Prototype controls">
+            <span class="xui-tag xui-tag--xs xui-tag--brand-extra">Prototype</span>
+            <span class="topbar__label" id="lbl-account">Account</span>
+            <div class="xui-segmented xui-segmented--sm" role="radiogroup" aria-labelledby="lbl-account" id="seg-account"></div>
+            <span class="topbar__label" id="lbl-setup">Initial setup</span>
+            <div class="xui-segmented xui-segmented--sm" role="radiogroup" aria-labelledby="lbl-setup" id="seg-setup"></div>
+            <button class="xui-btn xui-btn--ghost xui-btn--mono xui-btn--xs" type="button" data-action="reset">Reset</button>
+          </div>
+        </div>
+      </header>
+      <main class="page" id="view" tabindex="-1"></main>
+    </div>
+  </div>
+  <div id="widget-root"></div>
+
+  <script>
+(function () {
+  'use strict';
+
+  /* ── Icons (assets/icons-inline.md, fill="currentColor") ── */
+  var P = {
+    arrowR: '<path d="M11.9983 19.0824L18.0706 13.0111L2.99927 13.0111L2.99927 11.0111L18.0706 11.0111L11.9993 4.93985L13.4133 3.52579L21.1915 11.304C21.5821 11.6945 21.5821 12.3277 21.1915 12.7182L13.4124 20.4965L11.9983 19.0824Z" fill="currentColor"/>',
+    arrowL: '<path d="M12.0008 4.92871L5.92852 11H20.9998V13H5.92852L11.9998 19.0713L10.5857 20.4854L2.80754 12.7071C2.417 12.3166 2.41702 11.6834 2.80758 11.2929L10.5867 3.51465L12.0008 4.92871Z" fill="currentColor"/>',
+    check: '<path d="M21.0918 6.56055L10.0919 17.5605C9.7014 17.951 9.06823 17.951 8.67771 17.5605L2.90625 11.7862L4.31891 10.3736L9.38482 15.4395L19.6778 5.14648L21.0918 6.56055Z" fill="currentColor"/>',
+    checkCr: '<path d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM11 12.5859L9.08203 10.668L7.66797 12.082L11 15.4141L16.707 9.70703L15.293 8.29297L11 12.5859Z" fill="currentColor"/>',
+    lock: '<path fill-rule="evenodd" clip-rule="evenodd" d="M20 21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21L4 11C4 10.4477 4.44772 10 5 10H6C6 9.27589 6 8.57063 6 8C6 4.68629 8.68629 2 12 2C15.3137 2 18 4.68629 18 8V10H19C19.5523 10 20 10.4477 20 11V21ZM18 12H6L6 20H18V12ZM16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8V10H16V8Z" fill="currentColor"/><path d="M11 15C11 14.4477 11.4477 14 12 14C12.5523 14 13 14.4477 13 15V17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17V15Z" fill="currentColor"/>',
+    discount: '<path d="M17 13C19.2091 13 21 14.7909 21 17C21 19.2091 19.2091 21 17 21C14.7909 21 13 19.2091 13 17C13 14.7909 14.7909 13 17 13ZM20.707 4.70703L4.70703 20.707L3.29297 19.293L19.293 3.29297L20.707 4.70703ZM17 15C15.8954 15 15 15.8954 15 17C15 18.1046 15.8954 19 17 19C18.1046 19 19 18.1046 19 17C19 15.8954 18.1046 15 17 15ZM7 3C9.20914 3 11 4.79086 11 7C11 9.20914 9.20914 11 7 11C4.79086 11 3 9.20914 3 7C3 4.79086 4.79086 3 7 3ZM7 5C5.89543 5 5 5.89543 5 7C5 8.10457 5.89543 9 7 9C8.10457 9 9 8.10457 9 7C9 5.89543 8.10457 5 7 5Z" fill="currentColor"/>',
+    coupon: '<path d="M14 13C14.5523 13 15 13.4477 15 14C15 14.5523 14.5523 15 14 15C13.4477 15 13 14.5523 13 14C13 13.4477 13.4477 13 14 13Z" fill="currentColor"/><path d="M10 9C10.5523 9 11 9.44772 11 10C11 10.5523 10.5523 11 10 11C9.44772 11 9 10.5523 9 10C9 9.44772 9.44772 9 10 9Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M21 8.23444C21 8.40846 20.9546 8.57948 20.8682 8.73057L19 12L20.8682 15.2694C20.9546 15.4205 21 15.5915 21 15.7656V18C21 18.5523 20.5523 19 20 19H4C3.44772 19 3 18.5523 3 18V15.7656C3 15.5915 3.04542 15.4205 3.13176 15.2694L5 12L3.13176 8.73057C3.04542 8.57948 3 8.40846 3 8.23444V6C3 5.44772 3.44772 5 4 5H20C20.5523 5 21 5.44772 21 6V8.23444ZM5 7.96875L7.30371 12L5 16.0303V17H19V16.0303L16.6963 12L19 7.96875V7H5V7.96875Z" fill="currentColor"/><path d="M9 13.6772L10.3228 15L15 10.3228L13.6772 9L9 13.6772Z" fill="currentColor"/>',
+    gift: '<path d="M14.5 2C16.433 2 18 3.567 18 5.5C18 6.03681 17.8791 6.54536 17.6631 7H21L21.1025 7.00488C21.6067 7.05621 22 7.48232 22 8V15C22 15.5177 21.6067 15.9438 21.1025 15.9951L21 16H20V21C20 21.5523 19.5523 22 19 22H5L4.89746 21.9951C4.39333 21.9438 4 21.5177 4 21V16H3C2.48232 16 2.05621 15.6067 2.00488 15.1025L2 15V8C2 7.44772 2.44772 7 3 7H6.33691C6.12093 6.54536 6 6.03681 6 5.5C6 3.567 7.567 2 9.5 2C10.4797 2 11.3647 2.40311 12 3.05176C12.6353 2.40311 13.5203 2 14.5 2ZM13 20H18V16H13V20ZM6 20H11V16H6V20ZM13 14H20V9H13V14ZM4 14H11V9H4V14ZM9.5 4C8.67157 4 8 4.67157 8 5.5C8 6.32843 8.67157 7 9.5 7H11V5.5C11 4.67157 10.3284 4 9.5 4ZM14.5 4C13.6716 4 13 4.67157 13 5.5V7H14.5C15.3284 7 16 6.32843 16 5.5C16 4.67157 15.3284 4 14.5 4Z" fill="currentColor"/>',
+    home: '<path d="M16 18.999H19V9.92672L12 5.20795L5 9.92672V19H8V11.9199H16V18.999ZM21 19.9883C21 20.5468 20.5523 21 20 21L14 20.999V13.9199H10V21H4L3.89746 20.9951C3.39333 20.9432 3.00001 20.5118 3 19.9883V9.40523C3 9.06709 3.16713 8.75101 3.44531 8.56343L11.4453 3.16986C11.7812 2.94338 12.2188 2.94338 12.5547 3.16986L20.5547 8.56343C20.8329 8.75101 21 9.06709 21 9.40523V19.9883Z" fill="currentColor"/>',
+    shop: '<path d="M20.1025 2.00488C20.6067 2.05621 21 2.48232 21 3V12C21 12.5177 20.6067 12.9438 20.1025 12.9951L20 13H19V21C19 21.5177 18.6067 21.9438 18.1025 21.9951L18 22H6L5.89746 21.9951C5.42703 21.9472 5.05278 21.573 5.00488 21.1025L5 21V13H4C3.48232 13 3.05621 12.6067 3.00488 12.1025L3 12V3C3 2.44772 3.44772 2 4 2H20L20.1025 2.00488ZM7 20H11V18H13V20H17V13H7V20ZM5 11H7V4H5V11ZM9 11H11V4H9V11ZM13 11H15V4H13V11ZM17 11H19V4H17V11Z" fill="currentColor"/>',
+    settings: '<path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 7.99999C14.209 8.00016 16 9.79098 16.0001 12C16.0001 14.209 14.2091 15.9998 12.0001 16C9.79094 16 8.00007 14.2091 8.00007 12C8.0001 9.79087 9.79095 7.99999 12.0001 7.99999ZM12.0001 9.99999C10.8955 9.99999 10.0001 10.8954 10.0001 12C10.0001 13.1046 10.8955 14 12.0001 14C13.1045 13.9998 14.0001 13.1044 14.0001 12C14 10.8955 13.1045 10.0002 12.0001 9.99999Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.6134 2.09374C11.527 1.97009 12.4614 1.9676 13.3887 2.09276C13.8095 2.14962 14.1159 2.48944 14.2511 2.88475C14.5558 3.77608 15.1799 4.56608 16.0743 5.07323C16.9684 5.58 17.9769 5.71545 18.9151 5.52928C19.3313 5.44667 19.7835 5.53803 20.044 5.86717C20.619 6.59437 21.0849 7.39107 21.4327 8.23143C21.5922 8.6171 21.4463 9.04598 21.1661 9.35838C20.5337 10.0629 20.1497 10.9882 20.1495 12.001C20.1497 13.014 20.5344 13.9391 21.1671 14.6435C21.448 14.9564 21.5933 15.3872 21.4327 15.7734C21.2594 16.1899 21.0559 16.6004 20.8204 17.001C20.5857 17.4001 20.3265 17.7781 20.0469 18.1328C19.7865 18.4628 19.3329 18.5543 18.9161 18.4717C17.9777 18.2857 16.9686 18.4219 16.0743 18.9287C15.1806 19.4354 14.5561 20.225 14.2511 21.1152C14.1156 21.5099 13.8099 21.8491 13.3897 21.9062C12.475 22.0305 11.5398 22.0325 10.6114 21.9072C10.191 21.8502 9.88455 21.5112 9.7491 21.1162C9.4438 20.2258 8.81975 19.4365 7.92586 18.9297C7.03145 18.4227 6.02248 18.2875 5.08406 18.4736C4.66798 18.556 4.2156 18.4648 3.95515 18.1357C3.38057 17.4092 2.91529 16.613 2.56746 15.7734C2.4078 15.3875 2.55444 14.958 2.83504 14.6455C3.46806 13.9408 3.85241 13.0143 3.85261 12.001C3.85242 10.9867 3.46703 10.0605 2.83308 9.35545C2.5516 9.04231 2.40564 8.61121 2.56648 8.2246C2.73949 7.80916 2.94293 7.39941 3.17781 6.99999C3.41322 6.59974 3.67357 6.22156 3.95418 5.8662C4.21493 5.53638 4.66821 5.44525 5.08504 5.52831C6.02381 5.71533 7.03297 5.58039 7.92781 5.07323C8.82195 4.56629 9.4469 3.77679 9.75203 2.88573C9.88733 2.49065 10.1929 2.15097 10.6134 2.09374ZM12.5147 4.01561C12.1721 3.99452 11.829 3.99528 11.4884 4.01659C10.9842 5.14821 10.1191 6.14083 8.94636 6.80565C7.77215 7.47116 6.46317 7.70847 5.21297 7.5703C5.11881 7.70953 5.02887 7.85307 4.94246 7.99999C4.85628 8.14653 4.7749 8.29502 4.69929 8.44432C5.44599 9.43913 5.88956 10.6711 5.88972 12.001C5.88939 13.3297 5.44654 14.5619 4.70125 15.5556C4.8528 15.8562 5.02294 16.1486 5.21297 16.4297C6.4632 16.2925 7.77147 16.5334 8.94441 17.1982C10.1157 17.8623 10.9808 18.8528 11.4854 19.9834C11.8292 20.0046 12.1731 20.0049 12.5147 19.9834C13.0188 18.8527 13.8838 17.8617 15.0557 17.1973C16.2277 16.533 17.5352 16.2921 18.7852 16.4287C18.8788 16.29 18.9696 16.1474 19.0557 16.001C19.1426 15.8533 19.2228 15.7031 19.2989 15.5527C18.5548 14.5598 18.1127 13.3299 18.1124 12.0019C18.1125 10.6736 18.5542 9.44187 19.2989 8.44823C19.1468 8.14642 18.9751 7.8534 18.7843 7.57127C17.5353 7.70811 16.2282 7.47018 15.0557 6.80565C13.8824 6.14039 13.0183 5.14721 12.5147 4.01561Z" fill="currentColor"/>',
+    chart: '<path d="M20.7339 3.03709C21.371 2.8601 22.0013 3.33876 22.0015 3.99998V20C22.0013 20.6612 21.371 21.1399 20.7339 20.9629L2.73389 15.9629C2.30118 15.8427 2.00161 15.449 2.00146 15V8.99998C2.0016 8.5509 2.30117 8.1573 2.73389 8.03709L20.7339 3.03709ZM16.0015 6.42576V17.5722L20.0015 18.6836V5.31541L16.0015 6.42576ZM10.0015 8.09275V15.9053L14.0015 17.0166V6.98143L10.0015 8.09275ZM4.00146 9.75975V14.2392L8.00146 15.3496V8.64842L4.00146 9.75975Z" fill="currentColor"/>',
+    boxes: '<path d="M21 20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20L3 12C3 11.4477 3.44772 11 4 11H7V4C7 3.44772 7.44772 3 8 3L16 3C16.5523 3 17 3.44772 17 4L17 11L20 11C20.5523 11 21 11.4477 21 12V20ZM5 13L5 19H11V13H5ZM9 5V11H15L15 5L9 5ZM13 13V19H19V13L13 13Z" fill="currentColor"/>',
+    card: '<path d="M11.9998 13.9993V15.9993L5.99976 15.9993V13.9993L11.9998 13.9993Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19.9988 3.99927C21.1034 3.99925 21.9997 4.8947 21.9998 5.99927L21.9998 17.9993C21.9998 19.1037 21.1041 19.999 19.9998 19.9993L4.00073 19.9993C2.89637 19.9991 2.00087 19.1037 2.00073 17.9993L1.99976 6.00024C1.99962 4.89559 2.89511 3.99929 3.99976 3.99927L19.9988 3.99927ZM3.99976 17.9993L19.9998 17.9993L19.9998 10.9993L3.99976 10.9993L3.99976 17.9993ZM3.99976 7.99927L19.9998 7.99927V5.99927L3.99976 5.99927L3.99976 7.99927Z" fill="currentColor"/>',
+    users: '<path d="M6 14C8.20914 14 10 15.7909 10 18V21H8V18C8 16.8954 7.10457 16 6 16C4.89543 16 4 16.8954 4 18V21H2V18C2 15.7909 3.79086 14 6 14ZM15 21H13V18C13 16.8954 12.1046 16 11 16V14C13.2091 14 15 15.7909 15 18V21ZM20 12H22V14H20V16H18V14H16V12H18V10H20V12ZM6 5C8.20914 5 10 6.79086 10 9C10 11.2091 8.20914 13 6 13C3.79086 13 2 11.2091 2 9C2 6.79086 3.79086 5 6 5ZM11 5C13.2091 5 15 6.79086 15 9C15 11.2091 13.2091 13 11 13V11C12.1046 11 13 10.1046 13 9C13 7.89543 12.1046 7 11 7V5ZM6 7C4.89543 7 4 7.89543 4 9C4 10.1046 4.89543 11 6 11C7.10457 11 8 10.1046 8 9C8 7.89543 7.10457 7 6 7Z" fill="currentColor"/>',
+    megaphone: '<path fill-rule="evenodd" clip-rule="evenodd" d="M20.6172 2.07897C21.2759 1.8045 22.002 2.28823 22.002 3.00182V21.0018C22.0015 21.715 21.2756 22.1989 20.6172 21.9247L10.002 17.5008V19.0018C10.0016 20.6584 8.65859 22.0018 7.00195 22.0018C5.34532 22.0018 4.00231 20.6584 4.00195 19.0018V16.0008C2.788 15.0887 2.00217 13.6371 2.00195 12.0018C2.00195 9.2404 4.24053 7.00182 7.00195 7.00182H8.80273L20.6172 2.07897ZM7.00195 9.00182C5.3451 9.00182 4.00195 10.345 4.00195 12.0018C4.00224 13.3065 4.8367 14.4133 6 14.826V18.0008H6.00195V19.0018C6.00231 19.5538 6.44989 20.0018 7.00195 20.0018C7.55402 20.0018 8.0016 19.5538 8.00195 19.0018V17.0018H8V9.00182H7.00195ZM10 8.66881V15.3339L20.002 19.5018V4.50084L10 8.66881Z" fill="currentColor"/>',
+    layout: '<path d="M21.1045 4.00488C21.6086 4.05621 22.002 4.48232 22.002 5V19C22.002 19.5177 21.6086 19.9438 21.1045 19.9951L21.002 20H3.00195C2.44967 20 2.00195 19.5523 2.00195 19V5C2.00195 4.44772 2.44967 4 3.00195 4H21.002L21.1045 4.00488ZM10.002 18H20.002V6H10.002V18ZM4.00195 18H8.00195V6H4.00195V18Z" fill="currentColor"/>',
+    trophy: '<path d="M18.0054 22H6.00537V20H18.0054V22ZM4.00537 7V9C4.00537 10.1046 4.9008 11 6.00537 11V7H4.00537ZM8.00537 12.3252L8.06299 12.6689C8.38037 14.5601 10.0264 16 12.0054 16V18C9.03249 18 6.56655 15.8376 6.09033 13H6.00537L5.79932 12.9951C3.68593 12.8879 2.00537 11.14 2.00537 9V6C2.00537 5.44772 2.45309 5 3.00537 5H6.00537V3.58301C6.00555 3.2611 6.26647 3.00018 6.58838 3H17.4224L17.5396 3.01172C17.8053 3.06606 18.0052 3.30123 18.0054 3.58301V5H21.0054L21.1079 5.00488C21.612 5.05621 22.0054 5.48232 22.0054 6V9C22.0054 11.14 20.3248 12.8879 18.2114 12.9951L18.0054 13H17.9204C17.4442 15.8376 14.9783 18 12.0054 18V16C13.9843 16 15.6304 14.5601 15.9478 12.6689L16.0054 12.3252V5H8.00537V12.3252ZM18.0054 11C19.1099 11 20.0054 10.1046 20.0054 9V7H18.0054V11Z" fill="currentColor"/>',
+    info: '<path d="M11 7C11 6.44771 11.4477 6 12 6C12.5523 6 13 6.44771 13 7C13 7.55228 12.5523 8 12 8C11.4477 8 11 7.55228 11 7Z" fill="currentColor"/><path d="M11 10L13 10L13 18L11 18L11 10Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" fill="currentColor"/>',
+    openIn: '<path d="M9 5H5V19H19V15H21V20L20.9951 20.1025C20.9472 20.573 20.573 20.9472 20.1025 20.9951L20 21H4C3.48232 21 3.05621 20.6067 3.00488 20.1025L3 20V4C3 3.44772 3.44772 3 4 3H9V5ZM20 3C20.5523 3 21 3.44772 21 4V11H19V6.41309L11.207 14.207L9.79297 12.793L17.585 5H13V3H20Z" fill="currentColor"/>',
+    close: '<path d="M20.0303 5.41455L13.4199 12.0249L20.0195 18.6245L18.6055 20.0386L12.0059 13.439L5.41406 20.0308L4 18.6167L10.5918 12.0249L4.00879 5.44189L5.42285 4.02783L12.0059 10.6108L18.6162 4.00049L20.0303 5.41455Z" fill="currentColor"/>',
+    chevronDown: '<path d="M12.7178 15.7808C12.3273 16.1713 11.6942 16.1713 11.3036 15.7808L4.30371 8.78084L5.71777 7.36678L12.0107 13.6597L18.3037 7.36678L19.7178 8.78084L12.7178 15.7808Z" fill="currentColor"/>',
+    globe: '<path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM9.58008 13C9.74723 15.2121 10.4528 17.6275 12.001 20.1758C13.5494 17.6274 14.2558 15.2121 14.4229 13H9.58008ZM4.06445 13C4.44602 16.059 6.55277 18.5799 9.38184 19.5596C8.25858 17.2774 7.71225 15.0732 7.5752 13H4.06445ZM16.4268 13C16.29 15.0731 15.7431 17.2765 14.6201 19.5586C17.4482 18.5784 19.5541 16.0582 19.9355 13H16.4268ZM14.6738 4.45898C15.4876 6.11718 16.1356 8.05334 16.3701 10.2041C16.3987 10.4666 16.4187 10.732 16.4346 11H19.9355C19.5565 7.96103 17.475 5.45224 14.6738 4.45898ZM12.001 3.76465C10.8826 5.54272 9.90416 7.816 9.62012 10.4209C9.59929 10.6119 9.58251 10.805 9.56934 11H14.4326C14.4194 10.805 14.4027 10.6119 14.3818 10.4209C14.0978 7.81584 13.1195 5.54277 12.001 3.76465ZM9.32812 4.45801C6.52591 5.45077 4.44362 7.9603 4.06445 11H7.56738C7.58322 10.732 7.60322 10.4666 7.63184 10.2041C7.86638 8.05315 8.51421 6.11642 9.32812 4.45801Z" fill="currentColor"/>'
+  };
+  function ic(name, size, cls) {
+    size = size || 24;
+    return '<svg' + (cls ? ' class="' + cls + '"' : '') + ' width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" aria-hidden="true">' + P[name] + '</svg>';
+  }
+  var CRUMB_SEP = '<li class="xui-breadcrumbs__sep" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></li>';
+  var CHECK_SMALL = '<svg class="xui-checkbox__icon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function money(n) { return '$' + n.toFixed(2); }
+
+  /* ── Account content model (D2-FR9, D3-FR11) ── */
+  var ACCOUNTS = {
+    f2p: {
+      label: 'Free-to-play',
+      meta: 'Free-to-play account',
+      catalogNav: 'Virtual items',
+      items: [
+        { id: 'starter', name: 'Starter pack', type: 'Bundle', price: 4.99 },
+        { id: 'gems', name: '1,200 Gems', type: 'Currency pack', price: 9.99 },
+        { id: 'pass', name: 'Season pass', type: 'Virtual item', price: 14.99 }
+      ],
+      bonuses: [
+        { id: 'b-gems', name: '200 bonus Gems' },
+        { id: 'b-skin', name: 'Rift Runner skin' }
+      ],
+      catalogDesc: 'Add virtual items, currency packs, and bundles.',
+      examplesSales: ['Virtual items', 'Currency packs', 'Bundles'],
+      examplesCodes: ['Bonus currency', 'Free skins', 'Starter bundles'],
+      promoteDesc: 'Make sure the virtual items, currency packs, or bundles you want to promote are in your catalog.',
+      bonusDesc: 'Add bonus currency or an item to the purchase',
+      codeBonus: 'Bonus item or currency',
+      codeExample: 'RIFT200',
+      redeemGame: 'Redeem in the game client'
+    },
+    premium: {
+      label: 'Premium PC',
+      meta: 'Premium PC account',
+      catalogNav: 'Game keys',
+      items: [
+        { id: 'std', name: 'Standard edition', type: 'Game key', price: 29.99 },
+        { id: 'dlx', name: 'Deluxe edition', type: 'Game key', price: 49.99 },
+        { id: 'ost', name: 'Soundtrack DLC', type: 'DLC', price: 7.99 }
+      ],
+      bonuses: [
+        { id: 'b-ost', name: 'Soundtrack DLC' },
+        { id: 'b-art', name: 'Digital artbook' }
+      ],
+      catalogDesc: 'Add game keys, editions, and DLCs.',
+      examplesSales: ['Game keys', 'Editions', 'DLCs'],
+      examplesCodes: ['Launch discounts', 'Creator campaigns', 'Free DLCs'],
+      promoteDesc: 'Make sure the game keys, editions, or DLCs you want to promote are in your catalog.',
+      bonusDesc: 'Add a bonus DLC or item to the purchase',
+      codeBonus: 'Bonus item or DLC',
+      codeExample: 'LAUNCH15',
+      redeemGame: 'Redeem in the game launcher'
+    }
+  };
+
+  /* ── State (persists per account variant, D3-FR7) ── */
+  var KEY = 'xsolla-promotions-advanced-proto-v1';
+  function freshProject() {
+    return {
+      guides: {
+        sales: { started: false, confirmed: {}, paths: { offer: 'discount' }, chosen: {} },
+        codes: { started: false, confirmed: {}, paths: { reward: 'discount', type: 'promo', redeem: 'webshop' }, chosen: {} }
+      },
+      promo: null,
+      code: null,
+      shopBlock: false,
+      lastGuide: null
+    };
+  }
+  function freshState() {
+    return { account: 'f2p', setupDone: true, widgetCollapsed: false, projects: { f2p: freshProject(), premium: freshProject() } };
+  }
+  var S;
+  try { S = JSON.parse(localStorage.getItem(KEY)) || freshState(); } catch (e) { S = freshState(); }
+  if (!S.projects || !S.projects.f2p || !S.projects.premium) S = freshState();
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage unavailable */ } }
+  function A() { return ACCOUNTS[S.account]; }
+  function PJ() { return S.projects[S.account]; }
+  var flash = null;
+
+  function itemById(id) { return A().items.filter(function (i) { return i.id === id; })[0]; }
+  function bonusById(id) { return A().bonuses.filter(function (i) { return i.id === id; })[0]; }
+
+  /* ── Guides (D3) ── */
+  var GUIDES = {
+    sales: {
+      id: 'sales',
+      name: 'Sales, discounts & offers',
+      icon: 'discount',
+      short: function () { return 'Run time-limited discounts or add bonus rewards to purchases.'; },
+      goal: 'Run a time-limited discount or bonus offer in your Web Shop.',
+      minutes: 15,
+      accomplish: [
+        'Pick the items to promote',
+        'Choose a discount or a bonus reward',
+        'Set dates, regions, and limits',
+        'Activate the offer and check it in your store'
+      ],
+      prep: function () {
+        return [
+          { text: 'At least one item in your catalog', done: S.setupDone },
+          { text: 'The discount percentage or bonus reward to offer' },
+          { text: 'Start and end dates for the offer' },
+          { text: 'Optional: target regions and a per-player limit' }
+        ];
+      },
+      examples: function () { return A().examplesSales; },
+      steps: [
+        {
+          id: 'what', title: 'Choose what to promote', detect: 'auto',
+          desc: function () { return A().promoteDesc; },
+          done: function () { return S.setupDone; },
+          doneNote: function () { return 'Detected: ' + A().items.length + ' items in your catalog'; },
+          cta: function () { return { label: 'Open catalog', href: '#catalog' }; }
+        },
+        {
+          id: 'offer', title: 'Choose the offer', detect: 'auto',
+          desc: function () { return 'Give a discount on the chosen items, or add a bonus to the purchase.'; },
+          paths: function () {
+            return [
+              { id: 'discount', label: 'Discount', desc: 'Lower the price by a percentage', instr: 'Create a discount, select the items it applies to, and set the percentage off.', cta: { label: 'Create discount', href: '#promotions/new?kind=discount' } },
+              { id: 'bonus', label: 'Bonus', desc: A().bonusDesc, instr: 'Create a bonus promotion, select the items it applies to, and choose the bonus players get.', cta: { label: 'Create bonus promotion', href: '#promotions/new?kind=bonus' } }
+            ];
+          },
+          done: function () { return !!PJ().promo; },
+          doneNote: function () { var p = PJ().promo; return p ? 'Detected: ' + (p.kind === 'discount' ? 'discount' : 'bonus promotion') + ' “' + p.name + '”' : ''; }
+        },
+        {
+          id: 'schedule', title: 'Set schedule and limits', detect: 'auto',
+          desc: function () { return 'Set start and end dates and, if needed, regions and per-player limits.'; },
+          done: function () { var p = PJ().promo; return !!(p && p.scheduled); },
+          doneNote: function () { var p = PJ().promo; return p ? 'Detected: runs ' + p.start + ' to ' + p.end : ''; },
+          cta: function () { return { label: 'Set schedule', href: '#promotions/schedule' }; }
+        },
+        {
+          id: 'activate', title: 'Review and activate', detect: 'auto',
+          desc: function () { return 'Check the resulting price or bonus, then activate the offer.'; },
+          done: function () { var p = PJ().promo; return !!(p && p.active); },
+          doneNote: function () { return 'Detected: offer is active'; },
+          cta: function () { return { label: 'Review offer', href: '#promotions/review' }; }
+        },
+        {
+          id: 'check', title: 'Check it in your store', detect: 'confirm',
+          desc: function () { return 'Open your Web Shop and make a test purchase to see the offer applied.'; },
+          done: function () { return !!PJ().guides.sales.confirmed.check; },
+          doneNote: function () { return 'Confirmed by you'; },
+          cta: function () { return { label: 'Open Web Shop', href: '#webshop?mode=offer' }; }
+        }
+      ]
+    },
+    codes: {
+      id: 'codes',
+      name: 'Promo codes & coupons',
+      icon: 'coupon',
+      short: function () { return 'Give players codes they redeem for a discount, bonus, or item.'; },
+      goal: 'Give players codes they redeem for a discount, bonus, or item.',
+      minutes: 20,
+      accomplish: [
+        'Choose what a code gives',
+        'Pick a shared promo code or one-time coupons',
+        'Create the codes and set limits',
+        'Let players redeem and test a code'
+      ],
+      prep: function () {
+        return [
+          { text: 'The reward each code gives' },
+          { text: 'The code text, or how many coupons you need' },
+          { text: 'Validity dates and redemption limits' },
+          { text: 'Where players enter codes: your Web Shop or the game' }
+        ];
+      },
+      examples: function () { return A().examplesCodes; },
+      steps: [
+        {
+          id: 'reward', title: 'Choose the reward', detect: 'choice',
+          desc: function () { return 'Decide what a code gives: a discount, a bonus, or an item.'; },
+          paths: function () {
+            return [
+              { id: 'discount', label: 'Discount', desc: 'A percentage off the purchase' },
+              { id: 'bonus', label: 'Bonus', desc: A().codeBonus },
+              { id: 'item', label: 'Item', desc: 'A free item through a predefined offer' }
+            ];
+          },
+          choiceLabel: 'Save reward',
+          done: function () { return !!PJ().guides.codes.chosen.reward; },
+          doneNote: function () { return 'Saved: ' + rewardLabel(PJ().guides.codes.chosen.reward); }
+        },
+        {
+          id: 'type', title: 'Choose the code type', detect: 'choice',
+          desc: function () { return 'Pick one shared promo code, or one-time coupons linked to an offer.'; },
+          paths: function () {
+            return [
+              { id: 'promo', label: 'Promo code', desc: 'One code many players can use, like ' + A().codeExample },
+              { id: 'coupon', label: 'Coupons', desc: 'Unique codes, each redeemable once' }
+            ];
+          },
+          choiceLabel: 'Save code type',
+          done: function () { return !!PJ().guides.codes.chosen.type; },
+          doneNote: function () { return 'Saved: ' + (PJ().guides.codes.chosen.type === 'coupon' ? 'coupons' : 'promo code'); }
+        },
+        {
+          id: 'create', title: 'Create the codes', detect: 'auto',
+          desc: function () { return codeType() === 'coupon' ? 'Generate a batch of unique coupon codes.' : 'Enter the code players will type.'; },
+          done: function () { return !!PJ().code; },
+          doneNote: function () { var c = PJ().code; return c ? (c.type === 'coupon' ? 'Detected: ' + c.count + ' coupons' : 'Detected: code ' + c.value) : ''; },
+          cta: function () { return { label: codeType() === 'coupon' ? 'Generate coupons' : 'Create promo code', href: '#promotions/code' }; }
+        },
+        {
+          id: 'limits', title: 'Set validity and limits', detect: 'auto',
+          desc: function () { return 'Set validity dates and how many times each code can be redeemed.'; },
+          done: function () { var c = PJ().code; return !!(c && c.limitsSet); },
+          doneNote: function () { var c = PJ().code; return c ? 'Detected: valid ' + c.from + ' to ' + c.to : ''; },
+          cta: function () { return { label: 'Set limits', href: '#promotions/code-limits' }; }
+        },
+        {
+          id: 'redeem', title: 'Let players redeem', detect: 'confirm',
+          desc: function () { return 'Add the promo code block to your Web Shop, or connect redemption in your game.'; },
+          paths: function () {
+            return [
+              { id: 'webshop', label: 'Web Shop', desc: 'Add the promo code block to your storefront', instr: 'Open the Web Shop editor, add the promo code block, and publish your storefront.', cta: { label: 'Open Web Shop editor', href: '#webshop?mode=editor' } },
+              { id: 'game', label: 'In game', desc: A().redeemGame, instr: 'Share the redemption API guide with your developer. This path may need help from your integration manager.', cta: { label: 'Open integration guide', href: '#page/docs' } }
+            ];
+          },
+          done: function () { return !!PJ().guides.codes.confirmed.redeem; },
+          doneNote: function () { return 'Confirmed by you'; }
+        },
+        {
+          id: 'test', title: 'Test a redemption', detect: 'confirm',
+          desc: function () { return 'Redeem a code and check that the reward is granted.'; },
+          done: function () { return !!PJ().guides.codes.confirmed.test; },
+          doneNote: function () { return 'Confirmed by you'; },
+          cta: function () { return { label: 'Open Web Shop', href: '#webshop?mode=redeem' }; }
+        }
+      ]
+    }
+  };
+  function codeType() { return PJ().guides.codes.chosen.type || PJ().guides.codes.paths.type; }
+  function rewardLabel(id) {
+    return { discount: 'discount', bonus: A().codeBonus.toLowerCase(), item: 'item through a predefined offer' }[id] || '';
+  }
+
+  function stepCta(g, st) {
+    if (st.paths) {
+      var pathId = PJ().guides[g.id].paths[st.id];
+      var path = st.paths().filter(function (p) { return p.id === pathId; })[0] || st.paths()[0];
+      if (path.cta) return path.cta;
+    }
+    return st.cta ? st.cta() : null;
+  }
+  function progress(gid) {
+    var g = GUIDES[gid];
+    var doneCount = 0, current = null;
+    g.steps.forEach(function (st, i) {
+      if (st.done()) doneCount++;
+      else if (current === null) current = i;
+    });
+    return { done: doneCount, total: g.steps.length, current: current, complete: current === null };
+  }
+
+  /* ── Card state (D2-FR4, FR7) — from account data, never guide visits ── */
+  function cardState(gid) {
+    if (!S.setupDone) return 'blocked';
+    var pj = PJ();
+    if (gid === 'sales' && pj.promo && pj.promo.active) return 'live';
+    if (gid === 'codes' && pj.code && pj.code.limitsSet) return 'live';
+    return 'available';
+  }
+
+  /* ── Small render helpers ── */
+  function status(tone, label, size) {
+    var sr = { success: 'success', warning: 'warning', neutral: 'neutral', default: 'inactive' }[tone];
+    return '<div class="xui-status xui-status--' + (size || 'md') + '" role="status" aria-label="' + sr + ': ' + esc(label) + '">' +
+      '<span class="xui-status__dot xui-status__dot--' + tone + '" aria-hidden="true"></span>' +
+      '<span class="xui-status__label xui-status__label--dot-color xui-status__label--' + tone + '" aria-hidden="true">' + esc(label) + '</span></div>';
+  }
+  function btn(label, opts) {
+    opts = opts || {};
+    var cls = 'xui-btn xui-btn--' + (opts.variant || 'primary') + ' xui-btn--' + (opts.tone || 'brand') + ' xui-btn--' + (opts.size || 'md') + (opts.arrow ? ' xui-btn--spread' : '') + (opts.full ? ' xui-btn--full-width' : '');
+    var iconSize = opts.size === 'xs' ? 24 : 28;
+    var inner = '<span class="xui-btn__label">' + esc(label) + '</span>' + (opts.arrow ? ic('arrowR', iconSize, 'xui-btn__icon') : '');
+    var data = opts.action ? ' data-action="' + opts.action + '"' : '';
+    if (opts.data) Object.keys(opts.data).forEach(function (k) { data += ' data-' + k + '="' + esc(opts.data[k]) + '"'; });
+    if (opts.href && !opts.disabled) return '<a class="' + cls + '" href="' + opts.href + '"' + data + '>' + inner + '</a>';
+    return '<button class="' + cls + '" type="' + (opts.submit ? 'submit' : 'button') + '"' + data + (opts.disabled ? ' disabled aria-disabled="true"' : '') + '>' + inner + '</button>';
+  }
+  function progressBar(done, total, opts) {
+    opts = opts || {};
+    var pct = Math.round(done / total * 100);
+    var state = done === total ? 'success' : 'default';
+    return '<div class="xui-progress-bar xui-progress-bar--' + (opts.size || 'lg') + ' xui-progress-bar--' + state + '" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100" aria-label="' + esc(opts.label || 'Progress') + '">' +
+      (opts.label ? '<div class="xui-progress-bar__header"><div class="xui-progress-bar__label-group"><span class="xui-progress-bar__label">' + esc(opts.label) + '</span></div>' +
+        (done === total ? ic('checkCr', 16, 'xui-progress-bar__status-icon') : '<span class="pg-caption">' + done + ' of ' + total + '</span>') + '</div>' : '') +
+      '<div class="xui-progress-bar__track"><div class="xui-progress-bar__fill" style="width: ' + pct + '%;"></div></div>' +
+      (opts.helper ? '<span class="xui-progress-bar__helper">' + esc(opts.helper) + '</span>' : '') + '</div>';
+  }
+  function notification(n) {
+    var iconName = n.tone === 'success' ? 'check' : 'info';
+    return '<div class="xui-notification xui-notification--' + n.tone + ' xui-notification--inline" role="status" aria-live="polite">' +
+      '<div class="xui-notification__icon-wrap">' + ic(iconName, 20) + '</div>' +
+      '<div class="xui-notification__body xui-notification__body--row"><div class="xui-notification__text-group">' +
+      (n.title ? '<p class="xui-notification__title">' + esc(n.title) + '</p>' : '') +
+      (n.msg ? '<p class="xui-notification__message">' + esc(n.msg) + '</p>' : '') + '</div>' +
+      (n.action ? '<a class="xui-notification__action" href="' + n.action.href + '">' + esc(n.action.label) + '</a>' : '') + '</div>' +
+      (n.closable === false ? '' : '<button class="xui-notification__close" type="button" aria-label="Close notification" data-action="close-note">' + ic('close', 18) + '</button>') + '</div>';
+  }
+  function crumbs(items) {
+    return '<nav aria-label="Breadcrumb" class="xui-breadcrumbs xui-breadcrumbs--md"><ol class="xui-breadcrumbs__list">' +
+      items.map(function (it, i) {
+        var last = i === items.length - 1;
+        return (i ? CRUMB_SEP : '') + '<li class="xui-breadcrumbs__item">' +
+          (last ? '<span class="xui-breadcrumbs__link xui-breadcrumbs__link--active" aria-current="page">' + esc(it.label) + '</span>'
+                : '<a class="xui-breadcrumbs__link" href="' + it.href + '">' + esc(it.label) + '</a>') + '</li>';
+      }).join('') + '</ol></nav>';
+  }
+  function radio(name, value, label, desc, checked) {
+    return '<label class="pg-choice' + (checked ? ' pg-choice--checked' : '') + '">' +
+      '<input class="visually-hidden" type="radio" name="' + name + '" value="' + value + '"' + (checked ? ' checked' : '') + '>' +
+      '<span class="xui-radio xui-radio--md' + (checked ? ' xui-radio--checked' : '') + '">' +
+      '<span class="xui-radio__control"><span class="xui-radio__dot"></span></span>' +
+      '<span class="xui-radio__text"><span class="xui-radio__label">' + esc(label) + '</span>' +
+      (desc ? '<span class="xui-radio__description">' + esc(desc) + '</span>' : '') + '</span></span></label>';
+  }
+  function checkbox(name, value, label, desc, checked) {
+    return '<label class="pg-choice' + (checked ? ' pg-choice--checked' : '') + '">' +
+      '<input class="visually-hidden" type="checkbox" name="' + name + '" value="' + value + '"' + (checked ? ' checked' : '') + '>' +
+      '<span class="xui-checkbox xui-checkbox--md' + (checked ? ' xui-checkbox--checked' : '') + '">' +
+      '<span class="xui-checkbox__control">' + CHECK_SMALL + '</span>' +
+      '<span class="xui-checkbox__text"><span class="xui-checkbox__label">' + esc(label) + '</span>' +
+      (desc ? '<span class="xui-checkbox__description">' + esc(desc) + '</span>' : '') + '</span></span></label>';
+  }
+  function field(id, label, input, opts) {
+    opts = opts || {};
+    return '<div class="xui-field-group xui-field-group--md">' +
+      '<div class="xui-field-group__label-row"><label class="xui-field-group__label' + (opts.required ? ' xui-field-group__label--required' : '') + '" for="' + id + '">' + esc(label) + '</label></div>' +
+      (opts.desc ? '<span class="xui-field-group__description">' + esc(opts.desc) + '</span>' : '') +
+      '<div class="xui-input-wrapper xui-input--md' + (opts.disabled ? ' xui-input--disabled' : '') + '"><div class="xui-input__container">' + input + '</div></div>' +
+      (opts.helper ? '<span class="xui-field-group__helper">' + esc(opts.helper) + '</span>' : '') + '</div>';
+  }
+  function input(id, attrs) {
+    return '<input id="' + id + '" name="' + id + '" class="xui-input" ' + attrs + ' />';
+  }
+  function today(offset) {
+    var d = new Date(); d.setDate(d.getDate() + (offset || 0));
+    return d.toISOString().slice(0, 10);
+  }
+  function pageHeader(title, desc, crumbItems, extra) {
+    return '<div class="pg-header">' + (crumbItems ? crumbs(crumbItems) : '') +
+      '<div class="pg-header__row"><h1 class="pg-h1">' + esc(title) + '</h1>' + (extra || '') + '</div>' +
+      (desc ? '<p class="pg-body-lg">' + esc(desc) + '</p>' : '') + '</div>';
+  }
+  function flashHtml() {
+    if (!flash) return '';
+    var h = notification(flash);
+    flash = null;
+    return h;
+  }
+
+  /* ══════════════════ Views ══════════════════ */
+
+  /* Get started — final onboarding screen + Advanced setup (D2) */
+  var START_WITH = [
+    { id: 'catalog', title: 'Create your catalog', desc: function () { return A().catalogDesc; }, href: '#catalog' },
+    { id: 'webshop', title: 'Build your Web Shop', desc: function () { return 'Publish a storefront where players buy directly.'; }, href: '#webshop' },
+    { id: 'payments', title: 'Set up payments', desc: function () { return 'Connect payment methods and payout details.'; }, href: '#page/payments' },
+    { id: 'launch', title: 'Go live', desc: function () { return 'Open your store to players.'; }, href: '#page/launch' }
+  ];
+  function startWithState(id) {
+    if (S.setupDone) return 'done';
+    if (id === 'payments') return 'progress';
+    if (id === 'launch') return 'todo';
+    return 'done';
+  }
+
+  function viewGetStarted() {
+    var doneCount = START_WITH.filter(function (s) { return startWithState(s.id) === 'done'; }).length;
+    var hero = S.setupDone
+      ? '<section class="pg-hero" aria-label="Initial setup status">' +
+          '<span class="pg-hero__icon">' + ic('checkCr', 40) + '</span>' +
+          '<div class="pg-hero__text"><h2 class="pg-h2">Your initial setup is complete</h2>' +
+          '<p class="pg-body">Your Web Shop is live and accepting payments. Grow revenue with the Advanced setup below.</p></div>' +
+          progressBar(doneCount, START_WITH.length, { label: 'Initial setup' }) + '</section>'
+      : '<section class="pg-hero" aria-label="Initial setup status">' +
+          '<span class="pg-hero__icon pg-hero__icon--progress">' + ic('info', 40) + '</span>' +
+          '<div class="pg-hero__text"><h2 class="pg-h2">Finish your initial setup</h2>' +
+          '<p class="pg-body">Complete the remaining steps to launch your store and unlock Advanced setup.</p></div>' +
+          progressBar(doneCount, START_WITH.length, { label: 'Initial setup' }) + '</section>';
+
+    var start = '<section class="pg-section" aria-labelledby="h-start">' +
+      '<div class="pg-section__head"><div class="pg-section__titles"><h2 class="pg-h2" id="h-start">Start with</h2>' +
+      '<p class="pg-body-sm">The foundation every store needs.</p></div></div><div class="pg-grid-4">' +
+      START_WITH.map(function (s) {
+        var st = startWithState(s.id);
+        var badge = st === 'done' ? status('success', 'Done') : st === 'progress' ? status('warning', 'In progress') : status('default', 'To do');
+        return '<article class="pg-card pg-card--flat pg-card--hover pg-mini">' +
+          '<div class="pg-mini__top">' + badge + '</div>' +
+          '<h3 class="pg-mini__title">' + esc(s.title) + '</h3>' +
+          '<p class="pg-body-sm">' + esc(s.desc()) + '</p>' +
+          '<div><a class="xui-link xui-link--md" href="' + s.href + '">' + (st === 'done' ? 'Open' : 'Continue') + '</a></div></article>';
+      }).join('') + '</div></section>';
+
+    var adv = '<section class="pg-section" aria-labelledby="h-adv">' +
+      '<div class="pg-section__head"><div class="pg-section__titles"><h2 class="pg-h2" id="h-adv">Advanced setup</h2>' +
+      '<p class="pg-body-sm">Tools that build on your live store. Each one comes with a step-by-step guide.</p></div></div>' +
+      '<div class="pg-grid-adv">' + ['sales', 'codes'].map(capCard).join('') + '</div></section>';
+
+    return pageHeader('Get started', 'Set up your store, then add the tools that grow revenue.') + flashHtml() + hero + adv + start;
+  }
+
+  function capCard(gid) {
+    var g = GUIDES[gid], state = cardState(gid), pr = progress(gid), gs = PJ().guides[gid];
+    var badge = state === 'live' ? status('success', 'Live') : state === 'blocked' ? status('default', 'Blocked') : status('neutral', 'Available');
+    var progressLine = '';
+    if (state !== 'blocked' && gs.started && !pr.complete) {
+      progressLine = progressBar(pr.done, pr.total, { size: 'sm', label: 'Step ' + (pr.current + 1) + ' of ' + pr.total + ': ' + g.steps[pr.current].title });
+    }
+    var foot;
+    if (state === 'live') {
+      foot = btn('Open', { href: '#promotions?tab=' + (gid === 'sales' ? (PJ().promo.kind === 'bonus' ? 'bonus' : 'discount') : (PJ().code.type === 'coupon' ? 'coupons' : 'codes')), arrow: true }) +
+        '<a class="xui-link xui-link--md" href="#guide/' + gid + '">View guide</a>';
+    } else if (state === 'available') {
+      foot = btn('Set up', { href: '#guide/' + gid, arrow: true });
+    } else {
+      foot = btn('Set up', { disabled: true, arrow: true });
+    }
+    var blocked = state === 'blocked'
+      ? '<div class="pg-cap__blocked">' + ic('lock', 16) + '<span>Available after your initial setup is complete. Remaining: <strong class="pg-strong">Set up payments</strong>, <strong class="pg-strong">Go live</strong>. <a class="xui-link xui-link--md xui-link--underline" href="#page/payments">Finish setup</a></span></div>'
+      : '';
+    return '<article class="pg-card pg-card--hover pg-cap' + (state === 'blocked' ? ' pg-cap--blocked' : '') + '" aria-labelledby="cap-' + gid + '">' +
+      '<div class="pg-cap__top"><div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--lg"><div class="xui-rich-icon__icon pg-cap__icon">' + ic(g.icon, 22) + '</div></div>' + badge + '</div>' +
+      '<div class="pg-section__titles"><h3 class="pg-cap__title" id="cap-' + gid + '">' + esc(g.name) + '</h3><p class="pg-body-sm">' + esc(g.short()) + '</p></div>' +
+      '<div class="pg-cap__examples">' + g.examples().map(function (x) { return '<span class="xui-tag xui-tag--xs xui-tag--secondary">' + esc(x) + '</span>'; }).join('') + '</div>' +
+      '<div class="pg-cap__meta pg-caption"><span>' + g.steps.length + ' steps</span><span>About ' + g.minutes + ' min</span><span>Self-serve</span></div>' +
+      progressLine + blocked + '<div class="pg-cap__foot">' + foot + '</div></article>';
+  }
+
+  /* Setup guide (D3) */
+  function viewGuide(gid) {
+    var g = GUIDES[gid];
+    if (!g) return viewNotFound();
+    if (!S.setupDone) {
+      flash = { tone: 'warning', title: 'Finish your initial setup first', msg: 'Setup guides for Advanced tools unlock after your store goes live.', action: { label: 'Finish setup', href: '#page/payments' } };
+      location.hash = '#get-started';
+      return '';
+    }
+    var gs = PJ().guides[gid], pr = progress(gid), state = cardState(gid);
+    PJ().lastGuide = gid; save();
+
+    var badge = pr.complete ? status('success', 'Live') : state === 'live' ? status('success', 'Live') : gs.started ? status('warning', 'In progress') : status('neutral', 'Available');
+    var head = '<div class="pg-header">' + crumbs([{ label: 'Get started', href: '#get-started' }, { label: 'Advanced setup', href: '#get-started' }, { label: g.name }]) +
+      '<div class="pg-header__row"><div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--lg"><div class="xui-rich-icon__icon pg-cap__icon">' + ic(g.icon, 22) + '</div></div>' +
+      '<h1 class="pg-h1">' + esc(g.name) + '</h1>' + badge + '</div></div>';
+
+    var main = '';
+    if (pr.complete) main += successPanel(gid);
+    if (!gs.started && !pr.complete) {
+      main += '<section class="pg-card pg-overview" aria-labelledby="ov-title">' +
+        '<p class="pg-caption">Overview</p><h2 class="pg-h2" id="ov-title">' + esc(g.goal) + '</h2>' +
+        '<p class="pg-body">In ' + g.steps.length + ' steps, about ' + g.minutes + ' minutes, you will:</p>' +
+        '<ul class="pg-overview__list">' + g.accomplish.map(function (a) { return '<li>' + ic('check', 18) + '<span>' + esc(a) + '</span></li>'; }).join('') + '</ul>' +
+        '<div class="pg-step__actions">' + btn('Start setup', { action: 'start-guide', data: { guide: gid }, arrow: true }) +
+        '<span class="pg-caption">Your progress is saved. You can leave and come back at any time.</span></div></section>';
+    }
+    main += '<section class="pg-section" aria-labelledby="steps-title"><div class="pg-section__head"><h2 class="pg-h3" id="steps-title">Steps</h2>' +
+      '<span class="pg-caption">Done steps are detected automatically from your account</span></div>' +
+      '<ol class="pg-steps">' + g.steps.map(function (st, i) { return stepHtml(g, st, i, pr, gs); }).join('') + '</ol></section>';
+
+    var side = '<aside class="pg-guide__side" aria-label="Guide summary">' +
+      '<div class="pg-card pg-card--flat">' + progressBar(pr.done, pr.total, { label: pr.complete ? 'All steps done' : 'Your progress', helper: pr.complete ? 'Reopen any step to review your settings.' : 'Next: ' + g.steps[pr.current].title }) + '</div>' +
+      '<div class="pg-card pg-card--flat pg-section"><h2 class="pg-h3">Before you start</h2><ul class="pg-prep">' +
+      g.prep().map(function (p) { return '<li class="' + (p.done ? 'pg-prep__done' : 'pg-prep__todo') + '">' + ic(p.done ? 'checkCr' : 'info', 18) + '<span>' + esc(p.text) + (p.done ? ' <span class="pg-caption">— ready</span>' : '') + '</span></li>'; }).join('') +
+      '</ul></div>' +
+      '<div class="pg-card pg-card--flat pg-section"><h2 class="pg-h3">Need help?</h2><p class="pg-body-sm">Everything you set up here lives in <a class="xui-link xui-link--md" href="#promotions">LiveOps › Promotions</a>. You can edit it there at any time.</p>' +
+      '<a class="xui-link xui-link--md" href="#page/docs">Promotions documentation ' + ic('openIn', 16) + '</a></div></aside>';
+
+    return head + flashHtml() + '<div class="pg-guide"><div class="pg-guide__main">' + main + '</div>' + side + '</div>';
+  }
+
+  function stepHtml(g, st, i, pr, gs) {
+    var done = st.done(), current = pr.current === i && gs.started;
+    var preview = !gs.started && !pr.complete;
+    var cls = 'pg-step' + (done ? ' pg-step--done' : '') + (current ? ' pg-step--current' : '') + (preview ? ' pg-step--preview' : '');
+    var badge = done ? status('success', 'Done', 'sm') : current ? status('warning', 'Current step', 'sm') : status('default', 'To do', 'sm');
+    var num = done ? ic('check', 18) : String(i + 1);
+    var body = '<div class="pg-step__head"><h3 class="pg-step__title">' + esc(st.title) + '</h3>' + badge + '</div><p class="pg-body-sm">' + esc(st.desc()) + '</p>';
+
+    if (preview) return '<li class="' + cls + '"><span class="pg-step__num" aria-hidden="true">' + (i + 1) + '</span><div class="pg-step__body">' + body + '</div></li>';
+
+    var detail = '';
+    if (current) {
+      if (st.paths) {
+        var sel = gs.paths[st.id];
+        var paths = st.paths();
+        detail += '<div class="pg-choices" role="radiogroup" aria-label="' + esc(st.title) + '">' +
+          paths.map(function (p) { return radio('path-' + g.id + '-' + st.id, p.id, p.label, p.desc, p.id === sel); }).join('') + '</div>';
+        var chosen = paths.filter(function (p) { return p.id === sel; })[0];
+        if (chosen && chosen.instr) detail += '<p class="pg-instr">' + esc(chosen.instr) + '</p>';
+      }
+      var cta = stepCta(g, st), actions = '';
+      if (st.detect === 'choice') {
+        actions += btn(st.choiceLabel, { action: 'save-choice', data: { guide: g.id, step: st.id }, arrow: true, size: 'sm' });
+      } else if (cta) {
+        actions += btn(cta.label, { href: cta.href + (cta.href.indexOf('?') > -1 ? '&' : '?') + 'guide=' + g.id, arrow: true, size: 'sm' });
+      }
+      if (st.detect === 'confirm') {
+        actions += btn('I’ve done this', { variant: 'secondary', size: 'sm', action: 'confirm-step', data: { guide: g.id, step: st.id } });
+      }
+      detail += '<div class="pg-step__actions">' + actions + '</div>';
+      if (st.detect === 'auto') detail += '<p class="pg-step__note">' + ic('info', 14) + 'This step is marked done automatically when the guide detects it in your account.</p>';
+      detail = '<div class="pg-step__detail">' + detail + '</div>';
+    } else if (done) {
+      var c2 = stepCta(g, st);
+      detail = '<div class="pg-step__actions"><span class="pg-step__note">' + ic('checkCr', 14) + esc(st.doneNote()) + '</span>' +
+        (c2 ? '<a class="xui-link xui-link--md" href="' + c2.href + (c2.href.indexOf('?') > -1 ? '&' : '?') + 'guide=' + g.id + '">Review</a>' : '') +
+        (st.detect === 'choice' ? '<button class="xui-link xui-link--md pg-linkbtn" type="button" data-action="reopen-choice" data-guide="' + g.id + '" data-step="' + st.id + '">Change</button>' : '') + '</div>';
+    }
+    return '<li class="' + cls + '"' + (current ? ' aria-current="step" id="current-step"' : '') + '><span class="pg-step__num" aria-hidden="true">' + num + '</span><div class="pg-step__body">' + body + detail + '</div></li>';
+  }
+
+  function successPanel(gid) {
+    var pj = PJ(), g = GUIDES[gid], other = gid === 'sales' ? 'codes' : 'sales';
+    var summary, title;
+    if (gid === 'sales') {
+      var p = pj.promo;
+      title = p.kind === 'discount' ? 'Your discount is live' : 'Your bonus offer is live';
+      summary = [
+        { k: 'Offer', v: p.kind === 'discount' ? p.percent + '% off' : bonusById(p.bonus).name + ' as a bonus' },
+        { k: 'Applies to', v: p.items.map(function (id) { return itemById(id).name; }).join(', ') },
+        { k: 'Runs', v: p.start + ' to ' + p.end },
+        { k: 'Regions', v: p.regions === 'all' ? 'All regions' : 'Selected regions' }
+      ];
+    } else {
+      var c = pj.code;
+      title = c.type === 'coupon' ? 'Your coupons are live' : 'Your promo code is live';
+      summary = [
+        { k: c.type === 'coupon' ? 'Coupons' : 'Code', v: c.type === 'coupon' ? c.count + ' unique codes' : c.value },
+        { k: 'Reward', v: rewardLabel(pj.guides.codes.chosen.reward).replace(/^./, function (m) { return m.toUpperCase(); }) },
+        { k: 'Valid', v: c.from + ' to ' + c.to },
+        { k: 'Redemptions', v: c.type === 'coupon' ? 'Once per coupon' : c.uses + ' in total' }
+      ];
+    }
+    var otherLive = cardState(other) === 'live' && progress(other).complete;
+    var next = otherLive
+      ? '<div class="pg-next"><div class="pg-next__text"><span class="pg-caption">Up next</span><span class="pg-strong">Both promotion tools are live</span><span class="pg-body-sm">Track redemptions and revenue in Analytics.</span></div>' +
+        btn('Open Analytics', { variant: 'secondary', size: 'sm', href: '#page/analytics' }) + '</div>'
+      : '<div class="pg-next"><div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--lg"><div class="xui-rich-icon__icon pg-cap__icon">' + ic(GUIDES[other].icon, 22) + '</div></div>' +
+        '<div class="pg-next__text"><span class="pg-caption">Suggested next</span><span class="pg-strong">' + esc(GUIDES[other].name) + '</span><span class="pg-body-sm">' + esc(GUIDES[other].short()) + '</span></div>' +
+        btn('Set up', { variant: 'secondary', size: 'sm', href: '#guide/' + other, arrow: true }) + '</div>';
+    return '<section class="pg-card pg-success" aria-labelledby="success-title">' +
+      '<div class="pg-success__head"><span class="pg-success__icon">' + ic('trophy', 48) + '</span><div class="pg-section__titles">' +
+      '<p class="pg-caption">Well done!</p><h2 class="pg-h2" id="success-title">' + title + '</h2>' +
+      '<p class="pg-body">Players can use ' + (/coupons/.test(title) ? 'them' : 'it') + ' in your Web Shop now. The ' + esc(g.name) + ' card on Get started shows it as Live.</p></div></div>' +
+      '<ul class="pg-summary">' + summary.map(function (s) { return '<li><span class="pg-caption">' + esc(s.k) + '</span><span class="pg-strong">' + esc(s.v) + '</span></li>'; }).join('') + '</ul>' +
+      '<div class="pg-step__actions">' + btn('Open Promotions', { href: '#promotions', arrow: true }) + btn('Back to Get started', { variant: 'secondary', href: '#get-started' }) + '</div>' +
+      next + '</section>';
+  }
+
+  /* Embedded Promotions section (D1) — LiveOps › Promotions */
+  var PROMO_TABS = [
+    { id: 'discount', label: 'Discounts' },
+    { id: 'bonus', label: 'Bonus promotions' },
+    { id: 'codes', label: 'Promo codes' },
+    { id: 'coupons', label: 'Coupons' }
+  ];
+  function promoCrumbs(last) {
+    var c = [{ label: 'LiveOps', href: '#promotions' }, { label: 'Promotions', href: '#promotions' }];
+    if (last) c.push({ label: last });
+    return c;
+  }
+  function viewPromotions(q) {
+    var pj = PJ(), tab = q.tab || 'discount';
+    var tabs = '<nav class="xui-tabs xui-tabs--line xui-tabs--sm" role="tablist" aria-label="Promotion types">' +
+      PROMO_TABS.map(function (t) {
+        var n = countFor(t.id);
+        return '<a class="xui-tab' + (t.id === tab ? ' xui-tab--active' : '') + '" role="tab" aria-selected="' + (t.id === tab) + '" href="#promotions?tab=' + t.id + '">' + esc(t.label) + (n ? ' <span class="xui-tab__counter">' + n + '</span>' : '') + '</a>';
+      }).join('') + '</nav>';
+    var rows = rowsFor(tab);
+    var createHref = { discount: '#promotions/new?kind=discount', bonus: '#promotions/new?kind=bonus', codes: '#promotions/code?type=promo', coupons: '#promotions/code?type=coupon' }[tab];
+    var createLabel = { discount: 'Create discount', bonus: 'Create bonus promotion', codes: 'Create promo code', coupons: 'Generate coupons' }[tab];
+    var body = rows.length
+      ? '<div class="pg-card pg-table-wrap"><table class="pg-table"><thead><tr><th>Name</th><th>Details</th><th>Dates</th><th>Status</th></tr></thead><tbody>' +
+        rows.map(function (r) { return '<tr><td><a class="xui-link xui-link--md" href="' + r.href + '">' + esc(r.name) + '</a></td><td class="pg-table__muted">' + esc(r.details) + '</td><td class="pg-table__muted">' + esc(r.dates) + '</td><td>' + r.status + '</td></tr>'; }).join('') +
+        '</tbody></table></div>'
+      : '<div class="pg-card pg-empty">' + ic(tab === 'codes' || tab === 'coupons' ? 'coupon' : 'discount', 40) +
+        '<h2 class="pg-h3">No ' + PROMO_TABS.filter(function (t) { return t.id === tab; })[0].label.toLowerCase() + ' yet</h2>' +
+        '<p class="pg-body-sm">Promotions you create appear here, with their dates and status.</p>' + btn(createLabel, { size: 'sm', href: createHref, arrow: true }) + '</div>';
+    return pageHeader('Promotions', 'Create and manage discounts, bonus promotions, promo codes, and coupons.', promoCrumbs(), '') +
+      flashHtml() + '<div class="pg-section__head">' + tabs + btn(createLabel, { variant: 'secondary', size: 'sm', href: createHref }) + '</div>' + body;
+  }
+  function countFor(tab) { return rowsFor(tab).length; }
+  function rowsFor(tab) {
+    var pj = PJ(), rows = [];
+    var p = pj.promo, c = pj.code;
+    if (p && ((tab === 'discount' && p.kind === 'discount') || (tab === 'bonus' && p.kind === 'bonus'))) {
+      rows.push({
+        name: p.name,
+        details: (p.kind === 'discount' ? p.percent + '% off ' : bonusById(p.bonus).name + ' with ') + p.items.map(function (id) { return itemById(id).name; }).join(', '),
+        dates: p.scheduled ? p.start + ' – ' + p.end : 'Not scheduled',
+        status: p.active ? status('success', 'Active') : status('default', 'Draft'),
+        href: p.active ? '#promotions/review' : p.scheduled ? '#promotions/review' : '#promotions/schedule'
+      });
+    }
+    if (c && ((tab === 'codes' && c.type === 'promo') || (tab === 'coupons' && c.type === 'coupon'))) {
+      rows.push({
+        name: c.type === 'coupon' ? c.name : c.value,
+        details: c.type === 'coupon' ? c.count + ' unique codes · ' + rewardLabel(c.reward) : rewardLabel(c.reward),
+        dates: c.limitsSet ? c.from + ' – ' + c.to : 'No validity set',
+        status: c.limitsSet ? status('success', 'Active') : status('default', 'Draft'),
+        href: '#promotions/code-limits'
+      });
+    }
+    return rows;
+  }
+
+  function guideReturn(q) {
+    return q.guide ? '<a class="xui-link xui-link--md" href="#guide/' + q.guide + '">' + ic('arrowL', 16) + 'Back to guide: ' + esc(GUIDES[q.guide].name) + '</a>' : '';
+  }
+  function guideSuffix(q) { return q.guide ? '&guide=' + q.guide : ''; }
+
+  function viewPromoNew(q) {
+    var pj = PJ(), a = A();
+    var kind = q.kind === 'bonus' ? 'bonus' : 'discount';
+    var p = pj.promo && pj.promo.kind === kind ? pj.promo : null;
+    var sel = p ? p.items : [a.items[0].id];
+    var valueField = kind === 'discount'
+      ? field('percent', 'Discount, %', input('percent', 'type="number" min="1" max="90" required aria-required="true" value="' + (p ? p.percent : 20) + '"'), { required: true, helper: 'Players see the original price crossed out.' })
+      : '<div class="pg-form__group"><span class="xui-field-group__label">Bonus players get</span><div class="pg-choices" role="radiogroup" aria-label="Bonus">' +
+        a.bonuses.map(function (b, i) { return radio('bonus', b.id, b.name, '', p ? p.bonus === b.id : i === 0); }).join('') + '</div></div>';
+    return pageHeader(kind === 'discount' ? 'New discount' : 'New bonus promotion', null, promoCrumbs(kind === 'discount' ? 'New discount' : 'New bonus promotion'), '') + guideReturn(q) +
+      '<form class="pg-card pg-form" data-form="promo-new" data-kind="' + kind + '" data-guide="' + (q.guide || '') + '">' +
+      field('pname', 'Promotion name', input('pname', 'type="text" required aria-required="true" value="' + esc(p ? p.name : (kind === 'discount' ? 'Weekend sale' : 'Bonus week')) + '"'), { required: true, helper: 'Only you see this name.' }) +
+      '<div class="pg-form__group"><span class="xui-field-group__label">Items the offer applies to</span><div class="pg-choices">' +
+      a.items.map(function (it) { return checkbox('items', it.id, it.name, it.type + ' · ' + money(it.price), sel.indexOf(it.id) > -1); }).join('') + '</div></div>' +
+      valueField +
+      '<div class="pg-form__actions">' + btn('Save draft', { submit: true, arrow: true }) + btn('Cancel', { variant: 'secondary', tone: 'mono', href: q.guide ? '#guide/' + q.guide : '#promotions' }) + '</div></form>';
+  }
+
+  function viewPromoSchedule(q) {
+    var p = PJ().promo;
+    if (!p) return needFirst('Create an offer first', 'Set up a discount or bonus promotion before you schedule it.', '#promotions/new?kind=discount' + guideSuffix(q), 'Create discount');
+    return pageHeader('Schedule and limits', p.name, promoCrumbs(p.name), status('default', p.active ? 'Active' : 'Draft')) + guideReturn(q) +
+      '<form class="pg-card pg-form" data-form="promo-schedule" data-guide="' + (q.guide || '') + '">' +
+      '<div class="pg-form__row">' + field('start', 'Start date', input('start', 'type="date" required aria-required="true" value="' + (p.start || today(0)) + '"'), { required: true }) +
+      field('end', 'End date', input('end', 'type="date" required aria-required="true" value="' + (p.end || today(7)) + '"'), { required: true }) + '</div>' +
+      '<div class="pg-form__group"><span class="xui-field-group__label">Regions</span><div class="pg-choices" role="radiogroup" aria-label="Regions">' +
+      radio('regions', 'all', 'All regions', 'The offer applies everywhere you sell', (p.regions || 'all') === 'all') +
+      radio('regions', 'selected', 'Selected regions', 'Choose countries on the next screen', p.regions === 'selected') + '</div></div>' +
+      field('limit', 'Per-player limit (optional)', input('limit', 'type="number" min="1" placeholder="No limit" value="' + (p.limit || '') + '"'), { helper: 'How many times one player can buy with this offer.' }) +
+      '<div class="pg-form__actions">' + btn('Save schedule', { submit: true, arrow: true }) + btn('Cancel', { variant: 'secondary', tone: 'mono', href: q.guide ? '#guide/' + q.guide : '#promotions' }) + '</div></form>';
+  }
+
+  function viewPromoReview(q) {
+    var p = PJ().promo;
+    if (!p) return needFirst('Create an offer first', 'Set up a discount or bonus promotion before you review it.', '#promotions/new?kind=discount' + guideSuffix(q), 'Create discount');
+    if (!p.scheduled) return needFirst('Set a schedule first', 'Add start and end dates before you activate the offer.', '#promotions/schedule' + (q.guide ? '?guide=' + q.guide : ''), 'Set schedule');
+    var rows = p.items.map(function (id) {
+      var it = itemById(id);
+      var result = p.kind === 'discount'
+        ? '<span class="pg-price-old">' + money(it.price) + '</span><span class="pg-price-new">' + money(it.price * (1 - p.percent / 100)) + '</span>'
+        : money(it.price) + ' <span class="pg-price-new">+ ' + esc(bonusById(p.bonus).name) + '</span>';
+      return '<tr><td>' + esc(it.name) + '</td><td class="pg-table__muted">' + esc(it.type) + '</td><td>' + result + '</td></tr>';
+    }).join('');
+    return pageHeader('Review and activate', p.name, promoCrumbs(p.name), status(p.active ? 'success' : 'default', p.active ? 'Active' : 'Draft')) + guideReturn(q) + flashHtml() +
+      '<div class="pg-card pg-review">' +
+      '<div class="pg-review__item"><span class="pg-caption">Offer</span><span class="pg-strong">' + (p.kind === 'discount' ? p.percent + '% off' : 'Bonus: ' + esc(bonusById(p.bonus).name)) + '</span></div>' +
+      '<div class="pg-review__item"><span class="pg-caption">Runs</span><span class="pg-strong">' + p.start + ' to ' + p.end + '</span></div>' +
+      '<div class="pg-review__item"><span class="pg-caption">Regions</span><span class="pg-strong">' + (p.regions === 'all' ? 'All regions' : 'Selected regions') + '</span></div>' +
+      '<div class="pg-review__item"><span class="pg-caption">Per-player limit</span><span class="pg-strong">' + (p.limit ? p.limit : 'No limit') + '</span></div></div>' +
+      '<div class="pg-card pg-table-wrap"><table class="pg-table"><thead><tr><th>Item</th><th>Type</th><th>Price players see</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<div class="pg-form__actions">' + (p.active
+        ? btn('Deactivate', { variant: 'secondary', tone: 'mono', action: 'deactivate-promo' })
+        : btn('Activate offer', { action: 'activate-promo', data: { guide: q.guide || '' }, arrow: true }) + btn('Edit schedule', { variant: 'secondary', tone: 'mono', href: '#promotions/schedule' + (q.guide ? '?guide=' + q.guide : '') })) + '</div>';
+  }
+
+  function viewCodeCreate(q) {
+    var pj = PJ(), gs = pj.guides.codes;
+    var type = q.type || codeType();
+    var reward = gs.chosen.reward || gs.paths.reward;
+    var c = pj.code && pj.code.type === type ? pj.code : null;
+    var body = type === 'coupon'
+      ? field('cname', 'Coupon batch name', input('cname', 'type="text" required aria-required="true" value="' + esc(c ? c.name : 'Launch coupons') + '"'), { required: true }) +
+        field('count', 'Number of coupons', input('count', 'type="number" min="1" max="10000" required aria-required="true" value="' + (c ? c.count : 500) + '"'), { required: true, helper: 'Each coupon is a unique code players redeem once.' })
+      : field('code', 'Promo code', input('code', 'type="text" required aria-required="true" pattern="[A-Za-z0-9_-]{4,20}" value="' + esc(c ? c.value : A().codeExample) + '"'), { required: true, helper: '4–20 letters, numbers, dashes, or underscores. Players type this code.' });
+    return pageHeader(type === 'coupon' ? 'Generate coupons' : 'New promo code', null, promoCrumbs(type === 'coupon' ? 'Generate coupons' : 'New promo code'), '') + guideReturn(q) +
+      '<form class="pg-card pg-form" data-form="code-new" data-type="' + type + '" data-guide="' + (q.guide || '') + '">' +
+      '<div class="pg-form__group"><span class="xui-field-group__label">Reward</span><div class="pg-choices" role="radiogroup" aria-label="Reward">' +
+      ['discount', 'bonus', 'item'].map(function (r) { return radio('reward', r, rewardLabel(r).replace(/^./, function (m) { return m.toUpperCase(); }), '', r === reward); }).join('') + '</div></div>' +
+      body +
+      field('upload', 'Upload codes from a file', input('upload', 'type="text" disabled placeholder="CSV, up to 10,000 codes"'), { disabled: true, helper: 'Bulk upload appears here when it becomes available in Publisher Account.' }) +
+      '<div class="pg-form__actions">' + btn(type === 'coupon' ? 'Generate coupons' : 'Create code', { submit: true, arrow: true }) + btn('Cancel', { variant: 'secondary', tone: 'mono', href: q.guide ? '#guide/' + q.guide : '#promotions?tab=codes' }) + '</div></form>';
+  }
+
+  function viewCodeLimits(q) {
+    var c = PJ().code;
+    if (!c) return needFirst('Create a code first', 'Create a promo code or coupons before you set validity and limits.', '#promotions/code' + (q.guide ? '?guide=' + q.guide : ''), 'Create code');
+    var uses = c.type === 'coupon'
+      ? '<p class="pg-body-sm">Each coupon can be redeemed once.</p>'
+      : field('uses', 'Total redemptions allowed', input('uses', 'type="number" min="1" required aria-required="true" value="' + (c.uses || 1000) + '"'), { required: true, helper: 'The code stops working after this many redemptions.' });
+    return pageHeader('Validity and limits', c.type === 'coupon' ? c.name : c.value, promoCrumbs(c.type === 'coupon' ? c.name : c.value), status(c.limitsSet ? 'success' : 'default', c.limitsSet ? 'Active' : 'Draft')) + guideReturn(q) +
+      '<form class="pg-card pg-form" data-form="code-limits" data-guide="' + (q.guide || '') + '">' +
+      '<div class="pg-form__row">' + field('from', 'Valid from', input('from', 'type="date" required aria-required="true" value="' + (c.from || today(0)) + '"'), { required: true }) +
+      field('to', 'Valid until', input('to', 'type="date" required aria-required="true" value="' + (c.to || today(30)) + '"'), { required: true }) + '</div>' +
+      uses + field('perPlayer', 'Per-player limit', input('perPlayer', 'type="number" min="1" value="' + (c.perPlayer || 1) + '"'), { helper: 'How many times one player can redeem.' }) +
+      '<div class="pg-form__actions">' + btn('Save and activate', { submit: true, arrow: true }) + btn('Cancel', { variant: 'secondary', tone: 'mono', href: q.guide ? '#guide/' + q.guide : '#promotions?tab=codes' }) + '</div></form>';
+  }
+
+  function needFirst(title, msg, href, label) {
+    return pageHeader('Promotions', null, promoCrumbs(), '') + '<div class="pg-card pg-empty">' + ic('info', 40) + '<h2 class="pg-h3">' + esc(title) + '</h2><p class="pg-body-sm">' + esc(msg) + '</p>' + btn(label, { size: 'sm', href: href, arrow: true }) + '</div>';
+  }
+
+  /* Catalog (read-only mock) */
+  function viewCatalog(q) {
+    return pageHeader(A().catalogNav, 'Items players can buy in your Web Shop.', [{ label: 'Catalog', href: '#catalog' }, { label: A().catalogNav }], '') + guideReturn(q) +
+      '<div class="pg-card pg-table-wrap"><table class="pg-table"><thead><tr><th>Name</th><th>Type</th><th>Price</th><th>Status</th></tr></thead><tbody>' +
+      A().items.map(function (it) { return '<tr><td>' + esc(it.name) + '</td><td class="pg-table__muted">' + esc(it.type) + '</td><td>' + money(it.price) + '</td><td>' + status('success', 'Published') + '</td></tr>'; }).join('') +
+      '</tbody></table></div>';
+  }
+
+  /* Web Shop preview (storefront, editor, redemption) */
+  function viewWebshop(q) {
+    var pj = PJ(), a = A(), mode = q.mode || 'offer', p = pj.promo;
+    var head = pageHeader('Web Shop', 'Preview your storefront as players see it.', [{ label: 'Storefronts', href: '#webshop' }, { label: 'Web Shop' }], '');
+    var modeTabs = '<nav class="xui-tabs xui-tabs--line xui-tabs--sm" role="tablist" aria-label="Web Shop views">' +
+      [{ id: 'offer', l: 'Storefront' }, { id: 'editor', l: 'Editor' }, { id: 'redeem', l: 'Redeem code' }].map(function (t) {
+        return '<a class="xui-tab' + (t.id === mode ? ' xui-tab--active' : '') + '" role="tab" aria-selected="' + (t.id === mode) + '" href="#webshop?mode=' + t.id + guideSuffix(q) + '">' + t.l + '</a>';
+      }).join('') + '</nav>';
+    var content;
+    if (mode === 'editor') {
+      content = '<div class="pg-shop__body"><h2 class="pg-h3">Storefront blocks</h2>' +
+        ['Header', 'Featured items', 'Item catalog'].map(function (b) { return '<div class="pg-block">' + ic('layout', 20) + '<div class="pg-block__text"><span class="pg-strong">' + b + '</span></div>' + status('success', 'Published', 'sm') + '</div>'; }).join('') +
+        (pj.shopBlock
+          ? '<div class="pg-block">' + ic('coupon', 20) + '<div class="pg-block__text"><span class="pg-strong">Promo code</span><span class="pg-caption">Players enter codes here</span></div>' + status('success', 'Published', 'sm') + '</div>'
+          : '<div class="pg-block pg-block--dashed">' + ic('coupon', 20) + '<div class="pg-block__text"><span class="pg-strong">Promo code</span><span class="pg-caption">Let players enter promo codes and coupons</span></div>' + btn('Add and publish', { size: 'xs', action: 'add-block' }) + '</div>') + '</div>';
+    } else if (mode === 'redeem') {
+      content = '<div class="pg-shop__body"><h2 class="pg-h3">Have a code?</h2>' +
+        (pj.shopBlock || pj.guides.codes.paths.redeem === 'game' ? '' : '<p class="pg-body-sm">Preview only. Add the promo code block in the editor so players see this field.</p>') +
+        '<form class="pg-shop__redeem" data-form="redeem">' + field('redeem-code', 'Code', input('redeem-code', 'type="text" required placeholder="Enter code" autocomplete="off"')) + btn('Redeem', { submit: true }) + '</form>' +
+        '<div id="redeem-result" aria-live="polite"></div>' +
+        (pj.code ? '<p class="pg-caption">Try: ' + esc(pj.code.type === 'coupon' ? pj.code.sample : pj.code.value) + '</p>' : '') + '</div>';
+    } else {
+      content = '<div class="pg-shop__body"><div class="pg-shop__grid">' + a.items.map(function (it) {
+        var on = p && p.active && p.items.indexOf(it.id) > -1;
+        var tag = on ? (p.kind === 'discount' ? '<span class="xui-tag xui-tag--xs xui-tag--brand-extra">−' + p.percent + '%</span>' : '<span class="xui-tag xui-tag--xs xui-tag--brand-extra">Bonus</span>') : '';
+        var price = on && p.kind === 'discount' ? '<span class="pg-price-old">' + money(it.price) + '</span><span class="pg-price-new">' + money(it.price * (1 - p.percent / 100)) + '</span>' : money(it.price);
+        return '<div class="pg-card pg-card--flat pg-shop__item"><div class="pg-shop__thumb">' + tag + ic('gift', 32) + '</div><span class="pg-strong">' + esc(it.name) + '</span>' +
+          (on && p.kind === 'bonus' ? '<span class="pg-caption">+ ' + esc(bonusById(p.bonus).name) + '</span>' : '') +
+          '<span>' + price + '</span>' + btn('Test purchase', { size: 'xs', variant: 'secondary', action: 'test-buy', data: { item: it.id }, full: true }) + '</div>';
+      }).join('') + '</div><div id="buy-result" aria-live="polite"></div></div>';
+    }
+    return head + guideReturn(q) + flashHtml() + modeTabs +
+      '<div class="pg-shop__frame"><div class="pg-shop__bar"><span class="pg-strong">Nova Rift store</span><span class="pg-caption">Sandbox preview · no real charges</span></div>' + content + '</div>';
+  }
+
+  function viewPlaceholder(name) {
+    var titles = { dashboard: 'Dashboard', payments: 'Payments', launch: 'Go live', analytics: 'Analytics', settings: 'Settings', team: 'Team', docs: 'Documentation', bundles: 'Bundles', currency: 'Virtual currency' };
+    var t = titles[name] || 'Section';
+    var msg = name === 'payments' && !S.setupDone
+      ? '<div class="pg-card pg-empty">' + ic('card', 40) + '<h2 class="pg-h3">Finish payment setup</h2><p class="pg-body-sm">In this prototype, switch Initial setup to Complete in the top bar to continue.</p>' + btn('Mark initial setup complete', { size: 'sm', action: 'complete-setup', arrow: true }) + '</div>'
+      : '<div class="pg-card pg-empty">' + ic('layout', 40) + '<h2 class="pg-h3">' + esc(t) + ' is embedded as is</h2><p class="pg-body-sm">This section is outside the scope of the prototype.</p>' + btn('Back to Get started', { size: 'sm', variant: 'secondary', href: '#get-started' }) + '</div>';
+    return pageHeader(t, null, null, '') + msg;
+  }
+  function viewNotFound() { return viewPlaceholder('x'); }
+
+  /* ── Sidebar nav ── */
+  function renderNav(route) {
+    var active = route.split('?')[0].split('/')[0];
+    var sub = route.split('?')[0];
+    var groups = [
+      { items: [{ id: 'get-started', label: 'Get started', icon: 'home', href: '#get-started', match: ['get-started', 'guide'] }, { id: 'dashboard', label: 'Dashboard', icon: 'chart', href: '#page/dashboard', match: ['page/dashboard'] }] },
+      { title: 'Catalog', items: [{ label: A().catalogNav, icon: 'boxes', href: '#catalog', match: ['catalog'] }, { label: 'Bundles', icon: 'gift', href: '#page/bundles', match: ['page/bundles'] }] },
+      { title: 'Storefronts', items: [{ label: 'Web Shop', icon: 'shop', href: '#webshop', match: ['webshop'] }] },
+      { title: 'LiveOps', items: [{ label: 'Promotions', icon: 'discount', href: '#promotions', match: ['promotions'], tag: 'New' }] },
+      { title: 'Business', items: [{ label: 'Payments', icon: 'card', href: '#page/payments', match: ['page/payments'] }, { label: 'Analytics', icon: 'chart', href: '#page/analytics', match: ['page/analytics'] }, { label: 'Team', icon: 'users', href: '#page/team', match: ['page/team'] }, { label: 'Settings', icon: 'settings', href: '#page/settings', match: ['page/settings'] }] }
+    ];
+    document.getElementById('side-nav').innerHTML = groups.map(function (g) {
+      return '<div class="side-nav__group">' + (g.title ? '<span class="side-nav__group-title">' + g.title + '</span>' : '') +
+        g.items.map(function (it) {
+          var isActive = it.match.some(function (m) { return m.indexOf('/') > -1 ? sub === m : active === m; });
+          return '<a class="side-nav__item' + (isActive ? ' side-nav__item--active' : '') + '" href="' + it.href + '"' + (isActive ? ' aria-current="page"' : '') + '>' + ic(it.icon, 18) + '<span>' + esc(it.label) + '</span>' +
+            (it.tag ? '<span class="xui-tag xui-tag--xs xui-tag--brand-extra">' + it.tag + '</span>' : '') + '</a>';
+        }).join('') + '</div>';
+    }).join('');
+  }
+
+  function renderControls() {
+    function seg(items, cur, action) {
+      return items.map(function (it) {
+        var on = it.v === cur;
+        return '<button class="xui-segmented__item' + (on ? ' xui-segmented__item--active' : '') + '" type="button" role="radio" aria-checked="' + on + '" tabindex="' + (on ? 0 : -1) + '" data-action="' + action + '" data-value="' + it.v + '"><span class="xui-segmented__label">' + it.l + '</span></button>';
+      }).join('');
+    }
+    document.getElementById('seg-account').innerHTML = seg([{ v: 'f2p', l: 'Free-to-play' }, { v: 'premium', l: 'Premium PC' }], S.account, 'set-account');
+    document.getElementById('seg-setup').innerHTML = seg([{ v: 'done', l: 'Complete' }, { v: 'progress', l: 'In progress' }], S.setupDone ? 'done' : 'progress', 'set-setup');
+    document.getElementById('project-meta').textContent = A().meta;
+  }
+
+  /* Floating setup widget (D3-FR10) */
+  function renderWidget(route) {
+    var root = document.getElementById('widget-root');
+    var gid = PJ().lastGuide;
+    var candidates = [gid, 'sales', 'codes'].filter(function (id) { return id && PJ().guides[id].started && !progress(id).complete; });
+    var onGuide = route.indexOf('guide/') === 0;
+    var shown = S.setupDone && candidates.length && !onGuide;
+    document.body.classList.toggle('has-widget', !!shown && !S.widgetCollapsed);
+    document.body.classList.toggle('has-widget-mini', !!shown && S.widgetCollapsed);
+    if (!shown) { root.innerHTML = ''; return; }
+    var id = candidates[0], g = GUIDES[id], pr = progress(id), st = g.steps[pr.current];
+    if (S.widgetCollapsed) {
+      root.innerHTML = '<button class="pg-widget pg-widget--collapsed xui-btn xui-btn--secondary xui-btn--brand xui-btn--sm" type="button" data-action="expand-widget" aria-label="Show setup progress">' +
+        '<span class="xui-btn__label">Setup: step ' + (pr.current + 1) + ' of ' + pr.total + '</span></button>';
+      return;
+    }
+    var cta = stepCta(g, st);
+    var goHref = st.detect === 'choice' || !cta ? '#guide/' + id : cta.href + (cta.href.indexOf('?') > -1 ? '&' : '?') + 'guide=' + id;
+    root.innerHTML = '<aside class="pg-widget" aria-label="Setup guide progress">' +
+      '<div class="pg-widget__head"><div class="xui-rich-icon xui-rich-icon--rounded xui-rich-icon--md"><div class="xui-rich-icon__icon pg-cap__icon">' + ic(g.icon, 18) + '</div></div>' +
+      '<div class="pg-widget__titles"><span class="pg-caption">' + esc(g.name) + '</span><span class="pg-strong">Step ' + (pr.current + 1) + ': ' + esc(st.title) + '</span></div>' +
+      '<button class="xui-icon-btn xui-btn--tertiary xui-btn--brand xui-btn--xs" type="button" aria-label="Minimize setup progress" data-action="collapse-widget">' + ic('chevronDown', 20) + '</button></div>' +
+      progressBar(pr.done, pr.total, { size: 'sm' }) +
+      '<div class="pg-widget__actions"><a class="xui-link xui-link--md" href="#guide/' + id + '">View full guide</a>' + btn('Go to step', { size: 'xs', href: goHref, arrow: true }) + '</div></aside>';
+  }
+
+  /* ── Router ── */
+  function parse() {
+    var h = (location.hash || '#get-started').slice(1);
+    var parts = h.split('?');
+    var q = {};
+    (parts[1] || '').split('&').forEach(function (kv) { if (!kv) return; var p = kv.split('='); q[decodeURIComponent(p[0])] = decodeURIComponent(p[1] || ''); });
+    return { path: parts[0] || 'get-started', q: q, raw: h };
+  }
+  var TITLES = { 'get-started': 'Get started', guide: 'Get started', promotions: 'LiveOps › Promotions', catalog: 'Catalog', webshop: 'Storefronts › Web Shop', page: 'Nova Rift' };
+  function render() {
+    var r = parse(), seg = r.path.split('/'), html;
+    if (r.q.guide && !GUIDES[r.q.guide]) delete r.q.guide;
+    switch (seg[0]) {
+      case 'guide': html = viewGuide(seg[1]); break;
+      case 'promotions':
+        if (seg[1] === 'new') html = viewPromoNew(r.q);
+        else if (seg[1] === 'schedule') html = viewPromoSchedule(r.q);
+        else if (seg[1] === 'review') html = viewPromoReview(r.q);
+        else if (seg[1] === 'code') html = viewCodeCreate(r.q);
+        else if (seg[1] === 'code-limits') html = viewCodeLimits(r.q);
+        else html = viewPromotions(r.q);
+        break;
+      case 'catalog': html = viewCatalog(r.q); break;
+      case 'webshop': html = viewWebshop(r.q); break;
+      case 'page': html = viewPlaceholder(seg[1]); break;
+      default: html = viewGetStarted();
+    }
+    if (html === '') return; /* redirected */
+    var view = document.getElementById('view');
+    view.innerHTML = html;
+    document.getElementById('topbar-title').textContent = TITLES[seg[0]] || 'Get started';
+    renderNav(r.path);
+    renderControls();
+    renderWidget(r.path);
+    save();
+  }
+
+  function go(hash) {
+    if (location.hash === hash) render(); else location.hash = hash;
+  }
+  function nextStepFlash(gid, title) {
+    var pr = progress(gid);
+    if (pr.complete) return { tone: 'success', title: title, msg: 'That was the last step.', action: { label: 'See your result', href: '#guide/' + gid } };
+    var st = GUIDES[gid].steps[pr.current];
+    return { tone: 'success', title: title, msg: 'Next in your setup guide: ' + st.title + '.', action: { label: 'Continue setup', href: '#guide/' + gid } };
+  }
+
+  /* ── Events ── */
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-action]');
+    if (!el) return;
+    var a = el.getAttribute('data-action'), pj = PJ(), gid = el.getAttribute('data-guide'), sid = el.getAttribute('data-step');
+    switch (a) {
+      case 'set-account': S.account = el.getAttribute('data-value'); flash = null; render(); break;
+      case 'set-setup': S.setupDone = el.getAttribute('data-value') === 'done'; render(); break;
+      case 'complete-setup': S.setupDone = true; flash = { tone: 'success', title: 'Initial setup complete', msg: 'Advanced setup is now available.' }; go('#get-started'); break;
+      case 'reset': S = freshState(); flash = null; save(); go('#get-started'); break;
+      case 'start-guide': pj.guides[gid].started = true; save(); render(); focusCurrent(); break;
+      case 'save-choice':
+        pj.guides[gid].chosen[sid] = pj.guides[gid].paths[sid]; pj.guides[gid].started = true; save(); render(); focusCurrent(); break;
+      case 'reopen-choice': delete pj.guides[gid].chosen[sid]; save(); render(); break;
+      case 'confirm-step': pj.guides[gid].confirmed[sid] = true; save(); render(); focusCurrent(); break;
+      case 'activate-promo':
+        pj.promo.active = true; save();
+        flash = gid ? nextStepFlash('sales', 'Offer activated') : { tone: 'success', title: 'Offer activated', msg: 'Players see it in your Web Shop now.' };
+        render(); break;
+      case 'deactivate-promo': pj.promo.active = false; save(); render(); break;
+      case 'add-block': pj.shopBlock = true; save(); flash = { tone: 'success', title: 'Promo code block published', msg: 'Players can enter codes on your storefront now.' }; render(); break;
+      case 'test-buy': {
+        var it = itemById(el.getAttribute('data-item')), p = pj.promo, on = p && p.active && p.items.indexOf(it.id) > -1, out;
+        if (on && p.kind === 'discount') out = { tone: 'success', title: 'Test purchase complete', msg: 'Discount applied: ' + money(it.price) + ' → ' + money(it.price * (1 - p.percent / 100)) + '.' };
+        else if (on) out = { tone: 'success', title: 'Test purchase complete', msg: 'Bonus granted: ' + bonusById(p.bonus).name + '.' };
+        else out = { tone: 'neutral', title: 'Test purchase complete', msg: 'No offer applies to ' + it.name + '. Paid ' + money(it.price) + '.' };
+        if (on && pj.guides.sales.started && !pj.guides.sales.confirmed.check) out.action = { label: 'Confirm in guide', href: '#guide/sales' };
+        document.getElementById('buy-result').innerHTML = notification(out); break;
+      }
+      case 'collapse-widget': S.widgetCollapsed = true; save(); renderWidget(parse().path); break;
+      case 'expand-widget': S.widgetCollapsed = false; save(); renderWidget(parse().path); break;
+      case 'close-note': el.closest('.xui-notification').remove(); break;
+    }
+  });
+
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (t.type !== 'radio' && t.type !== 'checkbox') return;
+    var m = /^path-(\w+)-(\w+)$/.exec(t.name);
+    if (m) { PJ().guides[m[1]].paths[m[2]] = t.value; save(); render(); return; }
+    /* live visual state for plain form radios/checkboxes */
+    var form = t.closest('form') || document;
+    form.querySelectorAll('input[name="' + t.name + '"]').forEach(function (inp) {
+      var lab = inp.closest('.pg-choice'), ctl = lab.querySelector('.xui-radio, .xui-checkbox');
+      lab.classList.toggle('pg-choice--checked', inp.checked);
+      ctl.classList.toggle(ctl.classList.contains('xui-radio') ? 'xui-radio--checked' : 'xui-checkbox--checked', inp.checked);
+    });
+  });
+
+  document.addEventListener('submit', function (e) {
+    var f = e.target, kind = f.getAttribute('data-form');
+    if (!kind) return;
+    e.preventDefault();
+    var pj = PJ(), fd = new FormData(f), g = f.getAttribute('data-guide');
+    var suffix = g ? '?guide=' + g : '';
+    if (kind === 'promo-new') {
+      var items = fd.getAll('items');
+      if (!items.length) { alertInline(f, 'Select at least one item'); return; }
+      var k = f.getAttribute('data-kind');
+      var prev = pj.promo && pj.promo.kind === k ? pj.promo : {};
+      pj.promo = { kind: k, name: fd.get('pname'), items: items, percent: k === 'discount' ? Number(fd.get('percent')) : null, bonus: k === 'bonus' ? fd.get('bonus') : null,
+        scheduled: !!prev.scheduled, start: prev.start, end: prev.end, regions: prev.regions, limit: prev.limit, active: false };
+      pj.guides.sales.paths.offer = k;
+      save();
+      flash = g ? nextStepFlash('sales', 'Draft saved') : { tone: 'success', title: 'Draft saved', msg: 'Set a schedule, then activate it.' };
+      go('#promotions?tab=' + k);
+    } else if (kind === 'promo-schedule') {
+      if (fd.get('end') < fd.get('start')) { alertInline(f, 'End date must be after the start date'); return; }
+      Object.assign(pj.promo, { scheduled: true, start: fd.get('start'), end: fd.get('end'), regions: fd.get('regions'), limit: fd.get('limit') });
+      save();
+      flash = g ? nextStepFlash('sales', 'Schedule saved') : { tone: 'success', title: 'Schedule saved' };
+      go('#promotions/review' + suffix);
+    } else if (kind === 'code-new') {
+      var type = f.getAttribute('data-type');
+      if (type === 'coupon') {
+        pj.code = { type: 'coupon', name: fd.get('cname'), count: Number(fd.get('count')), sample: 'NR-' + Math.random().toString(36).slice(2, 8).toUpperCase(), reward: fd.get('reward'), limitsSet: false };
+      } else {
+        pj.code = { type: 'promo', value: String(fd.get('code')).toUpperCase(), reward: fd.get('reward'), limitsSet: false };
+      }
+      var gs = pj.guides.codes;
+      if (!gs.chosen.type) gs.chosen.type = type;
+      if (!gs.chosen.reward) gs.chosen.reward = fd.get('reward');
+      gs.paths.type = type;
+      save();
+      flash = g ? nextStepFlash('codes', type === 'coupon' ? 'Coupons generated' : 'Code created') : { tone: 'success', title: 'Code created', msg: 'Set validity and limits to activate it.' };
+      go('#promotions?tab=' + (type === 'coupon' ? 'coupons' : 'codes'));
+    } else if (kind === 'code-limits') {
+      if (fd.get('to') < fd.get('from')) { alertInline(f, 'The end date must be after the start date'); return; }
+      Object.assign(pj.code, { limitsSet: true, from: fd.get('from'), to: fd.get('to'), uses: fd.get('uses') || null, perPlayer: fd.get('perPlayer') });
+      save();
+      flash = g ? nextStepFlash('codes', 'Code is active') : { tone: 'success', title: 'Code is active' };
+      go('#promotions?tab=' + (pj.code.type === 'coupon' ? 'coupons' : 'codes'));
+    } else if (kind === 'redeem') {
+      var v = String(fd.get('redeem-code')).trim().toUpperCase(), c = pj.code, out;
+      var match = c && c.limitsSet && (c.type === 'promo' ? v === c.value : v === c.sample);
+      if (match) {
+        out = { tone: 'success', title: 'Code redeemed', msg: 'Reward granted: ' + rewardLabel(c.reward) + '.' };
+        if (pj.guides.codes.started && !pj.guides.codes.confirmed.test) out.action = { label: 'Confirm in guide', href: '#guide/codes' };
+      } else if (c && !c.limitsSet && (v === c.value || v === c.sample)) {
+        out = { tone: 'warning', title: 'Code is not active yet', msg: 'Set validity and limits to activate it.' };
+      } else {
+        out = { tone: 'alert', title: 'Code not found', msg: 'Check the code and try again.' };
+      }
+      document.getElementById('redeem-result').innerHTML = notification(out);
+    }
+  });
+
+  function alertInline(form, msg) {
+    var old = form.querySelector('.xui-field-group__error'); if (old) old.remove();
+    var p = document.createElement('p');
+    p.className = 'xui-field-group__error'; p.setAttribute('role', 'alert'); p.textContent = msg;
+    form.querySelector('.pg-form__actions').before(p);
+  }
+  function focusCurrent() {
+    var el = document.getElementById('current-step');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  window.addEventListener('hashchange', function () { render(); window.scrollTo(0, 0); document.getElementById('view').focus({ preventScroll: true }); });
+  render();
+})();
+  </script>
+</body>
+</html>
